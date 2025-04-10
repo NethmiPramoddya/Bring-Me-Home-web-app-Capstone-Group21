@@ -49,11 +49,12 @@ function UsersMyRequests() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">My Requests</h1>
         <Link to="/create" className="flex items-center gap-2 px-4 py-2 text-white bg-black rounded-lg">
-          <span className="text-lg">➕</span> Post New Request
+          <span className="text-lg">➕</span> Post a New Request Here
         </Link>
       </div>
 
       {/* 🔍 Filter Inputs */}
+    <div className="flex justify-end mb-6">
       <div className="flex flex-col gap-4 mb-6 md:flex-row">
         <input
           type="text"
@@ -70,6 +71,7 @@ function UsersMyRequests() {
           className="px-4 py-2 border border-gray-300 rounded-md"
         />
       </div>
+      </div> 
 
       <div className="grid gap-4 md:grid-cols-2">
         {filteredRequests.map((request) => (
