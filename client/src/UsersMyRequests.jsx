@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 function UsersMyRequests() {
   const [requests,setRequests] = useState([]);
+  const [fromFilter, setFromFilter] = useState("");
+  const [toFilter, setToFilter] = useState("");
 
   useEffect(()=>{
     axios.get("http://localhost:3002")
@@ -34,6 +36,14 @@ function UsersMyRequests() {
     }
   };
 
+  // Filtering logic
+  const filteredRequests = requests.filter((request) => {
+    const fromMatch = request.fcountry.toLowerCase().includes(fromFilter.toLowerCase());
+    const toMatch = request.dcountry.toLowerCase().includes(toFilter.toLowerCase());
+    return fromMatch && toMatch;
+  });
+
+
   return (
     <div className="min-h-screen p-6 bg-gray-100">
       <div className="flex items-center justify-between mb-6">
@@ -42,8 +52,27 @@ function UsersMyRequests() {
           <span className="text-lg">➕</span> Post New Request
         </Link>
       </div>
+
+      {/* 🔍 Filter Inputs */}
+      <div className="flex flex-col gap-4 mb-6 md:flex-row">
+        <input
+          type="text"
+          placeholder="Filter by From Country"
+          value={fromFilter}
+          onChange={(e) => setFromFilter(e.target.value)}
+          className="px-4 py-2 border border-gray-300 rounded-md"
+        />
+        <input
+          type="text"
+          placeholder="Filter by To Country"
+          value={toFilter}
+          onChange={(e) => setToFilter(e.target.value)}
+          className="px-4 py-2 border border-gray-300 rounded-md"
+        />
+      </div>
+
       <div className="grid gap-4 md:grid-cols-2">
-        {requests.map((request) => (
+        {filteredRequests.map((request) => (
           <div key={request.id} className="p-4 bg-white rounded-lg shadow-md">
             <div className="flex justify-between">
               <h2 className="text-lg font-semibold">{request.item}</h2>
