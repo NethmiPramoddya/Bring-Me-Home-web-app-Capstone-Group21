@@ -5,7 +5,7 @@ import EditUsers from './EditUsers'
 import CreateUsersForm from './CreateUsersForm'
 import Navbar from './Navbar'
 import SignUp from './SignUp'
-import { LogIn } from 'lucide-react'
+import LogIn from './LogIn'
 
 function App() {
   

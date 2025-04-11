@@ -53,7 +53,7 @@ app.post('/login', (req,res)=>{
                 res.json("Success")
             }
             else{
-                res,json("The password is incorrect")
+                res.json("The password is incorrect")
             }
         }
         else{
