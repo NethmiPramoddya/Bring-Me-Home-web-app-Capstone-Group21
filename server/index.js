@@ -2,6 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const SenderModel = require('./models/Senders')
+const UserModel = require('./models/user')
+
 
 const app = express()
 app.use(cors())
@@ -41,6 +43,32 @@ app.delete('/deleteRequest/:id',(req,res)=>{
     .then(res => res.json(res))
     .catch(err => res.json(err))
 })
+
+app.post('/login', (req,res)=>{
+    const {email, password} = req.body;
+    UserModel.findOne({email:email})
+    .then(user =>{
+        if(user){
+            if(user.password===password){
+                res.json("Success")
+            }
+            else{
+                res,json("The password is incorrect")
+            }
+        }
+        else{
+            res.json("No recored existed")
+        }
+    })
+})
+
+app.post('/register',(req,res)=>{
+    UserModel.create(req.body)
+    .then(users => res.json(users))
+    .catch(err => res.json(err))
+
+})
+
 
 app.listen(3002, ()=>{
     console.log("Server is Running")

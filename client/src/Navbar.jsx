@@ -3,6 +3,7 @@ import { Bell, User } from "lucide-react";
 import logo from './assets/logo.png'
 
 const Navbar = () => {
+
   return (
     <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
       {/* Logo */}
