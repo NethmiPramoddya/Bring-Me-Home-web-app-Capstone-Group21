@@ -1,12 +1,21 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 
 function UsersMyRequests() {
   const [requests,setRequests] = useState([]);
   const [fromFilter, setFromFilter] = useState("");
   const [toFilter, setToFilter] = useState("");
+  const Navigate = useNavigate();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (!isLoggedIn) {
+      Navigate('/login');
+    }
+  }, []);
 
   useEffect(()=>{
     axios.get("http://localhost:3002")
