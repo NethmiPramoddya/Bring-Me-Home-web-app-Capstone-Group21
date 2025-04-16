@@ -6,6 +6,7 @@ import CreateUsersForm from './CreateUsersForm'
 import Navbar from './Navbar'
 import SignUp from './SignUp'
 import LogIn from './LogIn'
+import TravelerForm from './TravelerForm'
 
 function App() {
   
@@ -20,6 +21,8 @@ function App() {
         <Route path='/edit/:id' element={<EditUsers/>}></Route>
         <Route path='/register' element={<SignUp/>}></Route>
         <Route path='/login' element={<LogIn/>}></Route>
+        <Route path='/become-traveler' element={<TravelerForm/>}></Route>
+
       </Routes>
       </BrowserRouter>
     </div>

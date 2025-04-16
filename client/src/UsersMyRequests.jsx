@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
-
 function UsersMyRequests() {
-  const [requests,setRequests] = useState([]);
+  const [requests, setRequests] = useState([]);
   const [fromFilter, setFromFilter] = useState("");
   const [toFilter, setToFilter] = useState("");
   const Navigate = useNavigate();
@@ -17,18 +16,19 @@ function UsersMyRequests() {
     }
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get("http://localhost:3002")
-    .then(result => setRequests(result.data))
-    .catch(err => console.log(err))
-  },[])
+      .then(result => setRequests(result.data))
+      .catch(err => console.log(err))
+  }, []);
 
-  const handleDelete = (id) =>{
-    axios.delete('http://localhost:3002/deleteRequest/'+id)
-    .then(res =>{ console.log(res)
-      window.location.reload()
-    })
-    .catch(err => console.log(err))
+  const handleDelete = (id) => {
+    axios.delete('http://localhost:3002/deleteRequest/' + id)
+      .then(res => {
+        console.log(res);
+        window.location.reload()
+      })
+      .catch(err => console.log(err))
   }
 
   // Function to determine status color
@@ -47,11 +47,10 @@ function UsersMyRequests() {
 
   // Filtering logic
   const filteredRequests = requests.filter((request) => {
-    const fromMatch = request.fcountry.toLowerCase().includes(fromFilter.toLowerCase());
-    const toMatch = request.dcountry.toLowerCase().includes(toFilter.toLowerCase());
+    const fromMatch = request.fcountry && request.fcountry.toLowerCase().includes(fromFilter.toLowerCase());
+    const toMatch = request.dcountry && request.dcountry.toLowerCase().includes(toFilter.toLowerCase());
     return fromMatch && toMatch;
   });
-
 
   return (
     <div className="min-h-screen p-6 bg-gray-100">
@@ -63,24 +62,24 @@ function UsersMyRequests() {
       </div>
 
       {/* 🔍 Filter Inputs */}
-    <div className="flex justify-end mb-6">
-      <div className="flex flex-col gap-4 mb-6 md:flex-row">
-        <input
-          type="text"
-          placeholder="Filter by From Country"
-          value={fromFilter}
-          onChange={(e) => setFromFilter(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-md"
-        />
-        <input
-          type="text"
-          placeholder="Filter by To Country"
-          value={toFilter}
-          onChange={(e) => setToFilter(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-md"
-        />
+      <div className="flex justify-end mb-6">
+        <div className="flex flex-col gap-4 mb-6 md:flex-row">
+          <input
+            type="text"
+            placeholder="From Country"
+            value={fromFilter}
+            onChange={(e) => setFromFilter(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-md"
+          />
+          <input
+            type="text"
+            placeholder="To Country"
+            value={toFilter}
+            onChange={(e) => setToFilter(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-md"
+          />
+        </div>
       </div>
-      </div> 
 
       <div className="grid gap-4 md:grid-cols-2">
         {filteredRequests.map((request) => (
@@ -91,19 +90,23 @@ function UsersMyRequests() {
                 {request.status}
               </span>
             </div>
-            <p className="text-gray-600">
+            <p className="text-red-600">
               {request.fcountry} → {request.dcountry}
             </p>
-            <p className="text-sm text-gray-500">Requested Date: {request.date}</p>
+            <p className="text-sm font-bold text-gray-500">Requested Date: {request.date}</p>
+            <p className="text-sm text-gray-500">Weight of {request.item}(kg): {request.weight}</p>
+            <p className="text-sm text-gray-500">Length of {request.item}(cm): {request.length}</p>
+            <p className="text-sm text-gray-500">Height of {request.item}(cm): {request.height}</p>
+            <p className="text-sm text-gray-500">Width of {request.item}(cm): {request.width}</p>
             <div className="flex gap-2 mt-4">
-              <Link to={`/edit/${request._id}`} className="flex items-center gap-1 px-4 py-2 border rounded-lg">
+              {/* <Link to={`/edit/${request._id}`} className="flex items-center gap-1 px-4 py-2 border rounded-lg">
                 ✏️ Edit
-              </Link>
-              <button className="flex items-center gap-1 px-4 py-2 text-white bg-red-500 rounded-lg" onClick={(e)=>handleDelete(request._id)}>
+              </Link> */}
+              {/* <button className="flex items-center gap-1 px-4 py-2 text-white bg-red-500 rounded-lg" onClick={(e)=>handleDelete(request._id)}>
                 🗑️ Delete
-              </button>
+              </button> */}
               <button className="flex items-center gap-1 px-4 py-2 text-white bg-black rounded-lg">
-                ✈️ Track
+                ✈️ Accept
               </button>
             </div>
           </div>

@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const SenderModel = require('./models/Senders')
 const UserModel = require('./models/user')
+const TravelerModel = require('./models/Traveler')
 
 
 const app = express()
@@ -77,4 +78,13 @@ app.post('/register',(req,res)=>{
 
 app.listen(3002, ()=>{
     console.log("Server is Running")
+})
+
+// traveler requests
+
+
+app.post("/createTraveler",(req,res)=>{
+    TravelerModel.create(req.body)
+    .then(travelers => res.json(travelers))
+    .catch(err => res.json(err))
 })
