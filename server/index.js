@@ -50,14 +50,19 @@ app.post('/login', (req,res)=>{
     .then(user =>{
         if(user){
             if(user.password===password){
-                res.json("Success")
+                res.json({
+                    message:"Success",
+                    userId: user._id,
+                    email: user.email
+                })
+                
             }
             else{
-                res.json("The password is incorrect")
+                res.json({message:"The password is incorrect"})
             }
         }
         else{
-            res.json("No recored existed")
+            res.json({message:"No recored existed"})
         }
     })
 })

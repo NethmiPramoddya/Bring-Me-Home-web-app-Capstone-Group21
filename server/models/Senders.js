@@ -11,9 +11,15 @@ const SendersSchema = new mongoose.Schema({
     date: Date,
     fcountry: String,
     dcountry: String,
-    details: String,
+    weight: String,
+    length: String,
+    width: String,
+    height: String,
+    post_date:Date,
+    content: String,
     message: String,
-    contactinfo: String,
+    contactinfo_d: String,
+    contactinfo_a: String,
     profile1: String,
     profile2: String
 })

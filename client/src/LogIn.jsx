@@ -12,13 +12,14 @@ function LogIn() {
         e.preventDefault()
         axios.post('http://localhost:3002/login', {email,password})
         .then(result => {console.log(result)
-          if(result.data === "Success"){
+          if(result.data.message === "Success"){
           // Store simple login state in localStorage
           localStorage.setItem("isLoggedIn", true);
-          localStorage.setItem("userEmail", email);
-            Navigate('/')
+          localStorage.setItem("userEmail", result.data.email);
+          localStorage.setItem("userId", result.data.userId); //  Store userId
+          Navigate('/');
           }else{
-            alert(result.data)
+            alert(result.data.message)
           }
           
         })

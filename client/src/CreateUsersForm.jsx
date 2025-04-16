@@ -14,9 +14,15 @@ function CreateUsersForm() {
         date: "",
         fcountry: "",
         dcountry: "",
-        details: "",
+        weight: "",
+        length:"" ,
+        width: "",
+        height: "",
+        post_date:  new Date().toISOString().slice(0, 10),
+        content: "",
         message: "",
-        contactinfo: "",
+        contactinfo_d: "",
+        contactinfo_a:"",
         profile1: "",
         profile2: "",
       });
@@ -29,7 +35,13 @@ function CreateUsersForm() {
     
       const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:3002/create", formData)
+        const senderID = localStorage.getItem("userId");
+        const submissionData = {
+            ...formData,
+            buyer_id: senderID,
+          };
+
+        axios.post("http://localhost:3002/create", submissionData)
         .then(result => {
             console.log(result)
             navigate("/")
@@ -86,20 +98,50 @@ function CreateUsersForm() {
             </div>
 
             <div className="flex items-center justify-between mb-6">
-            <div className="flex flex-col my-2">
+            <div className="flex flex-col my-2 w-full md:w-[48%]">
                 <label htmlFor="fcountry" className="block mb-1 font-medium text-gray-700 text-md">Country From</label>
                 <input type="text" name="fcountry" id="fcountry" value={formData.fcountry} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 " required/>
                 </div>
-                <div className="flex flex-col my-2">
+                <div className="flex flex-col my-2 w-full md:w-[48%]">
                 <label htmlFor="dcountry" className="block mb-1 font-medium text-gray-700 text-md">Destination</label>
                 <input type="text" name="dcountry" id="dcountry" value={formData.dcountry} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 " required/>
                 </div>
             </div>
 
+            <div className="flex items-center justify-between mb-6">
+                <div className="flex flex-col w-full md:w-[48%]">
+                <label htmlFor="weight" className="block mb-1 font-medium text-gray-700 text-md">Weight in kg</label>
+                <input type="text" name="weight" id="weight" value={formData.weight} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 " required/>
+                </div>
+                <div className="flex flex-col w-full md:w-[48%]">
+                <label htmlFor="length" className="block mb-1 font-medium text-gray-700 text-md">Length in cm</label>
+                <input type="text" name="length" id="length" value={formData.length} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 "required/>
+                </div>
+            </div>
+
+
+            <div className="flex items-center justify-between mb-6">
+                <div className="flex flex-col w-full md:w-[48%]">
+                <label htmlFor="width" className="block mb-1 font-medium text-gray-700 text-md">Width in cm</label>
+                <input type="text" id="width" name="width" value={formData.width} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 " required/>
+                </div>
+                <div className="flex flex-col w-full md:w-[48%]">
+                <label htmlFor="height" className="block mb-1 font-medium text-gray-700 text-md">Height in cm</label>
+                <input type="text"  id="height" name="height" value={formData.height} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 " required/>
+                </div>
+            </div>
+
             <div>
             <div className="flex flex-col my-2">
-                <label htmlFor="details" className="block mb-1 font-medium text-gray-700 text-md">Package Details</label>
-                <textarea id="details" name="details" rows="5" value={formData.details} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 " placeholder="Height,Width,Weight,Content"></textarea>
+                <label htmlFor="post_date" className="block mb-1 font-medium text-gray-700 text-md">Current Date</label>
+                <input type="date" name="post_date" id="post_date" value={formData.post_date} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2" required/>
+                </div>
+            </div>
+
+            <div>
+            <div className="flex flex-col my-2">
+                <label htmlFor="content" className="block mb-1 font-medium text-gray-700 text-md">Package Content of Package</label>
+                <textarea id="content" name="content" rows="5" value={formData.content} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 " placeholder="Content of your package"></textarea>
                 </div>
             </div>
 
@@ -110,10 +152,14 @@ function CreateUsersForm() {
                 </div>
             </div>
 
-            <div>
-            <div className="flex flex-col my-4">
-                <label htmlFor="contactinfo" className="block mb-1 font-medium text-gray-700 text-md">Contact Info(Depature and Arrival)</label>
-                <textarea id="contactinfo" name="contactinfo" rows="3" value={formData.contactinfo} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            <div className="flex items-center justify-between mb-6">
+                <div className="flex flex-col w-full md:w-[48%]">
+                <label htmlFor="contactinfo_d" className="block mb-1 font-medium text-gray-700 text-md">Contact Info Depature</label>
+                <input type="text" id="contactinfo_d" name="contactinfo_d" value={formData.contactinfo_d} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 " required/>
+                </div>
+                <div className="flex flex-col w-full md:w-[48%]">
+                <label htmlFor="contactinfo_a" className="block mb-1 font-medium text-gray-700 text-md">Contact Info Arrival</label>
+                <input type="text"  id="contactinfo_a" name="contactinfo_a" value={formData.contactinfo_a} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 " required/>
                 </div>
             </div>
 
