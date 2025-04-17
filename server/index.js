@@ -45,6 +45,8 @@ app.delete('/deleteRequest/:id',(req,res)=>{
     .catch(err => res.json(err))
 })
 
+//Login and signUp
+
 app.post('/login', (req,res)=>{
     const {email, password} = req.body;
     UserModel.findOne({email:email})

@@ -28,7 +28,12 @@ function TravelerForm() {
     
       const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:3002/createTraveler", formData)
+        const travelerID = localStorage.getItem("userId");
+        const submissionData = {
+            ...formData,
+            traveler_id: travelerID,
+          };
+        axios.post("http://localhost:3002/createTraveler", submissionData)
         .then(result => {
             console.log(result)
             navigate("/")

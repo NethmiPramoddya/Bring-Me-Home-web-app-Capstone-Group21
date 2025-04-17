@@ -14,7 +14,7 @@ function LogIn() {
         .then(result => {console.log(result)
           if(result.data.message === "Success"){
           // Store simple login state in localStorage
-          localStorage.setItem("isLoggedIn", true);
+          localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("userEmail", result.data.email);
           localStorage.setItem("userId", result.data.userId); //  Store userId
           Navigate('/');
