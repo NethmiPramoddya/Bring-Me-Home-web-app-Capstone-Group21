@@ -1,15 +1,30 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Bell, User } from "lucide-react";
 import logo from './assets/logo.png'
+import React, { useEffect, useState, useRef } from "react";
 
 const Navbar = () => {
   
   const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleLogout = () => {
     localStorage.removeItem("userId"); // or other auth token
     navigate("/login"); // redirect to login
   };
+
+  // Close dropdown when clicked outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
 
   return (
     <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
@@ -28,24 +43,42 @@ const Navbar = () => {
         </Link>
 
         {/* Notification Icon */}
-        <button className="relative text-gray-700 hover:text-red-600">
+        <button className="relative text-gray-700 hover:text-red-600" onClick={() => navigate('/notifications')}>
           <Bell className="w-5 h-5" />
           {/* Optional badge */}
           <span className="absolute px-1 text-xs text-white bg-red-500 rounded-full -top-1 -right-1">3</span>
         </button>
 
-        {/* User Profile Icon */}
-        <button className="text-gray-700 hover:text-red-600">
-          <User className="w-5 h-5" />
-        </button>
+        {/* User Profile Dropdown */}
+        <div className="relative" ref={dropdownRef}>
+          <button
+            className="text-gray-700 hover:text-red-600"
+            onClick={() => setShowDropdown(!showDropdown)}
+          >
+            <User className="w-5 h-5" />
+          </button>
 
-        {/* Logout Button */}
-        <button
-          onClick={handleLogout}
-          className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600"
-        >
-          Logout
-        </button>
+          {showDropdown && (
+            <div className="absolute right-0 z-50 w-40 mt-2 bg-white border rounded shadow-lg">
+              
+              {/* View Profile Button */}
+              <button
+                onClick={() => navigate('/profile')}
+                className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
+              >
+                View Profile
+              </button>
+
+              
+              <button
+                onClick={handleLogout}
+                className="w-full px-4 py-2 text-left text-white bg-red-500 rounded hover:bg-red-600"
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );

@@ -7,9 +7,12 @@ import Navbar from './Navbar'
 import SignUp from './SignUp'
 import LogIn from './LogIn'
 import TravelerForm from './TravelerForm'
+import Profile from './Profile'
+import RequestDetails from './RequestDetails'
+import Notifications from './Notifications'
 
 function App() {
-  
+  const userId = localStorage.getItem('userId'); 
 
   return (
     <div>
@@ -22,6 +25,10 @@ function App() {
         <Route path='/register' element={<SignUp/>}></Route>
         <Route path='/login' element={<LogIn/>}></Route>
         <Route path='/become-traveler' element={<TravelerForm/>}></Route>
+        <Route path='/profile' element={<Profile/>}></Route>
+        <Route path="/buyer-requests/:senderRequestId" element={< RequestDetails/>} />
+        <Route path='/notifications' element={<Notifications userId={userId} />}></Route>
+
 
       </Routes>
       </BrowserRouter>
