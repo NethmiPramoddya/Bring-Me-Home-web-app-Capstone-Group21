@@ -7,14 +7,17 @@ import { Phone } from 'lucide-react'
 function SignUp() {
     const[name, setName] = useState("")
     const[email, setEmail] = useState("")
-    const[contact, setContact] = useState("")
+    const[phone, setPhone] = useState("")
     const[password, setPassword] = useState("")
     const Navigate = useNavigate()
 
     const handleSubmit = (e) =>{
         e.preventDefault()
-        axios.post('http://localhost:3002/register', {name,email,contact,password})
+        axios.post('http://localhost:3002/register', {name,email,phone,password})
         .then(result => {console.log(result)
+            localStorage.setItem("userId", result.data.userId); 
+            localStorage.setItem("userEmail", result.data.user.email);
+            localStorage.setItem("userPhone", result.data.user.phone);
           Navigate('/login')
         })
         .catch(err => console.log(err))
@@ -61,7 +64,7 @@ function SignUp() {
    
               required
               className="w-full p-3 mt-1 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={(e)=>setContact(e.target.value)}
+              onChange={(e)=>setPhone(e.target.value)}
             />
           </div>
 
