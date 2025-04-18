@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const TravelerSchema = new mongoose.Schema({
-
+    traveler_id: String,
     tname: String,
     temail: String,
     depature_country: String,

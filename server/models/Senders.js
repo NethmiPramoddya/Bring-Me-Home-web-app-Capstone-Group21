@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const SendersSchema = new mongoose.Schema({
-
+    buyer_id: String,
     sname: String,
     semail: String,
     rname: String,
