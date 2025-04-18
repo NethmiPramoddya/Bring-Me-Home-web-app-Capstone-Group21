@@ -54,7 +54,7 @@ app.post("/create",async(req,res)=>{
     const notifications = matchingTravelers.map(traveler=>{
         return{
             from_id:senderId,
-            to_id:traveler._id.toString(),
+            to_id:traveler.traveler_id.toString(),
             content: "You have a new buyer request",
             link: `http://localhost:5173/buyer-requests/${senderRequestId}`,
             dateTime: new Date(),
