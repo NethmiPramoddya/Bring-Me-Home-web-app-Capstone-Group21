@@ -2,23 +2,23 @@ import React, { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { Phone } from 'lucide-react'
 
 function SignUp() {
     const[name, setName] = useState("")
     const[email, setEmail] = useState("")
     const[phone, setPhone] = useState("")
     const[password, setPassword] = useState("")
-    const Navigate = useNavigate()
+    const navigate = useNavigate()
 
     const handleSubmit = (e) =>{
         e.preventDefault()
+        console.log({ name, email, phone, password });
         axios.post('http://localhost:3002/register', {name,email,phone,password})
         .then(result => {console.log(result)
             localStorage.setItem("userId", result.data.userId); 
-            localStorage.setItem("userEmail", result.data.user.email);
-            localStorage.setItem("userPhone", result.data.user.phone);
-          Navigate('/login')
+            localStorage.setItem("userEmail", result.data.email);
+            localStorage.setItem("userPhone", result.data.phone);
+            navigate('/login')
         })
         .catch(err => console.log(err))
     }
