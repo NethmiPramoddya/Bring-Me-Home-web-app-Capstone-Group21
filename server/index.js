@@ -114,7 +114,9 @@ app.post('/register',(req,res)=>{
             email: user.email,
             phone: user.phone, 
     }))
-    .catch(err => res.status(400).json(err))
+    .catch(err => {
+        console.error("Error:", err)
+        res.status(400).json(err)})
 
 })
 
