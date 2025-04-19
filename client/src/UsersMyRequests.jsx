@@ -91,13 +91,13 @@ function UsersMyRequests() {
               </span>
             </div>
             <p className="text-red-600">
-              {request.fcountry} → {request.dcountry}
+            🌍✈️🌎{request.fcountry} → {request.dcountry}
             </p>
             <p className="text-sm font-bold text-gray-500">Requested Date: {request.date}</p>
-            <p className="text-sm text-gray-500">Weight of {request.item}(kg): {request.weight}</p>
-            <p className="text-sm text-gray-500">Length of {request.item}(cm): {request.length}</p>
-            <p className="text-sm text-gray-500">Height of {request.item}(cm): {request.height}</p>
-            <p className="text-sm text-gray-500">Width of {request.item}(cm): {request.width}</p>
+            <p className="text-sm text-gray-500">⚖️Weight of {request.item}(kg): {request.weight}</p>
+            <p className="text-sm text-gray-500">📦➡️Length of {request.item}(cm): {request.length}</p>
+            <p className="text-sm text-gray-500">📦⬆️⬇️Height of {request.item}(cm): {request.height}</p>
+            <p className="text-sm text-gray-500">📦⬅️➡️Width of {request.item}(cm): {request.width}</p>
             <div className="flex gap-2 mt-4">
               {/* <Link to={`/edit/${request._id}`} className="flex items-center gap-1 px-4 py-2 border rounded-lg">
                 ✏️ Edit
@@ -105,9 +105,9 @@ function UsersMyRequests() {
               {/* <button className="flex items-center gap-1 px-4 py-2 text-white bg-red-500 rounded-lg" onClick={(e)=>handleDelete(request._id)}>
                 🗑️ Delete
               </button> */}
-              <button className="flex items-center gap-1 px-4 py-2 text-white bg-black rounded-lg">
-                ✈️ Accept
-              </button>
+              <Link to={`/more_info/${request._id}`} className="flex items-center gap-1 px-4 py-2 text-white bg-black rounded-lg">
+              ❓ Need more info?
+              </Link>
             </div>
           </div>
         ))}

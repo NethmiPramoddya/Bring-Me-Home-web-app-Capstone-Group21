@@ -4,6 +4,7 @@ import logo from './assets/logo.png'
 import React, { useEffect, useState, useRef } from "react";
 
 const Navbar = () => {
+  const userId = localStorage.getItem("userId");
   
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -63,7 +64,7 @@ const Navbar = () => {
               
               {/* View Profile Button */}
               <button
-                onClick={() => navigate('/profile')}
+                onClick={() => navigate(`/profile/${userId}`)}
                 className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
               >
                 View Profile
