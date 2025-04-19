@@ -126,20 +126,62 @@ app.listen(3002, ()=>{
 // traveler requests
 
 
-app.post("/createTraveler",(req,res)=>{
-    TravelerModel.create(req.body)
-    .then(travelers => res.json(travelers))
-    .catch(err => res.json(err))
+app.post("/createTraveler",async(req,res)=>{
+    try{
+    const travelerData = await TravelerModel.create(req.body)
+
+    //data needed to find matching senders
+    const from_country = travelerData.depature_country;
+    const to_country = travelerData.destination;
+    const delivery_dt = travelerData.arrival_date;
+    const travelerId = travelerData.traveler_id;
+
+    //finding sender requests that match the traveler's route and date
+    const matchingSenders = await SenderModel.find({
+        fcountry:from_country,
+        dcountry:to_country,
+        date:{$eq:delivery_dt}
+    })
+
+    //creating notofications for the traveler from each sender
+    const notifications = matchingSenders.map(sender=>{
+        return{
+            from_id:sender.buyer_id,
+            to_id:travelerId,
+            content:"A sender is looking for a traveler matching your route!",
+            link: `http://localhost:5173/buyer-requests/${sender._id}`,
+            dateTime: new Date(),
+            status: false   
+        }
+    })
+
+     // 5. Store the notifications in the DB
+     if (notifications.length > 0) {
+        await NotificationModel.insertMany(notifications);
+      }
+
+      // 6. Respond with success
+    res.json({ success: true, travelerData });
+    }catch(error){
+        console.error("Error submitting traveler info:", error);
+    res.status(500).json({ success: false, error: "Something went wrong!" });
+    }
+
 })
 
 
 //profile
 
-app.get("/profile/:id",(req,res)=>{
-    const userId = req.params.id
-    UserModel.findById(userId)
-    .then(user => res.json(user))
-    .catch(err => res.json(err))
+app.get("/profile/:id",async(req,res)=>{
+    try{const userId = req.params.id;
+    const user = await UserModel.findById(userId)
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      res.json(user);
+    }catch(error){
+        res.status(500).json({ message: error.message });
+    }
 })
 
 //Notifications
@@ -154,5 +196,17 @@ app.get('/notifications/:userId',async(req,res)=>{
     }catch(error){
         console.error("Error fetching notifications:",error);
         res.status(500).json({error:"something went wrong"})
+    }
+})
+
+//More info
+
+app.get("/more_info/:id", async (req,res)=>{
+    try{
+        const id = req.params.id;
+        const request = await SenderModel.findById(id);
+        res.json(request);
+    }catch(error){
+        res.status(500).json({ message: err.message });
     }
 })

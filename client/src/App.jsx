@@ -10,6 +10,7 @@ import TravelerForm from './TravelerForm'
 import Profile from './Profile'
 import RequestDetails from './RequestDetails'
 import Notifications from './Notifications'
+import MoreInfo from './MoreInfo'
 
 function App() {
   const userId = localStorage.getItem('userId'); 
@@ -25,9 +26,10 @@ function App() {
         <Route path='/register' element={<SignUp/>}></Route>
         <Route path='/login' element={<LogIn/>}></Route>
         <Route path='/become-traveler' element={<TravelerForm/>}></Route>
-        <Route path='/profile' element={<Profile/>}></Route>
+        <Route path='/profile/:id' element={<Profile/>}></Route>
         <Route path="/buyer-requests/:senderRequestId" element={< RequestDetails/>} />
         <Route path='/notifications' element={<Notifications userId={userId} />}></Route>
+        <Route path="/more_info/:id" element={<MoreInfo/>} />
 
 
       </Routes>

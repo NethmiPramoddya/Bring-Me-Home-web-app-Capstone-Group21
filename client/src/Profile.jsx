@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+
 
 function Profile() {
     const [user, setUser] = useState([]);
@@ -9,7 +9,9 @@ function Profile() {
 
     useEffect(()=>{
         axios.get(`http://localhost:3002/profile/${userId}`)
-        .then(result=>setUser(result.data))
+        .then(result=>{
+            console.log(result.data);
+            setUser(result.data)})
         .catch(err=>console.log(err))
     },[userId])
 
@@ -50,7 +52,7 @@ function Profile() {
                 <h3 className="text-xl font-semibold text-gray-700">Contact Info</h3>
                 <p className="text-gray-600"><strong>Email:</strong> {user.email}</p>
                 <p className="text-gray-600"><strong>Phone:</strong> {user.phone || 'Not available'}</p>
-            </div>
+            </div> 
 
             <div>
                 <h3 className="text-xl font-semibold text-gray-700">Other Info</h3>
