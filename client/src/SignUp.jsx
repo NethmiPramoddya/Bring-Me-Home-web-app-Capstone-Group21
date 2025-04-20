@@ -12,7 +12,6 @@ function SignUp() {
 
     const handleSubmit = (e) =>{
         e.preventDefault()
-        console.log({ name, email, phone, password });
         axios.post('http://localhost:3002/register', {name,email,phone,password})
         .then(result => {console.log(result)
             localStorage.setItem("userId", result.data.userId); 
