@@ -6,6 +6,13 @@ function Notifications({userId}) {
     const [notifications, setNotifications] = useState([])
     const navigate = useNavigate()
 
+    useEffect(() => {
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+        if (!isLoggedIn) {
+          navigate('/login');
+        }
+      }, []);
+
     useEffect(()=>{
         console.log("User ID:", userId);
         if(userId){
