@@ -1,4 +1,4 @@
-import {React, useState} from 'react'
+import {React, useState,useEffect} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { Luggage } from 'lucide-react';
@@ -21,6 +21,12 @@ function TravelerForm() {
       });
 
       const navigate  = useNavigate()
+      useEffect(() => {
+              const isLoggedIn = localStorage.getItem("isLoggedIn");
+              if (!isLoggedIn) {
+                navigate('/login');
+              }
+            }, []);
     
       const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });

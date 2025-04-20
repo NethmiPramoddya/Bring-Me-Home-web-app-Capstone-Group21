@@ -2,6 +2,7 @@ import React,{ useState} from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import logo from './assets/logo.png'
 
 function LogIn() {
   const[email, setEmail] = useState("")
@@ -32,6 +33,9 @@ function LogIn() {
       <div className="flex items-center justify-center min-h-screen px-4 py-10 bg-gray-100">
         <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-2xl">
           <form onSubmit={handleSubmit}>
+            <div className="flex justify-center mb-4">
+                <img src={logo} alt="Logo" className="w-auto h-16" />
+            </div>
             <h2 className="text-2xl font-bold text-center text-gray-800">Log In</h2>
 
             <div className="py-3">
