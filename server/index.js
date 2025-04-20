@@ -212,3 +212,15 @@ app.get("/more_info/:id", async (req,res)=>{
         res.status(500).json({ message: err.message });
     }
 })
+
+//Request Details
+
+app.get("/buyer-requests/:senderRequestId", async (req,res)=>{
+    try{
+        const id = req.params.senderRequestId;
+        const request = await SenderModel.findById(id);
+        res.json(request);
+    }catch(error){
+        res.status(500).json({ message: err.message });
+    }
+})
