@@ -224,3 +224,44 @@ app.get("/buyer-requests/:senderRequestId", async (req,res)=>{
         res.status(500).json({ message: err.message });
     }
 })
+
+//My Sender Requests
+
+app.get("/mySenderRequests/:id",async(req,res)=>{
+    try{const userId = req.params.id;
+    const requests = await SenderModel.find({ buyer_id: userId })
+    if (!requests) {
+        return res.status(404).json({ message: "Request not found" });
+      }
+      res.json(requests);
+    }catch(error){
+        res.status(500).json({ message: error.message });
+    }
+})
+
+app.delete("/deleteSenderRequest/:id", async (req, res) => {
+    try {
+        const deleted = await SenderModel.findByIdAndDelete(req.params.id);
+        if (!deleted) {
+            return res.status(404).json({ message: "Request not found" });
+        }
+        res.json({ message: "Sender request deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+//My traveling data
+
+app.get("/travelingData/:id",async(req,res)=>{
+    try{const userId = req.params.id;
+    const travelingData = await TravelerModel.find({traveler_id: userId })
+    if (!travelingData) {
+        return res.status(404).json({ message: "Traveling data not found" });
+      }
+      res.json(travelingData);
+    }catch(error){
+        res.status(500).json({ message: error.message });
+    }
+})
