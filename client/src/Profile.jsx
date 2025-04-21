@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 
 function Profile() {
     const [user, setUser] = useState([]);
+    const navigate = useNavigate()
 
     const userId = localStorage.getItem("userId")
 
@@ -14,6 +16,12 @@ function Profile() {
             setUser(result.data)})
         .catch(err=>console.log(err))
     },[userId])
+
+    
+  const handleLogout = () => {
+    localStorage.removeItem("userId"); // or other auth token
+    navigate("/login"); // redirect to login
+  };
 
     if (!user.name) {
         return <div>Loading...</div>; // Show loading message while data is being fetched
@@ -66,7 +74,7 @@ function Profile() {
         <button className="px-6 py-2 text-white transition duration-200 bg-blue-500 rounded-lg hover:bg-blue-600">
             Edit Profile
         </button>
-        <button className="px-6 py-2 text-white transition duration-200 bg-red-500 rounded-lg hover:bg-red-600">
+        <button onClick={handleLogout} className="px-6 py-2 text-white transition duration-200 bg-red-500 rounded-lg hover:bg-red-600">
             Logout
         </button>
     </div>
