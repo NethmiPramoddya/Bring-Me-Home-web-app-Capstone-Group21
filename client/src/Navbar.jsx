@@ -70,6 +70,20 @@ const Navbar = () => {
                 View Profile
               </button>
 
+              <button
+                onClick={() => navigate(`/mySenderRequests/${userId}`)}
+                className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
+              >
+                My Sender Requests
+              </button>
+
+              <button
+                onClick={() => navigate(`/travelingData/${userId}`)}
+                className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
+              >
+                Traveling data
+              </button>
+
               
               <button
                 onClick={handleLogout}

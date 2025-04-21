@@ -11,6 +11,8 @@ import Profile from './Profile'
 import RequestDetails from './RequestDetails'
 import Notifications from './Notifications'
 import MoreInfo from './MoreInfo'
+import MySenderRequests from './MySenderRequests'
+import MyTravelingData from './MyTravelingData'
 
 function App() {
   const userId = localStorage.getItem('userId'); 
@@ -29,7 +31,9 @@ function App() {
         <Route path='/profile/:id' element={<Profile/>}></Route>
         <Route path="/buyer-requests/:senderRequestId" element={< RequestDetails/>} />
         <Route path='/notifications' element={<Notifications userId={userId} />}></Route>
-        <Route path="/more_info/:id" element={<MoreInfo/>} />
+        <Route path="/more_info/:id" element={<MoreInfo/>} /> 
+        <Route path='/mySenderRequests/:id' element={<MySenderRequests/>}></Route>
+        <Route path='/travelingData/:id' element={<MyTravelingData/>}></Route>
 
 
       </Routes>
