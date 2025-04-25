@@ -10,12 +10,18 @@ function Profile() {
     const userId = localStorage.getItem("userId")
 
     useEffect(()=>{
-        axios.get(`http://localhost:3002/profile/${userId}`)
-        .then(result=>{
-            console.log(result.data);
-            setUser(result.data)})
-        .catch(err=>console.log(err))
-    },[userId])
+        if (!userId) {
+            navigate("/login"); // Redirect to login if userId is null
+            return;
+        }
+        if(userId){
+            axios.get(`http://localhost:3002/profile/${userId}`)
+            .then(result=>{
+                console.log(result.data);
+                setUser(result.data)})
+            .catch(err=>console.log(err))
+        }
+    },[userId, navigate])
 
     
   const handleLogout = () => {
