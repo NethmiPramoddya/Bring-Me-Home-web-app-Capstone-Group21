@@ -2,13 +2,15 @@ import React,{useEffect,useState} from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 
-function Notifications({userId}) {
+function Notifications() {
     const [notifications, setNotifications] = useState([])
     const navigate = useNavigate()
-
+    
+    const userId = localStorage.getItem("userId")
+    
     useEffect(() => {
         const isLoggedIn = localStorage.getItem("isLoggedIn");
-        if (!isLoggedIn) {
+        if (!isLoggedIn || isLoggedIn === "false" || !userId ) {
           navigate('/login');
         }
       }, []);
