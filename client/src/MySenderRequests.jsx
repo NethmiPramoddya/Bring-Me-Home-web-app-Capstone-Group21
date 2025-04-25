@@ -3,6 +3,8 @@ import axios from 'axios'
 
 function MySenderRequests() {
     const [mySenderRequests, setMySenderRequests] =useState([])
+    const [selectedRequest, setSelectedRequest] = useState(null);
+    const [showModal, setShowModal] = useState(false);
      const userId = localStorage.getItem("userId")
     
         useEffect(()=>{
@@ -28,6 +30,17 @@ function MySenderRequests() {
                 console.log("Error deleting request:", err);
             }
         };
+
+        const handleViewMore = (request) => {
+            setSelectedRequest(request);
+            setShowModal(true);
+          };
+
+          const closeModal = () => {
+            setShowModal(false);
+            setSelectedRequest(null);
+          };
+        
   return (
     <div className="p-4">
             <h2 className="mb-4 text-xl font-bold">My Sender Requests</h2>
@@ -49,10 +62,10 @@ function MySenderRequests() {
                                     onClick={() => handleDelete(request._id)}
                                     className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600"
                                 >
-                                    Delete
+                                    🗑️Delete
                                 </button>
                                 <button
-                                    
+                                    onClick={() => handleViewMore(request)}
                                     className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
                                 >
                                     View More
@@ -62,6 +75,33 @@ function MySenderRequests() {
                     ))}
                 </ul>
             )}
+
+            {showModal && selectedRequest && (
+                    <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                    onClick={closeModal}
+                    >
+                    <div
+                        className="relative w-full max-w-md p-6 bg-white rounded-lg shadow-lg"
+                        onClick={(e) => e.stopPropagation()} // Prevent modal from closing when clicking inside
+                    >
+                        <h3 className="mb-4 text-lg font-bold">Request Details</h3>
+                        <p><strong>Item:</strong> {selectedRequest.item}</p>
+                        <p><strong>From:</strong> {selectedRequest.fcountry}</p>
+                        <p><strong>To:</strong> {selectedRequest.dcountry}</p>
+                        <p><strong>Date:</strong> {new Date(selectedRequest.date).toLocaleDateString()}</p>
+                        <p><strong>Recipient:</strong> {selectedRequest.rname} ({selectedRequest.remail})</p>
+                        <p><strong>Message:</strong> {selectedRequest.message || 'No message'}</p>
+
+                        <button
+                        onClick={closeModal}
+                        className="px-4 py-2 mt-6 text-white bg-gray-700 rounded hover:bg-gray-800"
+                        >
+                        Close
+                        </button>
+                    </div>
+                    </div>
+                )}
         </div>
   )
 }
