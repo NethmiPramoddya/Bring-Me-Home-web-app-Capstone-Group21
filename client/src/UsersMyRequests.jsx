@@ -55,7 +55,7 @@ function UsersMyRequests() {
   return (
     <div className="min-h-screen p-6 bg-gray-100">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">My Requests</h1>
+        <h1 className="text-2xl font-bold">Senders Requests</h1>
         <Link to="/create" className="flex items-center gap-2 px-4 py-2 text-white bg-black rounded-lg">
           <span className="text-lg">➕</span> Post a New Request Here
         </Link>
