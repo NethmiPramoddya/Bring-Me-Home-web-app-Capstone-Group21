@@ -265,3 +265,15 @@ app.get("/travelingData/:id",async(req,res)=>{
         res.status(500).json({ message: error.message });
     }
 })
+
+app.delete("/deleteTravelerData/:id", async (req, res) => {
+    try {
+        const deleted = await TravelerModel.findByIdAndDelete(req.params.id);
+        if (!deleted) {
+            return res.status(404).json({ message: "Request not found" });
+        }
+        res.json({ message: "Sender request deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
