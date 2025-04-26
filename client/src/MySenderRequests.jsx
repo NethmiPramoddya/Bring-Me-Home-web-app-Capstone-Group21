@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 function MySenderRequests() {
     const [mySenderRequests, setMySenderRequests] =useState([])
@@ -31,10 +32,10 @@ function MySenderRequests() {
             }
         };
 
-        const handleViewMore = (request) => {
-            setSelectedRequest(request);
-            setShowModal(true);
-          };
+        // const handleViewMore = (request) => {
+        //     setSelectedRequest(request);
+        //     setShowModal(true);
+        //   };
 
           const closeModal = () => {
             setShowModal(false);
@@ -64,12 +65,12 @@ function MySenderRequests() {
                                 >
                                     🗑️Delete
                                 </button>
-                                <button
-                                    onClick={() => handleViewMore(request)}
+                                <Link to={`/View_more/${request._id}`}
+                                    
                                     className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
                                 >
                                     View More
-                                </button>
+                                </Link>
                             </div>
                         </li>
                     ))}
