@@ -277,3 +277,15 @@ app.delete("/deleteTravelerData/:id", async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+//view more
+app.get("/View_more/:id", async (req,res)=>{
+    try{
+        const id = req.params.id;
+        const request = await SenderModel.findById(id);
+        res.json(request);
+    }catch(error){
+        res.status(500).json({ message: err.message });
+    }
+})
+ 
