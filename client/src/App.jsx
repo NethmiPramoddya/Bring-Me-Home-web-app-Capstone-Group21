@@ -13,6 +13,7 @@ import Notifications from './Notifications'
 import MoreInfo from './MoreInfo'
 import MySenderRequests from './MySenderRequests'
 import MyTravelingData from './MyTravelingData'
+import ViewMore from './pages/ViewMore'
 
 function App() {
   const userId = localStorage.getItem('userId'); 
@@ -34,6 +35,7 @@ function App() {
         <Route path="/more_info/:id" element={<MoreInfo/>} /> 
         <Route path='/mySenderRequests/:id' element={<MySenderRequests/>}></Route>
         <Route path='/travelingData/:id' element={<MyTravelingData/>}></Route>
+        <Route path='/view_more/:id' element={<ViewMore/>}></Route>
 
 
       </Routes>

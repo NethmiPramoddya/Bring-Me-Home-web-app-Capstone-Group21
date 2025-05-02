@@ -15,6 +15,8 @@ const TravelerSchema = new mongoose.Schema({
     contactinfo_a:String,
     profile1: String,
     profile2: String,
+    sender_user_id: String,
+    sender_form_id: String,
 })
 
 

@@ -2,18 +2,34 @@ import { Link, useNavigate } from "react-router-dom";
 import { Bell, User } from "lucide-react";
 import logo from './assets/logo.png'
 import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
 
 const Navbar = () => {
   const userId = localStorage.getItem("userId");
   
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(0);
   const dropdownRef = useRef(null);
 
   const handleLogout = () => {
     localStorage.removeItem("userId"); // or other auth token
     navigate("/login"); // redirect to login
   };
+
+  useEffect(() => {
+    const fetchNotificationCount = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3002/notifications/${userId}`);
+        setNotificationCount(response.data.length); // Use setState here
+      } catch (error) {
+        console.error("Error fetching notification count:", error);
+      }
+    };
+    if (userId) {
+      fetchNotificationCount();
+    }
+  }, [userId]);
 
   // Close dropdown when clicked outside
   useEffect(() => {
@@ -47,7 +63,9 @@ const Navbar = () => {
         <button className="relative text-gray-700 hover:text-red-600" onClick={() => navigate('/notifications')}>
           <Bell className="w-5 h-5" />
           {/* Optional badge */}
-          <span className="absolute px-1 text-xs text-white bg-red-500 rounded-full -top-1 -right-1">3</span>
+          {notificationCount > 0 && (
+            <span className="absolute px-1 text-xs text-white bg-red-500 rounded-full -top-1 -right-1">{notificationCount}</span>
+          )}
         </button>
 
         {/* User Profile Dropdown */}

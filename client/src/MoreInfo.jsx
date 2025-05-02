@@ -15,6 +15,38 @@ function MoreInfo() {
 
       if (!info) return <p className="mt-10 text-center">Loading...</p>;
 
+      const handleAccept = async () => {
+        try {
+          const travelerId = localStorage.getItem("userId"); // Traveler logged in
+          if (!travelerId) {
+            alert("Please login first!");
+            return;
+          }
+      
+          // Make Accept API call
+          try {
+            const acceptResponse = await axios.post(`http://localhost:3002/acceptRequest`, {
+              requestId: info._id,
+              travelerId: travelerId,
+            });
+
+            if (acceptResponse.data.success) {
+              alert("Request accepted successfully!");
+              // Redirect if needed
+            } else {
+              alert(acceptResponse.data.message || "Your travel details do not match this request!");
+            }
+          } catch (error) {
+            console.error("Error during accept request:", error);
+            alert(error.response?.data?.message || "An error occurred while processing your request.");
+          }
+            
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred!");
+        }
+      };      
+
 
   return (
     <div className="min-h-screen py-10 bg-gray-50">
@@ -81,7 +113,7 @@ function MoreInfo() {
             </div>
 
             <div className="flex justify-center pt-2">
-          <button className="bg-[#b33434] hover:bg-[#a12d2d] w-[33.33%] mx-3 text-white py-1 px-4 rounded text-lg transition">
+          <button  onClick={handleAccept} className="bg-[#b33434] hover:bg-[#a12d2d] w-[33.33%] mx-3 text-white py-1 px-4 rounded text-lg transition">
             ✅ Accept
           </button>
           <Link to="/" className="bg-[#b33434] hover:bg-[#a12d2d] w-[33.33%] text-center text-white py-1 px-4 rounded text-lg transition">

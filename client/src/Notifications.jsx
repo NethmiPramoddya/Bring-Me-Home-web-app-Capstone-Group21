@@ -11,7 +11,7 @@ function Notifications({userId}) {
         if (!isLoggedIn) {
           navigate('/login');
         }
-      }, []);
+      }, [navigate]);
 
     useEffect(()=>{
         console.log("User ID:", userId);

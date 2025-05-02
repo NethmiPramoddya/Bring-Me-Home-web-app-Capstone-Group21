@@ -21,7 +21,14 @@ const SendersSchema = new mongoose.Schema({
     contactinfo_d: String,
     contactinfo_a: String,
     profile1: String,
-    profile2: String
+    profile2: String,
+    traveller_user_id: String,
+    travelling_form_id: String,
+    status: {
+        type: String,
+        default: 'pending', // default when first created
+        enum: ['pending', 'accepted', 'rejected', 'cancelled', 'completed']
+    },
 })
 
 

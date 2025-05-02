@@ -15,7 +15,7 @@ app.use(express.json())
 mongoose.connect("mongodb://127.0.0.1:27017/send_packageinfo")
 
 app.get('/', (req,res) => {
-    SenderModel.find({})
+    SenderModel.find({ $or: [{ status: 'pending' }, { status: { $exists: false } }] })
     .then(senders => res.json(senders))
     .catch(err => res.json(err))
 })
@@ -201,6 +201,77 @@ app.get('/notifications/:userId',async(req,res)=>{
     }
 })
 
+//accept request
+app.post("/acceptRequest", async (req, res) => {
+    try {
+      const { requestId, travelerId } = req.body;
+  
+      const senderRequest = await SenderModel.findById(requestId);
+      const travelerData = await TravelerModel.findOne({ 
+        traveler_id: travelerId, 
+        destination: senderRequest.dcountry, 
+        depature_country: senderRequest.fcountry, 
+        arrival_date: senderRequest.date 
+      });
+  
+      if (!senderRequest || !travelerData) {
+        return res.status(404).json({ success: false, message: "Data not found" });
+      }
+  
+      // Double checking match again in backend
+    //   return res.status(200).json({ 
+    //     success: true, 
+    //     message: {
+    //       traveler_depature_country: travelerData.depature_country, 
+    //       sender_fcountry: senderRequest.fcountry,
+    //       traveler_destination: travelerData.destination,
+    //       sender_dcountry: senderRequest.dcountry, 
+    //       traveler_arrival_date: travelerData.arrival_date, 
+    //       sender_date: senderRequest.date,
+    //       traveler_travelerDate: new Date(travelerData.arrival_date).toISOString().split('T')[0],
+    //       sender_senderDate: new Date(senderRequest.date).toISOString().split('T')[0]
+    //     } 
+    //   });
+      if (
+        travelerData.depature_country !== senderRequest.fcountry ||
+        travelerData.destination !== senderRequest.dcountry ||
+        new Date(travelerData.arrival_date).toISOString().split('T')[0] !== 
+        new Date(senderRequest.date).toISOString().split('T')[0]
+      ) {
+        return res.status(400).json({ success: false, message: "Travel details do not match!" });
+      }
+      
+      // Update Sender
+      senderRequest.traveller_user_id = travelerData.traveler_id;
+      senderRequest.travelling_form_id = travelerData._id;
+      await senderRequest.save();
+  
+      // Update Traveler
+      travelerData.sender_user_id = senderRequest.buyer_id;
+      travelerData.sender_form_id = senderRequest._id;
+      await travelerData.save();
+  
+      // Create Notification to Sender
+      await NotificationModel.create({
+        from_id: travelerData.traveler_id,
+        to_id: senderRequest.buyer_id,
+        content: "A traveler has accepted your delivery request!",
+        link: `/View_more/${senderRequest._id}`, // Same as sender's my requests view
+        dateTime: new Date(),
+        status: false
+      });
+  
+
+      await SenderModel.findByIdAndUpdate(requestId, { status: 'accepted' });
+  
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error accepting request:", error);
+      res.status(500).json({ success: false, message:error.message });
+    }
+  });
+  
+
 //More info
 
 app.get("/more_info/:id", async (req,res)=>{
@@ -277,3 +348,14 @@ app.delete("/deleteTravelerData/:id", async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+//view more
+app.get("/View_more/:id", async (req,res)=>{
+    try{
+        const id = req.params.id;
+        const request = await SenderModel.findById(id);
+        res.json(request);
+    }catch(error){
+        res.status(500).json({ message: err.message });
+    }
+})
