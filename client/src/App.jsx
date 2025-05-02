@@ -22,6 +22,7 @@ function App() {
     <div>
       <BrowserRouter>
       <Navbar/>
+      
       <Routes>
         <Route path='/' element={<UsersMyRequestes/>}></Route>
         <Route path='/create' element={<CreateUsersForm/>}></Route>
@@ -36,9 +37,12 @@ function App() {
         <Route path='/mySenderRequests/:id' element={<MySenderRequests/>}></Route>
         <Route path='/travelingData/:id' element={<MyTravelingData/>}></Route>
         <Route path='/view_more/:id' element={<ViewMore/>}></Route>
+        
+
 
 
       </Routes>
+      
       </BrowserRouter>
     </div>
   )

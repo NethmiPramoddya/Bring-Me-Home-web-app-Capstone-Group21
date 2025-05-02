@@ -13,7 +13,10 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
 
   const handleLogout = () => {
+    localStorage.setItem("isLoggedIn", false); 
     localStorage.removeItem("userId"); // or other auth token
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userPhone");
     navigate("/login"); // redirect to login
   };
 
@@ -60,13 +63,17 @@ const Navbar = () => {
         </Link>
 
         {/* Notification Icon */}
-        <button className="relative text-gray-700 hover:text-red-600" onClick={() => navigate('/notifications')}>
-          <Bell className="w-5 h-5" />
-          {/* Optional badge */}
-          {notificationCount > 0 && (
-            <span className="absolute px-1 text-xs text-white bg-red-500 rounded-full -top-1 -right-1">{notificationCount}</span>
-          )}
-        </button>
+        
+        {userId && (
+              <button className="relative text-gray-700 hover:text-red-600" onClick={() => navigate('/notifications')}>
+              <Bell className="w-5 h-5" />
+              {/* Optional badge */}
+              {notificationCount > 0 && (
+                <span className="absolute px-1 text-xs text-white bg-red-500 rounded-full -top-1 -right-1">{notificationCount}</span>
+              )}
+            </button>
+              )}
+        
 
         {/* User Profile Dropdown */}
         <div className="relative" ref={dropdownRef}>
@@ -81,34 +88,51 @@ const Navbar = () => {
             <div className="absolute right-0 z-50 w-40 mt-2 bg-white border rounded shadow-lg">
               
               {/* View Profile Button */}
-              <button
-                onClick={() => navigate(`/profile/${userId}`)}
-                className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
-              >
-                View Profile
-              </button>
+              {userId && (
+                <button
+                  onClick={() => navigate(`/profile/${userId}`)}
+                  className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
+                >
+                  View Profile
+                </button>
+              )}
 
-              <button
-                onClick={() => navigate(`/mySenderRequests/${userId}`)}
-                className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
-              >
-                My Sender Requests
-              </button>
+              {userId && (
+                <button
+                  onClick={() => navigate(`/mySenderRequests/${userId}`)}
+                  className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
+                >
+                  My Sender Requests
+                </button>
+              )}
 
-              <button
-                onClick={() => navigate(`/travelingData/${userId}`)}
-                className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
-              >
-                Traveling data
-              </button>
+              {userId && (
+                <button
+                  onClick={() => navigate(`/travelingData/${userId}`)}
+                  className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
+                >
+                  Traveling data
+                </button>
+              )}
 
-              
+              {userId && (
               <button
                 onClick={handleLogout}
                 className="w-full px-4 py-2 text-left text-white bg-red-500 rounded hover:bg-red-600"
               >
                 Logout
               </button>
+              )}
+              {!userId && (
+                <Link to="/login" className="block px-4 py-2 text-left text-gray-700 hover:bg-gray-100">
+                  Login
+                </Link>
+              )}
+              {!userId && (
+                <Link to="/register" className="block px-4 py-2 text-left text-gray-700 hover:bg-gray-100">
+                  Register
+                </Link>
+              )}
             </div>
           )}
         </div>
