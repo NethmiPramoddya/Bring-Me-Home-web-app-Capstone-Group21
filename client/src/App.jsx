@@ -31,7 +31,7 @@ function App() {
         <Route path='/login' element={<LogIn/>}></Route>
         <Route path='/become-traveler' element={<TravelerForm/>}></Route>
         <Route path='/profile/:id' element={<Profile/>}></Route>
-        <Route path="/buyer-requests/:senderRequestId" element={< RequestDetails/>} />
+        {/* <Route path="/buyer-requests/:senderRequestId" element={< RequestDetails/>} /> */}
         <Route path='/notifications' element={<Notifications userId={userId} />}></Route>
         <Route path="/more_info/:id" element={<MoreInfo/>} /> 
         <Route path='/mySenderRequests/:id' element={<MySenderRequests/>}></Route>

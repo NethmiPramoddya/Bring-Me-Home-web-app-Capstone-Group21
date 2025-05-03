@@ -32,7 +32,7 @@ function MoreInfo() {
 
             if (acceptResponse.data.success) {
               alert("Request accepted successfully!");
-              // Redirect if needed
+              window.location.reload(); // This will reload the current page
             } else {
               alert(acceptResponse.data.message || "Your travel details do not match this request!");
             }
@@ -113,9 +113,12 @@ function MoreInfo() {
             </div>
 
             <div className="flex justify-center pt-2">
-          <button  onClick={handleAccept} className="bg-[#b33434] hover:bg-[#a12d2d] w-[33.33%] mx-3 text-white py-1 px-4 rounded text-lg transition">
-            ✅ Accept
-          </button>
+                {info.status != "accepted" && (
+                    <button  onClick={handleAccept} className="bg-[#b33434] hover:bg-[#a12d2d] w-[33.33%] mx-3 text-white py-1 px-4 rounded text-lg transition">
+                    ✅ Accept
+                  </button>
+                )}
+          
           <Link to="/" className="bg-[#b33434] hover:bg-[#a12d2d] w-[33.33%] text-center text-white py-1 px-4 rounded text-lg transition">
              ⬅️ Go Back
           </Link>
