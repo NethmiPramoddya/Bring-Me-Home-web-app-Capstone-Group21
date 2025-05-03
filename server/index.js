@@ -12,7 +12,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-mongoose.connect("mongodb://127.0.0.1:27017/send_packageinfo")
+mongoose.connect("mongodb://127.0.0.1:27017/Send_a_package")
 
 app.get('/', (req,res) => {
     SenderModel.find({ $or: [{ status: 'pending' }, { status: { $exists: false } }] })
@@ -56,7 +56,7 @@ app.post("/create",async(req,res)=>{
             from_id:senderId,
             to_id:traveler.traveler_id.toString(),
             content: "You have a new buyer request",
-            link: `http://localhost:5173/buyer-requests/${senderRequestId}`,
+            link: `http://localhost:5173/more_info/${senderRequestId}`,
             dateTime: new Date(),
             status: false
         }
@@ -151,7 +151,7 @@ app.post("/createTraveler",async(req,res)=>{
             from_id:sender.buyer_id,
             to_id:travelerId,
             content:"A sender is looking for a traveler matching your route!",
-            link: `http://localhost:5173/buyer-requests/${sender._id}`,
+            link: `http://localhost:5173/more_info/${sender._id}`,
             dateTime: new Date(),
             status: false   
         }
@@ -256,7 +256,7 @@ app.post("/acceptRequest", async (req, res) => {
         from_id: travelerData.traveler_id,
         to_id: senderRequest.buyer_id,
         content: "A traveler has accepted your delivery request!",
-        link: `/View_more/${senderRequest._id}`, // Same as sender's my requests view
+        link: `http://localhost:5173/view_more/${senderRequest._id}`, // Same as sender's my requests view
         dateTime: new Date(),
         status: false
       });
@@ -286,15 +286,15 @@ app.get("/more_info/:id", async (req,res)=>{
 
 //Request Details
 
-app.get("/buyer-requests/:senderRequestId", async (req,res)=>{
-    try{
-        const id = req.params.senderRequestId;
-        const request = await SenderModel.findById(id);
-        res.json(request);
-    }catch(error){
-        res.status(500).json({ message: err.message });
-    }
-})
+// app.get("/buyer-requests/:senderRequestId", async (req,res)=>{
+//     try{
+//         const id = req.params.senderRequestId;
+//         const request = await SenderModel.findById(id);
+//         res.json(request);
+//     }catch(error){
+//         res.status(500).json({ message: err.message });
+//     }
+// })
 
 //My Sender Requests
 
@@ -350,7 +350,7 @@ app.delete("/deleteTravelerData/:id", async (req, res) => {
 });
 
 //view more
-app.get("/View_more/:id", async (req,res)=>{
+app.get("/view_more/:id", async (req,res)=>{
     try{
         const id = req.params.id;
         const request = await SenderModel.findById(id);
