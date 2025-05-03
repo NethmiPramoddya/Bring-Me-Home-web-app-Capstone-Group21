@@ -81,7 +81,7 @@ function MySenderRequests() {
                                 }
                                 
                                 
-                                <Link to={`/View_more/${request._id}`}
+                                <Link to={`/view_more/${request._id}`}
                                     
                                     className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
                                 >
