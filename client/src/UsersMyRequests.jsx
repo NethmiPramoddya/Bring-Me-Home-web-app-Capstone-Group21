@@ -22,14 +22,14 @@ function UsersMyRequests() {
       .catch(err => console.log(err))
   }, []);
 
-  const handleDelete = (id) => {
-    axios.delete('http://localhost:3002/deleteRequest/' + id)
-      .then(res => {
-        console.log(res);
-        window.location.reload()
-      })
-      .catch(err => console.log(err))
-  }
+  // const handleDelete = (id) => {
+  //   axios.delete('http://localhost:3002/deleteRequest/' + id)
+  //     .then(res => {
+  //       console.log(res);
+  //       window.location.reload()
+  //     })
+  //     .catch(err => console.log(err))
+  // }
 
   // Function to determine status color
   const getStatusColor = (status) => {
