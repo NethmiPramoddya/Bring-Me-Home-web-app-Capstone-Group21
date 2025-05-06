@@ -1,10 +1,57 @@
-/* .topbox{
-    width: 95%;
-height: 651px;
-flex-shrink: 0;
-border-radius: 68px;
-background: #F0F0F0;
-position: absolute;
-top: 120px;
-margin-left: 30px;
-} */
+
+.aclonica-regular {
+    font-family: "Aclonica", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    
+  }
+
+  .bellota-light {
+    font-family: "Bellota", system-ui;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .bellota-regular {
+    font-family: "Bellota", system-ui;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .bellota-bold {
+    font-family: "Bellota", system-ui;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .bellota-light-italic {
+    font-family: "Bellota", system-ui;
+    font-weight: 300;
+    font-style: italic;
+  }
+  
+  .bellota-regular-italic {
+    font-family: "Bellota", system-ui;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  .bellota-bold-italic {
+    font-family: "Bellota", system-ui;
+    font-weight: 700;
+    font-style: italic;
+  }
+
+
+
+.inter {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+
+ 
+
+ 
