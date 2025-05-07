@@ -112,6 +112,24 @@ function MoreInfo() {
                 <p className="text-base font-medium text-gray-800">{info.message}</p>
             </div>
 
+            <div className="flex items-center mb-3 space-x-2">
+                <div className="text-sm font-semibold text-[#b33434]">💰Tip</div>
+                <p className="text-base font-medium text-green-600">${(Number(info.tip)).toFixed(2)}</p>
+            </div>
+
+            <div className="flex items-center mb-3 space-x-2">
+                <div className="text-sm font-semibold text-[#b33434]">💳Total Payment</div>
+                <p className="text-base font-medium text-green-600">${(Number(info.itemPrice) + Number(info.tip)).toFixed(2)}</p>
+            </div>
+
+            <div className="flex items-center mb-3 space-x-2">
+                <div className="text-sm font-semibold text-[#b33434]">💵Traveler gets</div>
+                <p className="text-base font-medium text-green-600">${(Number(info.tip * 0.75)).toFixed(2)}</p>
+            </div>
+
+
+
+
             <div className="flex justify-center pt-2">
                 {info.status != "accepted" && (
                     <button  onClick={handleAccept} className="bg-[#b33434] hover:bg-[#a12d2d] w-[33.33%] mx-3 text-white py-1 px-4 rounded text-lg transition">

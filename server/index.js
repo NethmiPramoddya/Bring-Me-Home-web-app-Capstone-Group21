@@ -36,6 +36,12 @@ app.put('/editUser/:id', (req, res) => {
 
 app.post("/create",async(req,res)=>{
     try{
+        if (req.body.needsPurchase) {
+            req.body.totalCost = parseFloat(req.body.itemPrice) + parseFloat(req.body.tip);
+        } else {
+            req.body.totalCost = parseFloat(req.body.tip);
+        }
+          
     const senderData =await SenderModel.create(req.body)
     const from_country = senderData.fcountry;
     const to_country = senderData.dcountry;

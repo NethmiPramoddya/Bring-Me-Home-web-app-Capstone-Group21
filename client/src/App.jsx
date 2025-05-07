@@ -14,6 +14,7 @@ import MoreInfo from './MoreInfo'
 import MySenderRequests from './MySenderRequests'
 import MyTravelingData from './MyTravelingData'
 import ViewMore from './pages/ViewMore'
+import Home from './Home'
 
 function App() {
   const userId = localStorage.getItem('userId'); 
@@ -24,7 +25,9 @@ function App() {
       <Navbar/>
       
       <Routes>
+
         <Route path='/' element={<UsersMyRequestes/>}></Route>
+        <Route path='/Home' element={<Home/>}></Route>
         <Route path='/create' element={<CreateUsersForm/>}></Route>
         <Route path='/edit/:id' element={<EditUsers/>}></Route>
         <Route path='/register' element={<SignUp/>}></Route>

@@ -98,6 +98,14 @@ function UsersMyRequests() {
             <p className="text-sm text-gray-500">📦➡️Length of {request.item}(cm): {request.length}</p>
             <p className="text-sm text-gray-500">📦⬆️⬇️Height of {request.item}(cm): {request.height}</p>
             <p className="text-sm text-gray-500">📦⬅️➡️Width of {request.item}(cm): {request.width}</p>
+            <p className="text-sm font-semibold text-blue-600">💰 Tip: ${request.tip}</p>
+            {request.needsPurchase && (
+              <>
+                <p className="text-sm text-gray-600">🛒 Item Price: ${request.itemPrice}</p>
+                <p className="text-sm font-bold text-green-600">💳 Total Payment: ${(Number(request.itemPrice) + Number(request.tip)).toFixed(2)}</p>
+              </>
+            )}
+            <p className="text-xs text-gray-500">📊 System gets 0.25% (${(request.tip * 0.25).toFixed(2)}), Traveler gets 0.75% (${(Number(request.tip * 0.75)).toFixed(2)})</p>
             <div className="flex gap-2 mt-4">
               {/* <Link to={`/edit/${request._id}`} className="flex items-center gap-1 px-4 py-2 border rounded-lg">
                 ✏️ Edit
