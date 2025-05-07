@@ -1,4 +1,4 @@
-import {React, useState} from 'react'
+import {React, useState,useEffect} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
@@ -18,6 +18,9 @@ function CreateUsersForm() {
         length:"" ,
         width: "",
         height: "",
+        itemPrice: "", // optional, only if traveler needs to purchase
+        needsPurchase: false, // checkbox
+        tip: 0, // auto-calculated
         post_date:  new Date().toISOString().slice(0, 10),
         content: "",
         message: "",
@@ -28,10 +31,21 @@ function CreateUsersForm() {
       });
 
       const navigate  = useNavigate()
+
+      useEffect(() => {
+        const weight = parseFloat(formData.weight);
+        if (!isNaN(weight)) {
+          const calculatedTip = (weight * 5).toFixed(2); // Example: 5 currency units per kg
+          setFormData(prev => ({ ...prev, tip: calculatedTip }));
+        }
+      }, [formData.weight]);
+      
     
       const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value, type, checked } = e.target;
+        setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
       };
+      
     
       const handleSubmit = (e) => {
         e.preventDefault();
@@ -130,6 +144,41 @@ function CreateUsersForm() {
                 <input type="text"  id="height" name="height" value={formData.height} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 " required/>
                 </div>
             </div>
+
+                <div className="my-2">
+            <label className="block mb-1 font-medium text-gray-700 text-md">Does the traveler need to buy the item?</label>
+            <input
+                type="checkbox"
+                name="needsPurchase"
+                checked={formData.needsPurchase}
+                onChange={handleChange}
+            />
+            </div>
+
+            {formData.needsPurchase && (
+            <div className="flex flex-col my-2">
+                <label htmlFor="itemPrice" className="block mb-1 font-medium text-gray-700 text-md">Item Price</label>
+                <input
+                type="number"
+                name="itemPrice"
+                value={formData.itemPrice}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                required
+                />
+            </div>
+            )}
+
+            <div className="flex flex-col my-2">
+            <label className="block mb-1 font-medium text-gray-700 text-md">Tip (calculated automatically)</label>
+            <input
+                type="number"
+                value={formData.tip}
+                disabled
+                className="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-md"
+            />
+            </div>
+
 
             <div>
             <div className="flex flex-col my-2">
