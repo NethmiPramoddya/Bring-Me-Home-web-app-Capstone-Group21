@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import TopImage from "./assets/home_page_img.png";
 import Bag from "./assets/bag.png";
-
+import Shuttle from "./assets/shuttle.png";
 
 export default function Home() {
   return (
@@ -42,15 +42,32 @@ export default function Home() {
         </button>
       </div>
       <div className="wd">
-        <h1 class="w-[472px] h-[104px] text-[#6A6A6A] font-inter text-[64px] font-extrabold leading-none absolute top-[900px] ml-[50%]">Who we are...?</h1>
-        <p class="w-[627px] h-[375px] flex-shrink-0 text-[#6A6A6A] font-bold text-[32px] font-[Bellota] absolute top-[1000px] ml-[50%]">
+        <h1 class="w-[472px] h-[104px] text-[#6A6A6A] font-inter text-[64px] font-extrabold leading-none absolute top-[900px] ml-[50%]">
+          Who we are...?
+        </h1>
+        <p class="w-[627px] h-[375px] flex-shrink-0 text-[#6A6A6A] font-bold text-[32px] font-[Bellota] leading-normal absolute top-[1000px] ml-[50%] text-justify">
           Bring Me Home is a trusted global platform that connects people across
           borders by matching package senders with reliable travelers. We make
           it easy to send personal items, gifts, or essentials internationally,
           ensuring a safe and human touch in every delivery—powered by community
           trust and a shared purpose.
         </p>
-        <img class="w-[356px] h-[463px] aspect-[356/463] absolute top-[950px] ml-[10%]" src={Bag} alt="bag"/>
+        <img
+          class="w-[356px] h-[463px] aspect-[356/463] absolute top-[950px] ml-[10%]"
+          src={Bag}
+          alt="bag"
+        />
+      </div>
+      <div>
+        <h1 class="w-[472px] h-[104px] shrink-0 text-[#6A6A6A] font-inter text-[64px] not-italic font-extrabold leading-none absolute top-[1600px] ml-[100px]">Is It Fast?</h1>
+        <p class="w-[627px] h-[375px] flex-shrink-0 text-[#6A6A6A] font-[Bellota] text-[32px] not-italic font-bold leading-normal absolute top-[1700px] ml-[100px] text-justify">
+          Yes! Bring Me Home offers a faster alternative to traditional
+          shipping. By connecting with travelers already heading to your
+          package’s destination, your items can be delivered in less time—often
+          days instead of weeks. No long customs delays, just quick and reliable
+          delivery.
+        </p>
+        <img class="w-[440px] h-[452px] shrink-0 aspect-[145/149] absolute top-[1600px] ml-[60%]" src={Shuttle} alt="shuttle" />
       </div>
     </div>
   );
