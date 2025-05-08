@@ -12,15 +12,15 @@ export default function Home() {
           Home
         </h1>
         <div>
-          <img
+        <img
             class="w-[300px] h-[300px]
-            sm:w-[600px] sm:h-[600px] sm:top-[-90px] sm:left-[400px]
-            md:w-[650px] md:h-[650px] md:top-[-90px] md:left-[400px]
-            2md:w-[750px] 2md:h-[750px] 2md:top-[-135px] 2md:left-[330px]
-            3md:w-[800px] 3md:h-[800px] 3md:top-[-140px] 3md:left-[350px]
-            4md:w-[800px] 4md:h-[800px] 4md:top-[-140px] 4md:left-[350px]
-            lg:w-[850px] lg:h-[850px] lg:top-[-145px] lg:left-[370px]
-            xl:w-[900px] xl:h-[900px] xl:top-[-150px] xl:left-[440px]
+            sm:w-[700px] sm:h-[700px] sm:top-[-120px] sm:left-[300px]
+            md:w-[750px] md:h-[750px] md:top-[-90px] md:left-[300px]
+            2md:w-[800px] 2md:h-[800px] 2md:top-[-125px] 2md:left-[300px]
+            3md:w-[900px] 3md:h-[900px] 3md:top-[-140px] 3md:left-[350px]
+            4md:w-[900px] 4md:h-[900px] 4md:top-[-145px] 4md:left-[360px]
+            lg:w-[1000px] lg:h-[1000px] lg:top-[-145px] lg:left-[370px]
+            xl:w-[1100px] xl:h-[1100px] xl:top-[-150px] xl:left-[440px]
             
             flex-shrink-0 aspect-[1/1] absolute top-[-100px] left-[50px]"
             src={TopImage}
