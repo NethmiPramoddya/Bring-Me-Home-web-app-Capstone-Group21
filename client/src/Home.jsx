@@ -3,6 +3,9 @@ import "./App.css";
 import TopImage from "./assets/home_page_img.png";
 import Bag from "./assets/bag.png";
 import Shuttle from "./assets/shuttle.png";
+import Safe_logo from "./assets/safe.png";
+
+
 
 export default function Home() {
   return (
@@ -59,7 +62,9 @@ export default function Home() {
         />
       </div>
       <div>
-        <h1 class="w-[472px] h-[104px] shrink-0 text-[#6A6A6A] font-inter text-[64px] not-italic font-extrabold leading-none absolute top-[1600px] ml-[100px]">Is It Fast?</h1>
+        <h1 class="w-[472px] h-[104px] shrink-0 text-[#6A6A6A] font-inter text-[64px] not-italic font-extrabold leading-none absolute top-[1600px] ml-[100px]">
+          Is It Fast...?
+        </h1>
         <p class="w-[627px] h-[375px] flex-shrink-0 text-[#6A6A6A] font-[Bellota] text-[32px] not-italic font-bold leading-normal absolute top-[1700px] ml-[100px] text-justify">
           Yes! Bring Me Home offers a faster alternative to traditional
           shipping. By connecting with travelers already heading to your
@@ -67,7 +72,30 @@ export default function Home() {
           days instead of weeks. No long customs delays, just quick and reliable
           delivery.
         </p>
-        <img class="w-[440px] h-[452px] shrink-0 aspect-[145/149] absolute top-[1600px] ml-[60%]" src={Shuttle} alt="shuttle" />
+        <img
+          class="w-[440px] h-[452px] shrink-0 aspect-[145/149] absolute top-[1600px] ml-[60%]"
+          src={Shuttle}
+          alt="shuttle"
+        />
+      </div>
+      <div>
+        <h1 class="w-[472px] h-[104px] text-[#6A6A6A] font-inter text-[64px] font-extrabold leading-none absolute top-[2200px] ml-[50%]">
+          Why we are Secure...?
+        </h1>
+        <p class="w-[627px] h-[375px] flex-shrink-0 text-[#6A6A6A] font-bold text-[32px] font-[Bellota] leading-normal absolute top-[2350px] ml-[50%] text-justify">
+          At Bring Me Home, your package’s safety is our top priority. Every
+          delivery is arranged directly between you and a verified traveler,
+          with the package securely wrapped and checked in person—ensuring full
+          transparency. The traveler knows exactly what they are carrying,
+          eliminating confusion and enhancing trust. Our built-in tracking
+          system allows you to monitor your item throughout the journey,
+          providing peace of mind from start to finish.
+        </p>
+        <img
+          class="w-[434px] h-[434px] aspect-[1/1] absolute top-[2380px] ml-[10%]"
+          src={Safe_logo}
+          alt="bag"
+        />
       </div>
     </div>
   );
