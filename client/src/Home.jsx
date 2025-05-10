@@ -6,18 +6,22 @@ import Shuttle from "./assets/shuttle.png";
 import Safe_logo from "./assets/safe.png";
 import { useEffect } from "react";
 import AOS from "aos";
-import "aos/dist/aos.css"; // You can also use <link> for styles
-
+import "aos/dist/aos.css";
 
 export default function Home() {
-
   useEffect(() => {
-    AOS.init({duration: 1300});
-  })
+    AOS.init({ duration: 1300 });
+  });
   return (
     <div>
-      <div class=" w-[95%] h-[645px] flex-shrink-0 rounded-[68px] bg-[#F0F0F0] absolute top-[120px] ml-[30px] data-aos='fade-up'" data-aos="fade-up">
-        <h1 class="w-[448px] h-[403px] flex-shrink-0 text-[#FF8B2A] font-[Aclonica] text-[96px] font-normal leading-none absolute top-[85px] ml-[85px]" data-aos="fade-up">
+      <div
+        class=" w-[95%] h-[645px] flex-shrink-0 rounded-[68px] bg-[#F0F0F0] absolute top-[120px] ml-[30px] data-aos='fade-up'"
+        data-aos="fade-up"
+      >
+        <h1
+          class="w-[448px] h-[403px] flex-shrink-0 text-[#FF8B2A] font-[Aclonica] text-[96px] font-normal leading-none absolute top-[85px] ml-[85px]"
+          data-aos="fade-up"
+        >
           Bring Me
           <br />
           Home
@@ -52,10 +56,16 @@ export default function Home() {
         </button>
       </div>
       <div className="wd">
-        <h1 class=" w-[472px] h-[104px] text-[#6A6A6A] font-inter text-[64px] font-extrabold leading-none absolute top-[900px] ml-[50%]" data-aos="fade-up">
+        <h1
+          class=" w-[472px] h-[104px] text-[#6A6A6A] font-inter text-[64px] font-extrabold leading-none absolute top-[900px] ml-[50%]"
+          data-aos="fade-up"
+        >
           Who we are...?
         </h1>
-        <p class=" w-[627px] h-[375px] flex-shrink-0 text-[#6A6A6A] font-bold text-[32px] font-[Bellota] leading-normal absolute top-[1000px] ml-[50%] text-justify"  data-aos="fade-up">
+        <p
+          class=" w-[627px] h-[375px] flex-shrink-0 text-[#6A6A6A] font-bold text-[32px] font-[Bellota] leading-normal absolute top-[1000px] ml-[50%] text-justify"
+          data-aos="fade-up"
+        >
           Bring Me Home is a trusted global platform that connects people across
           borders by matching package senders with reliable travelers. We make
           it easy to send personal items, gifts, or essentials internationally,
@@ -70,10 +80,16 @@ export default function Home() {
         />
       </div>
       <div>
-        <h1 class="w-[472px] h-[104px] shrink-0 text-[#6A6A6A] font-inter text-[64px] not-italic font-extrabold leading-none absolute top-[1600px] ml-[100px]" data-aos="fade-up">
+        <h1
+          class="w-[472px] h-[104px] shrink-0 text-[#6A6A6A] font-inter text-[64px] not-italic font-extrabold leading-none absolute top-[1600px] ml-[100px]"
+          data-aos="fade-up"
+        >
           Is It Fast...?
         </h1>
-        <p class="w-[627px] h-[375px] flex-shrink-0 text-[#6A6A6A] font-[Bellota] text-[32px] not-italic font-bold leading-normal absolute top-[1700px] ml-[100px] text-justify" data-aos="fade-up">
+        <p
+          class="w-[627px] h-[375px] flex-shrink-0 text-[#6A6A6A] font-[Bellota] text-[32px] not-italic font-bold leading-normal absolute top-[1700px] ml-[100px] text-justify"
+          data-aos="fade-up"
+        >
           Yes! Bring Me Home offers a faster alternative to traditional
           shipping. By connecting with travelers already heading to your
           package’s destination, your items can be delivered in less time—often
@@ -88,10 +104,16 @@ export default function Home() {
         />
       </div>
       <div>
-        <h1 class="w-[472px] h-[104px] text-[#6A6A6A] font-inter text-[64px] font-extrabold leading-none absolute top-[2200px] ml-[50%]" data-aos="fade-up">
+        <h1
+          class="w-[472px] h-[104px] text-[#6A6A6A] font-inter text-[64px] font-extrabold leading-none absolute top-[2200px] ml-[50%]"
+          data-aos="fade-up"
+        >
           Why we are Secure...?
         </h1>
-        <p class="w-[627px] h-[375px] flex-shrink-0 text-[#6A6A6A] font-bold text-[32px] font-[Bellota] leading-normal absolute top-[2350px] ml-[50%] text-justify" data-aos="fade-up">
+        <p
+          class="w-[627px] h-[375px] flex-shrink-0 text-[#6A6A6A] font-bold text-[32px] font-[Bellota] leading-normal absolute top-[2350px] ml-[50%] text-justify"
+          data-aos="fade-up"
+        >
           At Bring Me Home, your package’s safety is our top priority. Every
           delivery is arranged directly between you and a verified traveler,
           with the package securely wrapped and checked in person—ensuring full
@@ -107,6 +129,70 @@ export default function Home() {
           data-aos="fade-down"
         />
       </div>
+      <div>
+        <div
+          className="card bg-[#000000] text-primary-content w-120 h-75 absolute top-[3080px] ml-[15%] "
+          data-aos="fade-right"
+        >
+          <div className="card-body">
+            <h2
+              className="card-title text-[40px] text-[#8d8d8d] font-extrabold text-justify"
+              data-aos="fade-left"
+            >
+              Become a Traveler
+            </h2>
+
+            <p className="text-justify" data-aos="fade-right">
+              Traveling abroad soon? Earn extra income by delivering packages
+              for trusted users through Bring Me Home. Once verified, you can
+              browse available delivery requests and choose the ones that match
+              your travel plans. You’ll meet the sender, inspect and seal the
+              item with them, and hand it over at the destination—making travel
+              more rewarding and purposeful.
+            </p>
+            <span data-aos="fade-right">
+              <div className="justify-end card-actions">
+                <button className="btn text-[#8d8d8d] font-bold bg-[#ffffff] p-5">
+                  {" "}
+                  Buy Now
+                </button>
+              </div>
+            </span>
+          </div>
+        </div>
+
+        <div
+          className="card bg-[#8d8d8d] text-primary-content w-120 h-75 absolute top-[3080px] ml-[50%]"
+          data-aos="fade-left"
+        >
+          <div className="card-body" data-aos="fade-left">
+            <h2
+              className="card-title text-[40px] text-[#000000] font-extrabold text-justify"
+              data-aos="fade-left"
+            >
+              Become a Traveler
+            </h2>
+
+            <p className="text-justify">
+              Traveling abroad soon? Earn extra income by delivering packages
+              for trusted users through Bring Me Home. Once verified, you can
+              browse available delivery requests and choose the ones that match
+              your travel plans. You’ll meet the sender, inspect and seal the
+              item with them, and hand it over at the destination—making travel
+              more rewarding and purposeful.
+            </p>
+            <span data-aos="fade-left">
+              <div className="justify-end card-actions">
+                <button className="btn text-[#8d8d8d] font-bold bg-[#ffffff] p-5">
+                  {" "}
+                  Buy Now
+                </button>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+
       
     </div>
   );

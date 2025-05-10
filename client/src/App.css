@@ -1,4 +1,13 @@
 
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+  root: ":root";
+  include: ;
+  exclude: ;
+  prefix: ;
+  logs: true;
+}
+
 .aclonica-regular {
     font-family: "Aclonica", sans-serif;
     font-weight: 400;
