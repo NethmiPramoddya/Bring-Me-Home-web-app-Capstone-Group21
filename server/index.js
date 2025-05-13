@@ -5,14 +5,29 @@ const SenderModel = require('./models/Senders')
 const UserModel = require('./models/user')
 const TravelerModel = require('./models/Traveler')
 const NotificationModel = require('./models/Notification');
-
+const paymentRouter = require('./routes/payment');
+const SenderRouter = require('./routes/sender')
 
 
 const app = express()
-app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect("mongodb://127.0.0.1:27017/Send_a_package")
+
+// Configure CORS
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Adjust this if your frontend is hosted elsewhere
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true, // Allow credentials if needed
+  })
+);
+
+// Set up routes (payment)
+app.use("/payment", paymentRouter);
+app.use("", SenderRouter);
 
 app.get('/', (req,res) => {
     SenderModel.find({ $or: [{ status: 'pending' }, { status: { $exists: false } }] })
@@ -20,12 +35,7 @@ app.get('/', (req,res) => {
     .catch(err => res.json(err))
 })
 
-app.get('/getUser/:id', (req, res)=>{
-    const id = req.params.id
-    SenderModel.findById({_id:id})
-    .then(senders => res.json(senders))
-    .catch(err => res.json(err))
-})
+
 
 app.put('/editUser/:id', (req, res) => {
     const id = req.params.id

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+
 const SendersSchema = new mongoose.Schema({
     buyer_id: String,
     sname: String,
@@ -18,6 +19,7 @@ const SendersSchema = new mongoose.Schema({
     tip: Number,
     needsPurchase: Boolean,
     itemPrice: Number,
+    totalCost: Number,
     post_date:Date,
     content: String,
     message: String,
@@ -32,6 +34,17 @@ const SendersSchema = new mongoose.Schema({
         default: 'pending', // default when first created
         enum: ['pending', 'accepted', 'rejected', 'cancelled', 'completed']
     },
+    paidAmount: {
+    type: Number,
+    default: 0
+    },
+    paymentStatus: {
+        type: String,
+        enum: ['unpaid', 'partial', 'paid'],
+        default: 'unpaid'
+    },
+    paymentDate: Date
+
 })
 
 
