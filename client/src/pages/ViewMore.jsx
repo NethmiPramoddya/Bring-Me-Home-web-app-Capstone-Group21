@@ -31,15 +31,15 @@ function ViewMore() {
 
     const paymentDetails = {
       order_id: viewMore._id,
-      amount: '1005.00',
-      currency: 'LKR',
-      first_name: 'Saman',
-      last_name: 'Perera',
-      email: 'samanp@gmail.com',
+      amount: viewMore.totalCost.toFixed(2),
+      currency: 'USD',
+      first_name: viewMore.sname,
+      last_name: '',
+      email: viewMore.semail,
       phone: '0771234567',
       address: 'No.1, Galle Road',
       city: 'Colombo',
-      country: 'Sri Lanka',
+      country: viewMore.fcountry,
     };
 
     try {
