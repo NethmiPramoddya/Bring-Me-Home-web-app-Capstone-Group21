@@ -152,7 +152,7 @@ export default function Home() {
             </p>
             <span data-aos="fade-right">
               <div className="justify-end card-actions">
-                <button className="btn text-[#8d8d8d] font-bold bg-[#ffffff] p-5">
+                <button className="btn text-[#000000] font-bold bg-[#FF8B2A] p-5">
                   {" "}
                   Buy Now
                 </button>
@@ -183,7 +183,7 @@ export default function Home() {
             </p>
             <span data-aos="fade-left">
               <div className="justify-end card-actions">
-                <button className="btn text-[#8d8d8d] font-bold bg-[#ffffff] p-5">
+                <button className="btn text-[#ffffff] font-bold bg-[#FF8B2A] p-5">
                   {" "}
                   Buy Now
                 </button>
@@ -193,7 +193,34 @@ export default function Home() {
         </div>
       </div>
 
-      
+      <footer class="footer footer-horizontal footer-center bg-[#000000] text-primary-content p-15 absolute top-[3480px] mb-10" data-aos="fade">
+        <aside>
+          
+          <p className="font-bold text-[#FF8B2A]"  >
+            Bring Me Home
+            <br />
+            Providing reliable Modern and Secure Delivery
+          </p>
+          <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
+        </aside>
+        <nav>
+          <div class="grid grid-flow-col gap-4">
+            
+           
+            <a>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                class="fill-current"
+              >
+                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
+              </svg>
+            </a>
+          </div>
+        </nav>
+      </footer>
     </div>
   );
 }
