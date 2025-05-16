@@ -31,7 +31,7 @@ function App() {
         <Route path='/create' element={<CreateUsersForm/>}></Route>
         <Route path='/edit/:id' element={<EditUsers/>}></Route>
         <Route path='/register' element={<SignUp/>}></Route>
-        <Route path='/login' element={<LogIn/>}></Route>
+        <Route path='/login' element={<Login/>}></Route>
         <Route path='/become-traveler' element={<TravelerForm/>}></Route>
         <Route path='/profile/:id' element={<Profile/>}></Route>
         {/* <Route path="/buyer-requests/:senderRequestId" element={< RequestDetails/>} /> */}

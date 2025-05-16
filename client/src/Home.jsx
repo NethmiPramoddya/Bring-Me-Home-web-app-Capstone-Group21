@@ -125,10 +125,10 @@ export default function Home() {
           2md:left-[3px] 2md:top-[980px] 2md:ml-[50%] 2md:w-[40%]
           md:left-[3px] md:top-[940px]  md:ml-[50%] md:w-[40%]
           
-          sm:left-[3px] sm:top-[1480px] sm:ml-[30%] text-[25px] sm:w-[40%]
-          2sm:left-[3px] 2sm:top-[1480px] 2sm:ml-[30%] text-[25px] 2sm:w-[40%]
-          3sm:left-[3px] 3sm:top-[1480px] 3sm:ml-[30%] text-[25px] 3sm:w-[40%]
-          4sm:left-[3px] 4sm:top-[1480px] 4sm:ml-[20%] text-[25px] 4sm:w-[60%]
+          sm:left-[3px] sm:top-[1480px] sm:ml-[30%] sm:text-[29px] sm:w-[40%]
+          2sm:left-[3px] 2sm:top-[1480px] 2sm:ml-[30%] 2sm:text-[25px] 2sm:w-[40%]
+          3sm:left-[3px] 3sm:top-[1480px] 3sm:ml-[30%] 3sm:text-[25px] 3sm:w-[40%]
+          4sm:left-[3px] 4sm:top-[1480px] 4sm:ml-[20%] 4sm:text-[32px] 4sm:w-[60%]
           "
           data-aos="fade-up"
 
@@ -143,7 +143,7 @@ export default function Home() {
         <img
           class="w-[356px] h-[463px] aspect-[356/463] absolute top-[950px] ml-[10%]
           
-          xl:w-[356px] xl:h-[463px] xl:top-[950px] xl:ml-[10%]
+          xl:w-[356px] xl:h-[463px] xl:top-[1050px] xl:ml-[10%]
           lg:w-[356px] lg:h-[463px] lg:top-[950px] lg:ml-[10%]
           4md:w-[356px] 4md:h-[463px] 4md:top-[950px] 4md:ml-[10%]
           3md:w-[356px] 3md:h-[463px] 3md:top-[950px] 3md:ml-[10%]
@@ -158,15 +158,38 @@ export default function Home() {
           data-aos="fade-left"
         />
       </div>
-      {/* <div>
+      <div>
         <h1
-          class="w-[472px] h-[104px] shrink-0 text-[#6A6A6A] font-inter text-[64px] not-italic font-extrabold leading-none absolute top-[1600px] ml-[100px]"
+          class="w-[472px] h-[104px] shrink-0 text-[#6A6A6A] font-inter text-[64px] not-italic font-extrabold leading-none absolute top-[1600px] ml-[100px]
+          xl:left-[0px] xl:top-[1600px] xl:ml-[10%]
+          lg:left-[50px] lg:top-[1600px] lg:ml-[10%]
+          4md:left-[3px] 4md:top-[1600px] 4md:ml-[10%]
+          3md:left-[3px] 3md:top-[1600px] 3md:ml-[10%]
+          2md:left-[3px] 2md:top-[1600px] 2md:ml-[10%]
+          md:left-[3px] md:top-[1600px]  md:ml-[10%]
+          sm:left-[3px] sm:top-[2650px] sm:ml-[30%]
+          2sm:left-[3px] 2sm:top-[2650px] 2sm:ml-[30%]
+          3sm:left-[3px] 3sm:top-[2650px] 3sm:ml-[30%]
+          4sm:left-[3px] 4sm:top-[2650px] 4sm:ml-[25%] 
+          
+          "
           data-aos="fade-up"
         >
           Is It Fast...?
         </h1>
         <p
-          class="w-[40%] h-[375px] flex-shrink-0 text-[#6A6A6A] font-[Bellota] text-[32px] not-italic font-bold leading-normal absolute top-[1700px] ml-[100px] text-justify"
+          class="w-[40%] h-[375px] flex-shrink-0 text-[#6A6A6A] font-[Bellota] text-[32px] not-italic font-bold leading-normal absolute top-[1700px] ml-[100px] text-justify
+          xl:left-[0px] xl:top-[1700px] xl:ml-[10%] xl:w-[40%]
+          lg:left-[50px] lg:top-[1700px] lg:ml-[10%]  lg:w-[40%]
+          4md:left-[3px] 4md:top-[1700px] 4md:ml-[10%]  4md:w-[40%]
+          3md:left-[3px] 3md:top-[1700px] 3md:ml-[10%] 3md:w-[40%]
+          2md:left-[3px] 2md:top-[1700px] 2md:ml-[10%] 2md:w-[40%]
+          md:left-[3px] md:top-[1700px]  md:ml-[10%]  md:w-[40%]
+          sm:left-[3px] sm:top-[2750px] sm:ml-[30%] sm:w-[40%]
+          2sm:left-[3px] 2sm:top-[2750px] 2sm:ml-[30%] 2sm:w-[40%]
+          3sm:left-[3px] 3sm:top-[2750px] 3sm:ml-[30%] 3sm:w-[40%]
+          4sm:left-[3px] 4sm:top-[2750px] 4sm:ml-[20%] 4sm:w-[60%]
+          "
           data-aos="fade-up"
         >
           Yes! Bring Me Home offers a faster alternative to traditional
@@ -176,12 +199,23 @@ export default function Home() {
           delivery.
         </p>
         <img
-          class="w-[440px] h-[452px] shrink-0 aspect-[145/149] absolute top-[1600px] ml-[40%]"
+          class="w-[440px] h-[452px] shrink-0 aspect-[145/149] absolute top-[1600px] ml-[40%]
+          xl:w-[440px] xl:h-[452px] xl:top-[1670px] xl:ml-[60%]
+          lg:w-[440px] lg:h-[452px] lg:top-[1670px] lg:ml-[55%]
+          4md:w-[440px] 4md:h-[452px] 4md:top-[1670px] 4md:ml-[55%]
+          3md:w-[440px] 3md:h-[452px] 3md:top-[1670px] 3md:ml-[55%]
+          2md:w-[440px] 2md:h-[452px] 2md:top-[1670px] 2md:ml-[55%]
+          md:w-[440px] md:h-[452px]  md:top-[1670px]  md:ml-[55%]
+          sm:w-[440px] sm:h-[452px] sm:top-[2150px] sm:ml-[30%]
+          2sm:w-[390px] 2sm:h-[432px] 2sm:top-[2150px] 2sm:ml-[30%]
+          3sm:w-[390px] 3sm:h-[432px] 3sm:top-[2150px] 3sm:ml-[30%]
+          4sm:w-[390px] 4sm:h-[425px] 4sm:top-[2180px] 4sm:ml-[20%]
+          "
           src={Shuttle}
           alt="shuttle"
           data-aos="fade-right"
         />
-      </div> */}
+      </div>
       {/* <div>
         <h1
           class="w-[472px] h-[104px] text-[#6A6A6A] font-inter text-[64px] font-extrabold leading-none absolute top-[2200px] ml-[40%]"
