@@ -1,11 +1,80 @@
 import React, { useState, useEffect } from 'react';
+import io from "socket.io-client";
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+
+const socket = io("http://localhost:3002"); 
+
+function generateUniqueId(length = 10) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  return Array.from({ length })
+    .map(() => characters.charAt(Math.floor(Math.random() * characters.length)))
+    .join('');
+}
 
 function ViewMore() {
-  const { id } = useParams();
+  const { id, roomId: urlRoomId } = useParams();
   const [viewMore, setViewMore] = useState(null);
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [storedUsername, setStoredUsername] = useState("");
+  const [userId, setUserId] = useState("");
+  const [roomId, setRoomId] = useState('');
+  const [socketId, setSocketId] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+  const storedRoom = localStorage.getItem('roomId');
+  if (storedRoom && !roomId) {
+    setRoomId(storedRoom);
+    console.log("Loaded roomId from localStorage:", storedRoom);
+  }
+}, []);
+
+
+ useEffect(() => {
+  axios
+    .get(`http://localhost:3002/view_more/${id}`)
+    .then((result) => {
+      setViewMore(result.data);
+      if (result.data.paymentStatus === 'paid' && result.data.roomId) {
+        setRoomId(result.data.roomId); // update state with roomId from URL
+        localStorage.setItem('roomId', result.data.roomId); 
+      }
+    })
+    .catch((err) => console.error('Error fetching data:', err));
+}, [id, urlRoomId]);
+
+
+    useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const uid = localStorage.getItem("userId");
+    const username = localStorage.getItem("username");
+    if (!isLoggedIn || isLoggedIn === "false" || !uid) {
+      alert("Please log in to chat");
+      return;
+    }
+
+    setUserId(uid);
+    setStoredUsername(username);
+  }, []);
+
+  // Socket setup
+  useEffect(() => {
+    if (!viewMore?.roomId || !storedUsername) return;
+
+    socket.connect();
+    socket.emit("join_room", viewMore.roomId);
+    setRoomId(viewMore.roomId);
+
+    socket.on("connect", () => {
+      setSocketId(socket.id);
+      console.log("Socket connected:", socket.id);
+    });
+
+   return () => {
+      socket.off("connect");
+    };
+  }, [viewMore?.roomId, storedUsername]);
 
   // Load PayHere script once when component mounts
   useEffect(() => {
@@ -45,7 +114,7 @@ function ViewMore() {
     try {
       // Request backend to generate the hash value
       const response = await fetch(
-        'https://b42d-112-134-170-36.ngrok-free.app/payment/start',
+        'https://195a-112-134-173-63.ngrok-free.app/payment/start',
         {
           method: 'POST',
           headers: {
@@ -58,13 +127,25 @@ function ViewMore() {
       if (response.ok) {
         const { hash, merchant_id } = await response.json();
 
+        const newRoomId = generateUniqueId(16); // generate roomId
+        setRoomId(newRoomId);
+        localStorage.setItem('roomId', newRoomId);
+
+        // Save roomId in backend
+       await axios.post(`http://localhost:3002/update_room/${viewMore._id}`, {
+          roomId: newRoomId,
+          sender_user_id: viewMore.buyer_id,       // Replace with correct field
+          traveler_user_id: viewMore.traveller_user_id    // Replace with correct field
+        });
+
+
         // Payment configuration
         const payment = {
           sandbox: true,
           merchant_id: merchant_id,
-          return_url: 'http://localhost:3000/payment/success',
-          cancel_url: 'http://localhost:3000/payment/cancel',
-          notify_url: 'https://b42d-112-134-170-36.ngrok-free.app/payment/notify',
+          return_url: `http://localhost:3002/payment/success`,
+          cancel_url: 'http://localhost:3002/payment/cancel',
+          notify_url: 'https://195a-112-134-173-63.ngrok-free.app/payment/notify',
           order_id: paymentDetails.order_id,
           items: viewMore.item,
           amount: paymentDetails.amount,
@@ -81,6 +162,13 @@ function ViewMore() {
 
         // Initialize PayHere payment
         window.payhere.startPayment(payment);
+        // Optimistically update viewMore
+            setViewMore((prev) => ({
+              ...prev,
+              paymentStatus: 'paid',
+              roomId: newRoomId,
+            }));
+            setRoomId(newRoomId);
       } else {
         console.error('Failed to generate hash for payment.');
         alert('Failed to initiate payment. Please try again.');
@@ -91,13 +179,30 @@ function ViewMore() {
     }
   };
 
-  // Fetch package details
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3002/view_more/${id}`)
-      .then((result) => setViewMore(result.data))
-      .catch((err) => console.error('Error fetching data:', err));
-  }, [id]);
+  const handleChat = async () => {
+  if (!roomId && viewMore && viewMore._id) {
+    try {
+      const res = await axios.get(`http://localhost:3002/view_more/${viewMore._id}`);
+      if (res.data?.roomId) {
+        setRoomId(res.data.roomId);
+        navigate(`/chat/${res.data.roomId}`);
+        return;
+      }
+    } catch (err) {
+      console.error("Failed to fetch room ID", err);
+      alert("Unable to retrieve chat room. Please try again.");
+      return;
+    }
+  }
+
+  if (!roomId) {
+    alert("Room ID is not available. Please check back later.");
+    return;
+  }
+
+  navigate(`/chat/${roomId}`);
+};
+
 
   if (!viewMore) return <p className="mt-10 text-center">Loading...</p>;
 
@@ -217,24 +322,32 @@ function ViewMore() {
         </div>
 
         <div className="flex justify-center pt-2">
-          {viewMore.status === 'accepted' ? (
+          {viewMore.paymentStatus === 'paid'? (
+            <>
+              <button
+                className="w-1/3 px-4 py-1 mx-3 text-lg text-white bg-blue-600 rounded hover:bg-blue-700"
+                onClick={handleChat}
+              >
+                💬 Chat with Traveler
+              </button>
+              
+            </>
+          ) : viewMore.status === 'accepted' ? (
             <button
-              className="bg-[rgb(48,120,22)] hover:bg-[#1e824b] w-[33.33%] mx-3 text-white py-1 px-4 rounded text-lg transition"
-              id="payhere-payment"
+              className="w-1/3 px-4 py-1 mx-3 text-lg text-white bg-green-600 rounded hover:bg-green-700"
               onClick={handlePayment}
-              disabled={!scriptLoaded} // Disable button until script is loaded
+              disabled={!scriptLoaded}
             >
               💳 Pay Now
             </button>
           ) : (
-            <p className="text-gray-600 w-[33.33%] mx-3 text-center">
+            <p className="w-1/3 mx-3 text-center text-gray-600">
               😔 Waiting for traveler to accept...
             </p>
           )}
-
           <Link
             to="/"
-            className="bg-[#b33434] hover:bg-[#a12d2d] w-[33.33%] text-center text-white py-1 px-4 rounded text-lg transition"
+            className="bg-[#b33434] hover:bg-[#a12d2d] w-1/3 text-center text-white py-1 px-4 rounded text-lg"
           >
             ⬅️ Go Back
           </Link>
