@@ -40,8 +40,8 @@ export default function Home() {
         <div>
           <img
             class="w-[300px] h-[300px]
-            4sm:w-[300px] 4sm:h-[300px] 4sm:top-[160px] 4sm:left-[300px]
-            3sm:w-[400px] 3sm:h-[400px] 3sm:top-[-80px] 3sm:left-[250px]
+            4sm:w-[290px] 4sm:h-[290px] 4sm:top-[160px] 4sm:left-[270px]
+            3sm:w-[400px] 3sm:h-[400px] 3sm:top-[-80px] 3sm:left-[200px]
             2sm:w-[500px] 2sm:h-[500px] 2sm:top-[-110px] 2sm:left-[260px]
             sm:w-[550px] sm:h-[550px] sm:top-[-100px] sm:left-[290px]
             md:w-[500px] md:h-[500px] md:top-[-90px] md:left-[390px]
@@ -57,7 +57,8 @@ export default function Home() {
             data-aos="fade-left"
           />
         </div>
-        <p class="animate-pulse flex-shrink-0 text-black font-[Bellota] text-[20px] font-normal leading-none absolute text-justify
+        <p
+          class="animate-pulse flex-shrink-0 text-black font-[Bellota] text-[20px] font-normal leading-none absolute text-justify
         
           
           3sm:w-[500px] 3sm:h-[324px] 3sm:top-[400px] 3sm:left-[85px] 3sm:ml-[5px]
@@ -69,13 +70,15 @@ export default function Home() {
           3md:w-[500px] 3md:h-[324px] 3md:top-[400px] 3md:left-[85px] 3md:ml-[5px]
           4md:w-[500px] 4md:h-[324px] 4md:top-[400px] 4md:left-[85px] 4md:ml-[5px]
           lg:w-[500px] lg:h-[324px] lg:top-[400px] lg:left-[85px] lg:ml-[5px]
-          xl:w-[500px] xl:h-[324px] xl:top-[400px] xl:left-[85px] xl:ml-[5px]">
+          xl:w-[500px] xl:h-[324px] xl:top-[400px] xl:left-[85px] xl:ml-[5px]"
+        >
           Bring Me Home connects people across borders by matching package
           senders with trusted travelers. Easily send gifts or essentials to
           your loved ones abroad—with a personal touch and a small tip for the
           helping traveler.
         </p>
-        <button class="flex-shrink-0 rounded-[13px] bg-[#6A6A6A] absolute top-[420px] left-[40px]
+        <button
+          class="flex-shrink-0 rounded-[13px] bg-[#6A6A6A] absolute top-[420px] left-[40px]
         
 
         3sm:w-[200px] 3sm:h-[60px] 3sm:top-[530px] 3sm:left-[85px]
@@ -88,12 +91,15 @@ export default function Home() {
         4md:w-[242px] 4md:h-[71px] 4md:top-[565px] 4md:left-[85px]
         lg:w-[242px] lg:h-[71px] lg:top-[565px] lg:left-[85px]
         xl:w-[242px] xl:h-[71px] xl:top-[565px] xl:left-[85px]
-        ">
-          <p class="w-[90px] h-[24px] text-white font-[Inter] text-[18px] sm:w-[115px] sm:h-[29px]  md:text-[24px] font-bold leading-none absolute top-[10px] left-[20px] sm:top-[20px] sm:left-[58px]
+        "
+        >
+          <p
+            class="w-[90px] h-[24px] text-white font-[Inter] text-[18px] sm:w-[115px] sm:h-[29px]  md:text-[24px] font-bold leading-none absolute top-[10px] left-[20px] sm:top-[20px] sm:left-[58px]
           
           3sm:w-[115px] 3sm:h-[29px] 3sm:top-[20px] 3sm:left-[43px]
           4sm:w-[115px] 4sm:h-[29px] 4sm:top-[20px] 4sm:left-[43px]
-          2sm:top-[20px] 2sm:left-[58px] 2sm:text-[20px]">
+          2sm:top-[20px] 2sm:left-[58px] 2sm:text-[20px]"
+          >
             Get Start
           </p>
         </button>
@@ -110,13 +116,13 @@ export default function Home() {
         sm:left-[3px] sm:top-[1400px] sm:ml-[30%] text-[45px]
         2sm:left-[3px] 2sm:top-[1400px] 2sm:ml-[30%] text-[35px]
         3sm:left-[3px] 3sm:top-[1400px] 3sm:ml-[30%] text-[35px]
-        4sm:left-[3px] 4sm:top-[1400px] 4sm:ml-[20%] text-[60px]"  
+        4sm:left-[3px] 4sm:top-[1400px] 4sm:ml-[20%] text-[60px]"
           data-aos="fade-up"
         >
           Who we are...?
         </h1>
         <p
-          class="  h-[375px] flex-shrink-0 text-[#6A6A6A] font-bold text-[32px] font-[Bellota] leading-normal absolute top-[1000px] ml-[50%] text-justify
+          class="  h-[375px] flex-shrink-0 text-[#6A6A6A] font-bold text-[32px] font-[Bellota] leading-normal absolute top-[1000px] ml-[50%] text-center
           
           xl:left-[0px] xl:top-[1120px] xl:ml-[50%] xl:w-[40%]
           lg:left-[50px] lg:top-[1120px] lg:ml-[50%]  lg:w-[40%]
@@ -126,13 +132,11 @@ export default function Home() {
           md:left-[3px] md:top-[940px]  md:ml-[50%] md:w-[40%]
           
           sm:left-[3px] sm:top-[1480px] sm:ml-[30%] sm:text-[29px] sm:w-[40%]
-          2sm:left-[3px] 2sm:top-[1480px] 2sm:ml-[30%] 2sm:text-[25px] 2sm:w-[40%]
-          3sm:left-[3px] 3sm:top-[1480px] 3sm:ml-[30%] 3sm:text-[25px] 3sm:w-[40%]
+          2sm:left-[3px] 2sm:top-[1480px] 2sm:ml-[30%] 2sm:text-[30px] 2sm:w-[40%]
+          3sm:left-[3px] 3sm:top-[1480px] 3sm:ml-[30%] 3sm:text-[30px] 3sm:w-[40%]
           4sm:left-[3px] 4sm:top-[1480px] 4sm:ml-[20%] 4sm:text-[32px] 4sm:w-[60%]
           "
           data-aos="fade-up"
-
-          
         >
           Bring Me Home is a trusted global platform that connects people across
           borders by matching package senders with reliable travelers. We make
@@ -152,7 +156,7 @@ export default function Home() {
           sm:w-[356px] sm:h-[463px] sm:top-[900px] sm:ml-[30%]
           2sm:w-[356px] 2sm:h-[463px] 2sm:top-[900px] 2sm:ml-[30%]
           3sm:w-[356px] 3sm:h-[463px] 3sm:top-[900px] 3sm:ml-[30%]
-          4sm:w-[356px] 4sm:h-[463px] 4sm:top-[900px] 4sm:ml-[25%]"
+          4sm:w-[356px] 4sm:h-[463px] 4sm:top-[900px] 4sm:ml-[20%]"
           src={Bag}
           alt="bag"
           data-aos="fade-left"
@@ -168,9 +172,9 @@ export default function Home() {
           2md:left-[3px] 2md:top-[1600px] 2md:ml-[10%]
           md:left-[3px] md:top-[1600px]  md:ml-[10%]
           sm:left-[3px] sm:top-[2650px] sm:ml-[30%]
-          2sm:left-[3px] 2sm:top-[2650px] 2sm:ml-[30%]
-          3sm:left-[3px] 3sm:top-[2650px] 3sm:ml-[30%]
-          4sm:left-[3px] 4sm:top-[2650px] 4sm:ml-[25%] 
+          2sm:left-[3px] 2sm:top-[2800px] 2sm:ml-[30%]
+          3sm:left-[3px] 3sm:top-[2800px] 3sm:ml-[30%]
+          4sm:left-[3px] 4sm:top-[2700px] 4sm:ml-[25%] 
           
           "
           data-aos="fade-up"
@@ -178,7 +182,7 @@ export default function Home() {
           Is It Fast...?
         </h1>
         <p
-          class="w-[40%] h-[375px] flex-shrink-0 text-[#6A6A6A] font-[Bellota] text-[32px] not-italic font-bold leading-normal absolute top-[1700px] ml-[100px] text-justify
+          class="w-[40%] h-[375px] flex-shrink-0 text-[#6A6A6A] font-[Bellota] text-[32px] not-italic font-bold leading-normal absolute top-[1700px] ml-[100px] text-center
           xl:left-[0px] xl:top-[1700px] xl:ml-[10%] xl:w-[40%]
           lg:left-[50px] lg:top-[1700px] lg:ml-[10%]  lg:w-[40%]
           4md:left-[3px] 4md:top-[1700px] 4md:ml-[10%]  4md:w-[40%]
@@ -186,9 +190,9 @@ export default function Home() {
           2md:left-[3px] 2md:top-[1700px] 2md:ml-[10%] 2md:w-[40%]
           md:left-[3px] md:top-[1700px]  md:ml-[10%]  md:w-[40%]
           sm:left-[3px] sm:top-[2750px] sm:ml-[30%] sm:w-[40%]
-          2sm:left-[3px] 2sm:top-[2750px] 2sm:ml-[30%] 2sm:w-[40%]
-          3sm:left-[3px] 3sm:top-[2750px] 3sm:ml-[30%] 3sm:w-[40%]
-          4sm:left-[3px] 4sm:top-[2750px] 4sm:ml-[20%] 4sm:w-[60%]
+          2sm:left-[3px] 2sm:top-[2900px] 2sm:ml-[30%] 2sm:w-[40%]
+          3sm:left-[3px] 3sm:top-[2900px] 3sm:ml-[30%] 3sm:w-[40%]
+          4sm:left-[3px] 4sm:top-[2800px] 4sm:ml-[20%] 4sm:w-[60%]
           "
           data-aos="fade-up"
         >
@@ -205,26 +209,53 @@ export default function Home() {
           4md:w-[440px] 4md:h-[452px] 4md:top-[1670px] 4md:ml-[55%]
           3md:w-[440px] 3md:h-[452px] 3md:top-[1670px] 3md:ml-[55%]
           2md:w-[440px] 2md:h-[452px] 2md:top-[1670px] 2md:ml-[55%]
-          md:w-[440px] md:h-[452px]  md:top-[1670px]  md:ml-[55%]
+          md:w-[400px] md:h-[416px]  md:top-[1730px]  md:ml-[52%]
           sm:w-[440px] sm:h-[452px] sm:top-[2150px] sm:ml-[30%]
-          2sm:w-[390px] 2sm:h-[432px] 2sm:top-[2150px] 2sm:ml-[30%]
-          3sm:w-[390px] 3sm:h-[432px] 3sm:top-[2150px] 3sm:ml-[30%]
-          4sm:w-[390px] 4sm:h-[425px] 4sm:top-[2180px] 4sm:ml-[20%]
+          2sm:w-[390px] 2sm:h-[432px] 2sm:top-[2350px] 2sm:ml-[30%]
+          3sm:w-[390px] 3sm:h-[432px] 3sm:top-[2350px] 3sm:ml-[30%]
+          4sm:w-[390px] 4sm:h-[425px] 4sm:top-[2250px] 4sm:ml-[20%]
           "
           src={Shuttle}
           alt="shuttle"
           data-aos="fade-right"
         />
       </div>
-      {/* <div>
+      <div>
         <h1
-          class="w-[472px] h-[104px] text-[#6A6A6A] font-inter text-[64px] font-extrabold leading-none absolute top-[2200px] ml-[40%]"
+          class="w-[472px] h-[104px] text-[#6A6A6A] font-inter text-[64px] font-extrabold leading-none absolute top-[2200px] ml-[40%]
+          
+          xl:left-[0px] xl:top-[2300px] xl:ml-[50%]
+          lg:left-[50px] lg:top-[2300px] lg:ml-[50%]
+          4md:left-[3px] 4md:top-[2300px] 4md:ml-[50%]
+          3md:left-[3px] 3md:top-[2400px] 3md:ml-[50%]
+          2md:left-[3px] 2md:top-[2300px] 2md:ml-[50%]
+          md:left-[3px] md:top-[2400px]  md:ml-[50%]
+          sm:left-[3px] sm:top-[3960px] sm:ml-[30%]
+          2sm:left-[3px] 2sm:top-[4220px] 2sm:ml-[30%]
+          3sm:left-[3px] 3sm:top-[4220px] 3sm:ml-[30%]
+          4sm:left-[3px] 4sm:top-[3930px] 4sm:ml-[25%]
+          
+          
+      
+          "
           data-aos="fade-up"
         >
           Why we are Secure...?
         </h1>
         <p
-          class="w-[40%] h-[375px] flex-shrink-0 text-[#6A6A6A] font-bold text-[32px] font-[Bellota] leading-normal absolute top-[2350px] ml-[40%] text-justify"
+          class="w-[40%] h-[375px] flex-shrink-0 text-[#6A6A6A] font-bold text-[32px] font-[Bellota] leading-normal absolute top-[2350px] ml-[40%] text-center
+          xl:left-[0px] xl:top-[2450px] xl:ml-[50%] xl:w-[40%]
+          lg:left-[50px] lg:top-[2450px] lg:ml-[50%]  lg:w-[40%]
+          4md:left-[3px] 4md:top-[2450px] 4md:ml-[50%] 4md:w-[40%]
+          3md:left-[3px] 3md:top-[2550px] 3md:ml-[50%] 3md:w-[40%]
+          2md:left-[3px] 2md:top-[2450px] 2md:ml-[50%] 2md:w-[40%]
+          md:left-[3px] md:top-[2550px]  md:ml-[50%]  md:w-[40%]
+          sm:left-[3px] sm:top-[4100px] sm:ml-[30%] sm:w-[40%]
+          2sm:left-[3px] 2sm:top-[4370px] 2sm:ml-[30%] 2sm:w-[40%]
+          3sm:left-[3px] 3sm:top-[4370px] 3sm:ml-[30%] 3sm:w-[40%]
+          4sm:left-[3px] 4sm:top-[4100px] 4sm:ml-[20%] 4sm:w-[60%]
+          
+          "
           data-aos="fade-up"
         >
           At Bring Me Home, your package’s safety is our top priority. Every
@@ -236,12 +267,23 @@ export default function Home() {
           providing peace of mind from start to finish.
         </p>
         <img
-          class="w-[434px] h-[434px] aspect-[1/1] absolute top-[2380px] ml-[10%]"
+          class="w-[434px] h-[434px] aspect-[1/1] absolute top-[2380px] ml-[10%]
+          xl:w-[434px] xl:h-[434px] xl:top-[2450px] xl:ml-[10%]
+          lg:w-[434px] lg:h-[434px] lg:top-[2450px] lg:ml-[10%]
+          4md:w-[434px] 4md:h-[434px] 4md:top-[2450px] 4md:ml-[10%]
+          3md:w-[404px] 3md:h-[404px] 3md:top-[2650px] 3md:ml-[10%]
+          md:w-[394px] md:h-[394px]  md:top-[2750px]  md:ml-[8%]
+          2md:w-[404px] 2md:h-[404px] 2md:top-[2450px] 2md:ml-[10%]
+          sm:w-[404px] sm:h-[404px] sm:top-[3515px] sm:ml-[28%]
+          2sm:w-[404px] 2sm:h-[404px] 2sm:top-[3785px] 2sm:ml-[28%]
+          3sm:w-[404px] 3sm:h-[404px] 3sm:top-[3785px] 3sm:ml-[28%]
+          4sm:w-[404px] 4sm:h-[404px] 4sm:top-[3485px] 4sm:ml-[20%]
+          "
           src={Safe_logo}
-          alt="bag"
+          alt="box"
           data-aos="fade-down"
         />
-      </div> */}
+      </div>
       {/* <div>
         <div
           className="card bg-[#000000] text-primary-content w-120 h-75 absolute top-[3080px] ml-[15%] "
