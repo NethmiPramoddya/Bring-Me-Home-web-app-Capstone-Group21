@@ -107,12 +107,12 @@ export default function Home() {
       <div className="wd">
         <h1
           class=" w-[472px] h-[104px] text-[#6A6A6A] font-inter font-extrabold leading-none absolute  ml-[50%]
-          xl:left-[0px] xl:top-[1050px] xl:ml-[50%]
-          lg:left-[50px] lg:top-[1050px] lg:ml-[50%]
-          4md:left-[3px] 4md:top-[980px] 4md:ml-[50%]
-          3md:left-[3px] 3md:top-[960px] 3md:ml-[50%]
-          2md:left-[3px] 2md:top-[920px] 2md:ml-[50%]
-          md:left-[3px] md:top-[880px] md:ml-[50%]
+          xl:left-[0px] xl:top-[1050px] xl:ml-[57%]
+          lg:left-[50px] lg:top-[1050px] lg:ml-[57%]
+          4md:left-[3px] 4md:top-[980px] 4md:ml-[57%]
+          3md:left-[3px] 3md:top-[960px] 3md:ml-[57%]
+          2md:left-[3px] 2md:top-[920px] 2md:ml-[57%]
+          md:left-[3px] md:top-[880px] md:ml-[57%]
         sm:left-[3px] sm:top-[1400px] sm:ml-[30%] text-[45px]
         2sm:left-[3px] 2sm:top-[1400px] 2sm:ml-[30%] text-[35px]
         3sm:left-[3px] 3sm:top-[1400px] 3sm:ml-[30%] text-[35px]
@@ -165,12 +165,12 @@ export default function Home() {
       <div>
         <h1
           class="w-[472px] h-[104px] shrink-0 text-[#6A6A6A] font-inter text-[64px] not-italic font-extrabold leading-none absolute top-[1600px] ml-[100px]
-          xl:left-[0px] xl:top-[1600px] xl:ml-[10%]
-          lg:left-[50px] lg:top-[1600px] lg:ml-[10%]
-          4md:left-[3px] 4md:top-[1600px] 4md:ml-[10%]
-          3md:left-[3px] 3md:top-[1600px] 3md:ml-[10%]
-          2md:left-[3px] 2md:top-[1600px] 2md:ml-[10%]
-          md:left-[3px] md:top-[1600px]  md:ml-[10%]
+          xl:left-[0px] xl:top-[1600px] xl:ml-[18%]
+          lg:left-[50px] lg:top-[1600px] lg:ml-[18%]
+          4md:left-[3px] 4md:top-[1600px] 4md:ml-[18%]
+          3md:left-[3px] 3md:top-[1600px] 3md:ml-[18%]
+          2md:left-[3px] 2md:top-[1600px] 2md:ml-[18%]
+          md:left-[3px] md:top-[1600px]  md:ml-[18%]
           sm:left-[3px] sm:top-[2650px] sm:ml-[30%]
           2sm:left-[3px] 2sm:top-[2800px] 2sm:ml-[30%]
           3sm:left-[3px] 3sm:top-[2800px] 3sm:ml-[30%]
@@ -224,12 +224,12 @@ export default function Home() {
         <h1
           class="w-[472px] h-[104px] text-[#6A6A6A] font-inter text-[64px] font-extrabold leading-none absolute top-[2200px] ml-[40%]
           
-          xl:left-[0px] xl:top-[2300px] xl:ml-[50%]
-          lg:left-[50px] lg:top-[2300px] lg:ml-[50%]
-          4md:left-[3px] 4md:top-[2300px] 4md:ml-[50%]
-          3md:left-[3px] 3md:top-[2400px] 3md:ml-[50%]
-          2md:left-[3px] 2md:top-[2300px] 2md:ml-[50%]
-          md:left-[3px] md:top-[2400px]  md:ml-[50%]
+          xl:left-[0px] xl:top-[2300px] xl:ml-[59%]
+          lg:left-[50px] lg:top-[2300px] lg:ml-[59%]
+          4md:left-[3px] 4md:top-[2300px] 4md:ml-[59%]
+          3md:left-[3px] 3md:top-[2400px] 3md:ml-[59%]
+          2md:left-[3px] 2md:top-[2300px] 2md:ml-[59%]
+          md:left-[3px] md:top-[2400px]  md:ml-[59%]
           sm:left-[3px] sm:top-[3960px] sm:ml-[30%]
           2sm:left-[3px] 2sm:top-[4220px] 2sm:ml-[30%]
           3sm:left-[3px] 3sm:top-[4220px] 3sm:ml-[30%]
@@ -284,20 +284,46 @@ export default function Home() {
           data-aos="fade-down"
         />
       </div>
-      {/* <div>
+      <div>
         <div
-          className="card bg-[#000000] text-primary-content w-120 h-75 absolute top-[3080px] ml-[15%] "
-          data-aos="fade-right"
+          className="card bg-[#000000] text-primary-content absolute 
+          xl:absolute xl:top-[3280px] xl:left-[15%] xl:w-150 xl:h-75
+          lg:absolute lg:top-[3380px] lg:left-[15%] lg:w-120  lg:h-75
+          4md:absolute 4md:top-[3380px] 4md:left-[11%]  4md:w-120 4md:h-75
+          3md:absolute 3md:top-[3440px] 3md:left-[8%] 3md:w-120 3md:h-75
+          2md:absolute 2md:top-[3440px] 2md:left-[6%] 2md:w-120 2md:h-75
+          md:absolute md:top-[3550px] md:left-[18%] md:w-180  md:h-105
+          sm:absolute sm:top-[5180px] sm:left-[120px]  sm:w-120 sm:h-75
+          2sm:absolute 2sm:top-[5530px] 2sm:left-[78px]  2sm:w-120 2sm:h-75
+          3sm:absolute 3sm:top-[3380px] 3sm:left-[17%]  3sm:w-120 3sm:h-75
+          4sm:absolute 4sm:top-[3380px] 4sm:left-[17%]  4sm:w-120 4sm:h-75
+          
+          "
+          // data-aos="fade-right"
         >
           <div className="card-body">
             <h2
-              className="card-title text-[40px] text-[#8d8d8d] font-extrabold text-justify"
+              className="card-title text-[40px] text-[#8d8d8d] font-extrabold text-justify
+              
+              "
               data-aos="fade-left"
             >
               Become a Traveler
             </h2>
 
-            <p className="text-justify" data-aos="fade-right">
+            <p className="text-justify 
+            xl:text-[18px]
+            lg:text-[18px]
+            4md:text-[18px]
+            3md:text-[18px]
+            2md:text-[18px]
+            md:text-[25px] 
+            sm:text-[25px]
+            2sm:text-[25px]
+            3sm:text-[18px]
+            4sm:text-[18px]
+            
+            " >
               Traveling abroad soon? Earn extra income by delivering packages
               for trusted users through Bring Me Home. Once verified, you can
               browse available delivery requests and choose the ones that match
@@ -317,18 +343,39 @@ export default function Home() {
         </div>
 
         <div
-          className="card bg-[#8d8d8d] text-primary-content w-120 h-75 absolute top-[3080px] ml-[50%]"
-          data-aos="fade-left"
+          className="card bg-[#8d8d8d] text-primary-content w-120 h-75 absolute 
+          xl:absolute xl:top-[3280px] xl:left-[15%] xl:w-150 xl:h-75
+          lg:absolute lg:top-[3380px] lg:left-[15%] lg:w-120  lg:h-75
+          4md:absolute 4md:top-[3380px] 4md:left-[11%]  4md:w-120 4md:h-75
+          3md:absolute 3md:top-[3440px] 3md:left-[8%] 3md:w-120 3md:h-75
+          2md:absolute 2md:top-[3440px] 2md:left-[6%] 2md:w-120 2md:h-75
+          md:absolute md:top-[4050px] md:left-[18%] md:w-180  md:h-105
+          sm:absolute sm:top-[5650px] sm:left-[120px]  sm:w-120 sm:h-75
+          2sm:absolute 2sm:top-[6000px] 2sm:left-[78px]  2sm:w-120 2sm:h-75
+          3sm:absolute 3sm:top-[3380px] 3sm:left-[17%]  3sm:w-120 3sm:h-75
+          4sm:absolute 4sm:top-[3380px] 4sm:left-[17%]  4sm:w-120 4sm:h-75
+          
+          "
+          // data-aos="fade-left"
         >
-          <div className="card-body" data-aos="fade-left">
+          <div className="card-body" >
             <h2
               className="card-title text-[40px] text-[#000000] font-extrabold text-justify"
-              data-aos="fade-left"
+              
             >
               Become a Traveler
             </h2>
 
-            <p className="text-justify">
+            <p className="text-justify  xl:text-[18px]
+            lg:text-[18px]
+            4md:text-[18px]
+            3md:text-[18px]
+            2md:text-[18px]
+            md:text-[25px] 
+            sm:text-[25px]
+            2sm:text-[25px]
+            3sm:text-[18px]
+            4sm:text-[18px]">
               Traveling abroad soon? Earn extra income by delivering packages
               for trusted users through Bring Me Home. Once verified, you can
               browse available delivery requests and choose the ones that match
@@ -336,7 +383,7 @@ export default function Home() {
               item with them, and hand it over at the destination—making travel
               more rewarding and purposeful.
             </p>
-            <span data-aos="fade-left">
+            <span >
               <div className="justify-end card-actions">
                 <button className="btn text-[#ffffff] font-bold bg-[#FF8B2A] p-5">
                   {" "}
@@ -346,7 +393,7 @@ export default function Home() {
             </span>
           </div>
         </div>
-      </div> */}
+      </div>
 
       {/* <footer class="footer footer-horizontal footer-center w-[10%] bg-[#000000] text-primary-content p-15 absolute top-[3480px] mb-10" data-aos="fade">
         <aside>
