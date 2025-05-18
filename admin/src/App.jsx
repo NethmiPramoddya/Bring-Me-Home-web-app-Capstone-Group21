@@ -1,13 +1,17 @@
-import { useState } from 'react'
 import './App.css'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import ManageSender from './pages/ManageSender'
 
 function App() {
-  const [count, setCount] = useState(0)
+  
 
   return (
     <>
-      
+      <BrowserRouter>
+        <Routes>
+          <Route path='/manageSenders'element={<ManageSender/>}></Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

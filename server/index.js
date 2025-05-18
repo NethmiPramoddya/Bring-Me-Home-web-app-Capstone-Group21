@@ -23,7 +23,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/Send_a_package")
 // Configure CORS
 app.use(
   cors({
-    origin: "http://localhost:5173", // Adjust this if your frontend is hosted elsewhere
+    origin: "http://localhost:5174", // Adjust this if your frontend is hosted elsewhere
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true, // Allow credentials if needed
@@ -387,7 +387,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173",
+        origin: "http://localhost:5174",
         methods: ["GET","POST"],
     },
 });
@@ -494,4 +494,11 @@ app.get("/onGoingTasks/:id",async(req,res)=>{
     }catch(error){
         res.status(500).json({ message: error.message });
     }
+})
+
+//admin
+app.get('/manageSenders', (req,res)=>{
+    SenderModel.find({})
+    .then(senders => res.json(senders))
+    .catch(err =>res.json(err))
 })
