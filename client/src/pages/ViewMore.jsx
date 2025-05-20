@@ -114,7 +114,7 @@ function ViewMore() {
     try {
       // Request backend to generate the hash value
       const response = await fetch(
-        'https://195a-112-134-173-63.ngrok-free.app/payment/start',
+        'https://8eb8-2402-4000-2110-4f26-9052-f211-5a85-afa6.ngrok-free.app/payment/start',
         {
           method: 'POST',
           headers: {
@@ -145,7 +145,7 @@ function ViewMore() {
           merchant_id: merchant_id,
           return_url: `http://localhost:3002/payment/success`,
           cancel_url: 'http://localhost:3002/payment/cancel',
-          notify_url: 'https://195a-112-134-173-63.ngrok-free.app/payment/notify',
+          notify_url: 'https://8eb8-2402-4000-2110-4f26-9052-f211-5a85-afa6.ngrok-free.app/payment/notify',
           order_id: paymentDetails.order_id,
           items: viewMore.item,
           amount: paymentDetails.amount,

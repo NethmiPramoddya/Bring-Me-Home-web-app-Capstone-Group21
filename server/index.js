@@ -23,7 +23,10 @@ mongoose.connect("mongodb://127.0.0.1:27017/Send_a_package")
 // Configure CORS
 app.use(
   cors({
-    origin: "http://localhost:5174", // Adjust this if your frontend is hosted elsewhere
+    origin:  [
+    'http://localhost:5173',  // admin
+    'http://localhost:5174'   // client
+  ], // Adjust this if your frontend is hosted elsewhere
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true, // Allow credentials if needed
@@ -79,7 +82,7 @@ app.post("/create",async(req,res)=>{
             from_id:senderId,
             to_id:traveler.traveler_id.toString(),
             content: "You have a new buyer request",
-            link: `http://localhost:5173/more_info/${senderRequestId}`,
+            link: `http://localhost:5174/more_info/${senderRequestId}`,
             dateTime: new Date(),
             status: false
         }
@@ -171,7 +174,7 @@ app.post("/createTraveler",async(req,res)=>{
             from_id:sender.buyer_id,
             to_id:travelerId,
             content:"A sender is looking for a traveler matching your route!",
-            link: `http://localhost:5173/more_info/${sender._id}`,
+            link: `http://localhost:5174/more_info/${sender._id}`,
             dateTime: new Date(),
             status: false   
         }
@@ -276,7 +279,9 @@ app.post("/acceptRequest", async (req, res) => {
         from_id: travelerData.traveler_id,
         to_id: senderRequest.buyer_id,
         content: "A traveler has accepted your delivery request!",
-        link: `http://localhost:5173/view_more/${senderRequest._id}`, // Same as sender's my requests view
+        link: [`http://localhost:5174/view_more/${senderRequest._id}`,
+            `http://localhost:5173/view_more/${senderRequest._id}`
+        ], // Same as sender's my requests view
         dateTime: new Date(),
         status: false
       });
@@ -387,7 +392,10 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5174",
+        origin:  [
+            'http://localhost:5173',  // admin
+            'http://localhost:5174'   // client
+  ],
         methods: ["GET","POST"],
     },
 });
