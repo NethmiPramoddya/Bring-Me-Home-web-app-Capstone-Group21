@@ -43,7 +43,8 @@ const SendersSchema = new mongoose.Schema({
         enum: ['unpaid', 'partial', 'paid'],
         default: 'unpaid'
     },
-    paymentDate: Date
+    paymentDate: Date,
+    roomId:String,
 
 })
 

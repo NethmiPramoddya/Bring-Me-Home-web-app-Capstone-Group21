@@ -116,6 +116,14 @@ const Navbar = () => {
               )}
 
               {userId && (
+                <button
+                  onClick={() => navigate(`/onGoingTasks/${userId}`)}
+                  className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
+                >OnGoing Tasks
+                </button>
+              )}
+
+              {userId && (
               <button
                 onClick={handleLogout}
                 className="w-full px-4 py-2 text-left text-white bg-red-500 rounded hover:bg-red-600"
