@@ -20,6 +20,7 @@ import Chats from './Chats'
 import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import OnGoingTasks from './OnGoingTasks'
+import ReceiverDetails from './ReceiverDetails'
 
 function App() {
   const userId = localStorage.getItem('userId'); 
@@ -50,6 +51,8 @@ function App() {
         <Route path='/view_more/:id' element={<ViewMore/>}></Route>
         <Route path="/chat/:roomId" element={<Chats socket={socket} username={storedUsername} room={roomId}/>} />
         <Route path='/onGoingTasks/:id' element={<OnGoingTasks/>}></Route>
+        <Route path="/receiver/:id" element={<ReceiverDetails />} />
+
 
         
 
