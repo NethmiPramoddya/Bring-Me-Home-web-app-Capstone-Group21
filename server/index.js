@@ -504,6 +504,25 @@ app.get("/onGoingTasks/:id",async(req,res)=>{
     }
 })
 
+// receiver QR route
+app.get('/receiver/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const senderTask = await SenderModel.findById(id);
+    if (!senderTask) return res.status(404).send("Sender task not found");
+
+    const traveler = await TravelerModel.findOne({ traveler_id: senderTask.traveller_user_id });
+    const tname = traveler ? traveler.tname : "Unknown Traveler";
+
+    res.json({ ...senderTask.toObject(), tname });
+  } catch (err) {
+    console.error("Error fetching receiver details:", err);
+    res.status(500).send("Server error");
+  }
+});
+
+
 //admin
 app.get('/manageSenders', (req,res)=>{
     SenderModel.find({})
