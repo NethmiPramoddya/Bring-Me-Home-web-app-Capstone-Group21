@@ -111,8 +111,8 @@ export default function Home() {
           lg:left-[50px] lg:top-[1050px] lg:ml-[57%]
           4md:left-[3px] 4md:top-[980px] 4md:ml-[57%]
           3md:left-[3px] 3md:top-[960px] 3md:ml-[57%]
-          2md:left-[3px] 2md:top-[920px] 2md:ml-[57%]
-          md:left-[3px] md:top-[880px] md:ml-[57%]
+          2md:left-[3px] 2md:top-[920px] 2md:ml-[52%]
+          md:left-[3px] md:top-[880px] md:ml-[52%]
         sm:left-[3px] sm:top-[1400px] sm:ml-[30%] text-[45px]
         2sm:left-[3px] 2sm:top-[1400px] 2sm:ml-[30%] text-[35px]
         3sm:left-[3px] 3sm:top-[1400px] 3sm:ml-[30%] text-[35px]
@@ -228,8 +228,8 @@ export default function Home() {
           lg:left-[50px] lg:top-[2300px] lg:ml-[59%]
           4md:left-[3px] 4md:top-[2300px] 4md:ml-[59%]
           3md:left-[3px] 3md:top-[2400px] 3md:ml-[59%]
-          2md:left-[3px] 2md:top-[2300px] 2md:ml-[59%]
-          md:left-[3px] md:top-[2400px]  md:ml-[59%]
+          2md:left-[3px] 2md:top-[2300px] 2md:ml-[50%]
+          md:left-[3px] md:top-[2400px]  md:ml-[50%]
           sm:left-[3px] sm:top-[3960px] sm:ml-[30%]
           2sm:left-[3px] 2sm:top-[4220px] 2sm:ml-[30%]
           3sm:left-[3px] 3sm:top-[4220px] 3sm:ml-[30%]
@@ -296,7 +296,7 @@ export default function Home() {
           sm:absolute sm:top-[5180px] sm:left-[160px]  sm:w-120 sm:h-75
           2sm:absolute 2sm:top-[5530px] 2sm:left-[120px]  2sm:w-120 2sm:h-75
           3sm:absolute 3sm:top-[5800px] 3sm:left-[85px]  3sm:w-[600px] 3sm:h-[500px]
-          4sm:absolute 4sm:top-[5180px] 4sm:left-[90px]  4sm:w-[500px] 4sm:h-[500px]
+          4sm:absolute 4sm:top-[5080px] 4sm:left-[90px]  4sm:w-[500px] 4sm:h-[540px]
           
           "
           // data-aos="fade-right"
@@ -335,7 +335,7 @@ export default function Home() {
             </p>
             <span >
               <div className="justify-end card-actions">
-                <button className="btn text-[#000000] font-bold bg-[#FF8B2A] p-">
+                <button className="btn text-[#000000] font-bold bg-[#FF8B2A] p-5">
                   {" "}
                   Be a Sender
                 </button>
@@ -355,7 +355,7 @@ export default function Home() {
           sm:absolute sm:top-[5750px] sm:left-[160px]  sm:w-120 sm:h-75
           2sm:absolute 2sm:top-[6100px] 2sm:left-[120px]  2sm:w-120 2sm:h-75
           3sm:absolute 3sm:top-[6380px] 3sm:left-[85px]  3sm:w-[600px] 3sm:h-[500px]
-          4sm:absolute 4sm:top-[5730px] 4sm:left-[90px]  4sm:w-[500px] 4sm:h-[500px]
+          4sm:absolute 4sm:top-[5730px] 4sm:left-[90px]  4sm:w-[500px] 4sm:h-[540px]
           
           "
           // data-aos="fade-left"
@@ -396,7 +396,19 @@ export default function Home() {
         </div>
       </div>
 
-      {/* <footer class="footer footer-horizontal footer-center w-[10%] bg-[#000000] text-primary-content p-15 absolute top-[3480px] mb-10" data-aos="fade">
+      <footer class="footer footer-horizontal footer-center  bg-[#000000] text-primary-content 
+      xl:absolute xl:top-[4000px]  xl:w-[100%] xl:h-75 pt-25
+      lg:absolute lg:top-[4700px]  lg:w-[100%] lg:h-75 pt-25
+      4md:absolute 4md:top-[4700px] 4md:w-[100%] 4md:h-75 pt-25
+      3md:absolute 3md:top-[4700px] 3md:w-[100%] 3md:h-75 pt-25
+      2md:absolute 2md:top-[4700px] 2md:w-[100%] 2md:h-75 pt-25
+      md:absolute md:top-[4700px]  md:w-[100%]  md:h-75 pt-25
+      sm:absolute sm:top-[6500px] sm:w-[100%] sm:h-75 pt-25
+      2sm:absolute 2sm:top-[6800px] 2sm:w-[100%] 2sm:h-75 pt-25
+      3sm:absolute 3sm:top-[7000px] 3sm:w-[100%] 3sm:h-75 pt-25
+      4sm:absolute 4sm:top-[6400px] 4sm:w-[100%] 4sm:h-50 <pt-10></pt-10>
+      
+      " data-aos="fade">
         <aside>
           
           <p className="font-bold text-[#FF8B2A]"  >
@@ -423,7 +435,7 @@ export default function Home() {
             </a>
           </div>
         </nav>
-      </footer> */}
+      </footer>
     </div>
   );
 }
