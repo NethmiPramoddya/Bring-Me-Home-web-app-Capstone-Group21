@@ -299,14 +299,14 @@ export default function Home() {
           4sm:absolute 4sm:top-[5080px] 4sm:left-[90px]  4sm:w-[500px] 4sm:h-[540px]
           
           "
-          // data-aos="fade-right"
+          data-aos="fade-right"
         >
           <div className="card-body">
             <h2
               className="card-title text-[40px] text-[#8d8d8d] font-extrabold text-justify
               
               "
-              data-aos="fade-left"
+              data-aos="fade-right"
             >
               Become a Sender
             </h2>
@@ -325,6 +325,7 @@ export default function Home() {
             4sm:text-[25px]
             
             "
+            data-aos="fade-right"
             >
               Need to send something abroad? With Bring Me Home, you can connect
               directly with verified travelers heading to your destination.
@@ -334,7 +335,7 @@ export default function Home() {
               seal it in front of them, and track it every step of the way.
             </p>
             <span >
-              <div className="justify-end card-actions">
+              <div className="justify-end card-actions" data-aos="fade-right">
                 <button className="btn text-[#000000] font-bold bg-[#FF8B2A] p-5">
                   {" "}
                   Be a Sender
@@ -358,10 +359,11 @@ export default function Home() {
           4sm:absolute 4sm:top-[5730px] 4sm:left-[90px]  4sm:w-[500px] 4sm:h-[540px]
           
           "
-          // data-aos="fade-left"
+          data-aos="fade-right"
+          
         >
           <div className="card-body">
-            <h2 className="card-title text-[40px] text-[#000000] font-extrabold text-justify">
+            <h2 className="card-title text-[40px] text-[#000000] font-extrabold text-justify" data-aos="fade-right">
               Become a Traveler
             </h2>
 
@@ -376,6 +378,7 @@ export default function Home() {
             2sm:text-[25px]
             3sm:text-[25px]
             4sm:text-[25px]"
+            data-aos="fade-right"
             >
               Traveling abroad soon? Earn extra income by delivering packages
               for trusted users through Bring Me Home. Once verified, you can
@@ -386,7 +389,7 @@ export default function Home() {
             </p>
             <span>
               <div className="justify-end card-actions">
-                <button className="btn text-[#ffffff] font-bold bg-[#FF8B2A] p-5">
+                <button className="btn text-[#ffffff] font-bold bg-[#FF8B2A] p-5" data-aos="fade-right">
                   {" "}
                   Be a Traveler
                 </button>
