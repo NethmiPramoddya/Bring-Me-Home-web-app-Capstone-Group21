@@ -279,9 +279,7 @@ app.post("/acceptRequest", async (req, res) => {
         from_id: travelerData.traveler_id,
         to_id: senderRequest.buyer_id,
         content: "A traveler has accepted your delivery request!",
-        link: [`http://localhost:5174/view_more/${senderRequest._id}`,
-            `http://localhost:5173/view_more/${senderRequest._id}`
-        ], // Same as sender's my requests view
+        link: `http://localhost:5174/view_more/${senderRequest._id}`, // Same as sender's my requests view
         dateTime: new Date(),
         status: false
       });

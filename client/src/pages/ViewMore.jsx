@@ -114,7 +114,7 @@ function ViewMore() {
     try {
       // Request backend to generate the hash value
       const response = await fetch(
-        'https://8eb8-2402-4000-2110-4f26-9052-f211-5a85-afa6.ngrok-free.app/payment/start',
+        'https://dea9-2402-4000-b200-1e13-505a-4939-1b2f-bf21.ngrok-free.app/payment/start',
         {
           method: 'POST',
           headers: {
@@ -145,7 +145,7 @@ function ViewMore() {
           merchant_id: merchant_id,
           return_url: `http://localhost:3002/payment/success`,
           cancel_url: 'http://localhost:3002/payment/cancel',
-          notify_url: 'https://8eb8-2402-4000-2110-4f26-9052-f211-5a85-afa6.ngrok-free.app/payment/notify',
+          notify_url: 'https://dea9-2402-4000-b200-1e13-505a-4939-1b2f-bf21.ngrok-free.app/payment/notify',
           order_id: paymentDetails.order_id,
           items: viewMore.item,
           amount: paymentDetails.amount,
@@ -320,6 +320,26 @@ function ViewMore() {
             {viewMore.totalCost}
           </p>
         </div>
+
+        <div className="flex items-center mb-3 space-x-2">
+          <div className="text-sm font-semibold text-[#b33434]">
+            🔐 Delivery OTP 
+          </div>
+          <p className="text-base font-medium text-gray-800">
+            {viewMore.deliveryOtp}
+          </p>
+        </div>
+        <div className="p-4 mb-2 border border-blue-300 rounded-xl bg-blue-50">
+            <p className="font-medium text-blue-700">
+              📦 Please share this package OTP only with the receiver 🔐
+            </p>
+          </div>
+          <div className="p-4 mb-3 border border-red-300 rounded-xl bg-red-50">
+            <p className="font-medium text-red-600">
+              ⚠️ Force receiver to scan QR 📲 and enter correct OTP ✅
+            </p>
+          </div>
+
 
         <div className="flex justify-center pt-2">
           {viewMore.paymentStatus === 'paid'? (

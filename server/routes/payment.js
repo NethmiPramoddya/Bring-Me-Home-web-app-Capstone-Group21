@@ -87,12 +87,18 @@ router.post("/notify", async (req, res) => {
         paymentStatus = 'paid';
       }
 
+      // ✅ Generate 6-digit OTP
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
       sender.paidAmount = paidAmount;
       sender.paymentStatus = paymentStatus;
       sender.paymentDate = new Date();
+      sender.deliveryOtp = otp;
       await sender.save();
 
       console.log("Payment successful for order:", order_id);
+      console.log("Generated OTP:", otp);
+
 
       if (paymentStatus === 'paid') {
         console.log(`Notify traveler (user_id: ${sender.traveller_user_id}) - Payment received.`);

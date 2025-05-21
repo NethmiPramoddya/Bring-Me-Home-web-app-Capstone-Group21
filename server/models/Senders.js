@@ -45,6 +45,11 @@ const SendersSchema = new mongoose.Schema({
     },
     paymentDate: Date,
     roomId:String,
+    deliveryOtp: {
+        type: Number,
+        default: null
+},
+
 
 })
 
