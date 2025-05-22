@@ -1,6 +1,7 @@
 import './App.css'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import ManageSender from './pages/ManageSender'
+import AdminWallets from './pages/AdminWallets'
 
 function App() {
   
@@ -10,6 +11,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/manageSenders'element={<ManageSender/>}></Route>
+          <Route path='/withdrawal'element={<AdminWallets/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

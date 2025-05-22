@@ -12,7 +12,8 @@ const paymentRouter = require('./routes/payment');
 const SenderRouter = require('./routes/sender');
 const MessageModel = require('./models/Masseges');
 const RoomChatModel = require('./models/ChatRoom');
-
+const deliveryRouter = require('./routes/delivery');
+const adminRoutes = require("./routes/admin");
 
 const app = express()
 app.use(express.json())
@@ -25,7 +26,8 @@ app.use(
   cors({
     origin:  [
     'http://localhost:5173',  // admin
-    'http://localhost:5174'   // client
+    'http://localhost:5174',   // client
+    'https://e711-2402-4000-2300-38da-edb2-e06a-2b1c-f2f4.ngrok-free.app'
   ], // Adjust this if your frontend is hosted elsewhere
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -37,7 +39,10 @@ app.use(bodyParser.json());
 
 // Set up routes (payment)
 app.use("/payment", paymentRouter);
+app.use("/api/payment",deliveryRouter)
 app.use("", SenderRouter);
+app.use("/admin", adminRoutes);
+
 
 app.get('/', (req,res) => {
     SenderModel.find({ $or: [{ status: 'pending' }, { status: { $exists: false } }] })
@@ -56,11 +61,17 @@ app.put('/editUser/:id', (req, res) => {
 
 app.post("/create",async(req,res)=>{
     try{
+       const tip = parseFloat(req.body.tip);
         if (req.body.needsPurchase) {
             req.body.totalCost = parseFloat(req.body.itemPrice) + parseFloat(req.body.tip);
         } else {
             req.body.totalCost = parseFloat(req.body.tip);
         }
+
+        // 💸 Calculate system and traveler share from tip
+        req.body.systemShare = Number((tip * 0.25).toFixed(2));     // 25%
+        req.body.travelerShare = Number((tip * 0.75).toFixed(2));   // 75%
+
           
     const senderData =await SenderModel.create(req.body)
     const from_country = senderData.fcountry;

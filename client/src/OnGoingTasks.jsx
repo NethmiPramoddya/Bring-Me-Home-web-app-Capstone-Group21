@@ -67,7 +67,7 @@ function OnGoingTasks() {
             ) : (
                 <ul className="space-y-6">
                     {onGoingTasks.map((task, index) => {
-                        const qrUrl = `http://localhost:5174/receiver/${task._id}`;
+                        const qrUrl = `https://e711-2402-4000-2300-38da-edb2-e06a-2b1c-f2f4.ngrok-free.app/receiver/${task._id}`;
                         return (
                             <li key={index} className="flex flex-col justify-between gap-4 p-4 bg-white border rounded shadow-sm md:flex-row">
                                 <div>
