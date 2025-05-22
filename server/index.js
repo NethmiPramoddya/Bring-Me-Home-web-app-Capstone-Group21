@@ -14,6 +14,9 @@ const MessageModel = require('./models/Masseges');
 const RoomChatModel = require('./models/ChatRoom');
 const deliveryRouter = require('./routes/delivery');
 const adminRoutes = require("./routes/admin");
+const WalletModel = require("./models/Wallet")
+const WalletTransaction = require("./models/WalletTransaction")
+
 
 const app = express()
 app.use(express.json())
@@ -208,17 +211,63 @@ app.post("/createTraveler",async(req,res)=>{
 
 //profile
 
-app.get("/profile/:id",async(req,res)=>{
-    try{const userId = req.params.id;
-    const user = await UserModel.findById(userId)
-    if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      res.json(user);
-    }catch(error){
-        res.status(500).json({ message: error.message });
+app.get("/profile/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await UserModel.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.put("/profile/:id", async (req, res) => {
+  const userId = req.params.id;
+  const { name, about, phone, location, bankName, accountNumber, branch } = req.body;
+
+  try {
+    // Update user profile info
+    await UserModel.findByIdAndUpdate(userId, {
+      name,
+      about,
+      phone,
+      location,
+    });
+
+    // Check if wallet exists
+    const wallet = await WalletModel.findOne({ traveler_user_id: userId });
+
+    if (wallet) {
+      // Only update bank details if wallet exists
+      wallet.bankDetails = {
+        bankName,
+        accountNumber,
+        branch,
+      };
+      await wallet.save();
     }
-})
+
+    res.json({ message: "Profile updated successfully." });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get('/wallet/:userId', async (req, res) => {
+  try {
+    const wallet = await WalletModel.findOne({ traveler_user_id: req.params.userId });
+    if (!wallet) {
+      return res.status(404).json({ message: "Wallet not found" });
+    }
+    res.json(wallet);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
 
 //Notifications
 

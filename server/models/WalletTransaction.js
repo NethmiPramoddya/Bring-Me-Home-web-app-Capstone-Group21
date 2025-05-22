@@ -22,4 +22,6 @@ const WalletTransactionSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("WalletTransaction", WalletTransactionSchema);
+const WalletTransaction = mongoose.model("WalletTransaction", WalletTransactionSchema);
+
+ module.exports = WalletTransaction

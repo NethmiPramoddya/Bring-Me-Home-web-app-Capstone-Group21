@@ -14,6 +14,14 @@ const WalletSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+
+  bankDetails: {
+    bankName: { type: String },
+    accountNumber: { type: String },
+    branch: { type: String },
+  },
 });
 
-module.exports = mongoose.model("Wallet", WalletSchema);
+const WalletModel= mongoose.model("Wallet", WalletSchema);
+
+module.exports = WalletModel
