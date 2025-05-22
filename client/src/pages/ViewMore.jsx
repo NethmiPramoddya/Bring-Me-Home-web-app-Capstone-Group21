@@ -91,6 +91,8 @@ function ViewMore() {
     };
   }, []);
 
+
+
   const handlePayment = async () => {
     if (!scriptLoaded || !window.payhere) {
       console.error('PayHere script not loaded yet');
@@ -114,7 +116,7 @@ function ViewMore() {
     try {
       // Request backend to generate the hash value
       const response = await fetch(
-        'https://dea9-2402-4000-b200-1e13-505a-4939-1b2f-bf21.ngrok-free.app/payment/start',
+        'https://4f3e-2402-4000-2300-38da-edb2-e06a-2b1c-f2f4.ngrok-free.app/payment/start',
         {
           method: 'POST',
           headers: {
@@ -145,7 +147,7 @@ function ViewMore() {
           merchant_id: merchant_id,
           return_url: `http://localhost:3002/payment/success`,
           cancel_url: 'http://localhost:3002/payment/cancel',
-          notify_url: 'https://dea9-2402-4000-b200-1e13-505a-4939-1b2f-bf21.ngrok-free.app/payment/notify',
+          notify_url: 'https://4f3e-2402-4000-2300-38da-edb2-e06a-2b1c-f2f4.ngrok-free.app/payment/notify',
           order_id: paymentDetails.order_id,
           items: viewMore.item,
           amount: paymentDetails.amount,
