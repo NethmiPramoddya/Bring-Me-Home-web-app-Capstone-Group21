@@ -111,8 +111,8 @@ export default function Home() {
           lg:left-[50px] lg:top-[1050px] lg:ml-[57%]
           4md:left-[3px] 4md:top-[980px] 4md:ml-[57%]
           3md:left-[3px] 3md:top-[960px] 3md:ml-[57%]
-          2md:left-[3px] 2md:top-[920px] 2md:ml-[57%]
-          md:left-[3px] md:top-[880px] md:ml-[57%]
+          2md:left-[3px] 2md:top-[920px] 2md:ml-[52%]
+          md:left-[3px] md:top-[880px] md:ml-[52%]
         sm:left-[3px] sm:top-[1400px] sm:ml-[30%] text-[45px]
         2sm:left-[3px] 2sm:top-[1400px] 2sm:ml-[30%] text-[35px]
         3sm:left-[3px] 3sm:top-[1400px] 3sm:ml-[30%] text-[35px]
@@ -228,8 +228,8 @@ export default function Home() {
           lg:left-[50px] lg:top-[2300px] lg:ml-[59%]
           4md:left-[3px] 4md:top-[2300px] 4md:ml-[59%]
           3md:left-[3px] 3md:top-[2400px] 3md:ml-[59%]
-          2md:left-[3px] 2md:top-[2300px] 2md:ml-[59%]
-          md:left-[3px] md:top-[2400px]  md:ml-[59%]
+          2md:left-[3px] 2md:top-[2300px] 2md:ml-[50%]
+          md:left-[3px] md:top-[2400px]  md:ml-[50%]
           sm:left-[3px] sm:top-[3960px] sm:ml-[30%]
           2sm:left-[3px] 2sm:top-[4220px] 2sm:ml-[30%]
           3sm:left-[3px] 3sm:top-[4220px] 3sm:ml-[30%]
@@ -287,32 +287,33 @@ export default function Home() {
       <div>
         <div
           className="card bg-[#000000] text-primary-content absolute 
-          xl:absolute xl:top-[3280px] xl:left-[15%] xl:w-150 xl:h-75
-          lg:absolute lg:top-[3380px] lg:left-[15%] lg:w-120  lg:h-75
-          4md:absolute 4md:top-[3380px] 4md:left-[11%]  4md:w-120 4md:h-75
-          3md:absolute 3md:top-[3440px] 3md:left-[8%] 3md:w-120 3md:h-75
-          2md:absolute 2md:top-[3440px] 2md:left-[6%] 2md:w-120 2md:h-75
-          md:absolute md:top-[3550px] md:left-[18%] md:w-180  md:h-105
-          sm:absolute sm:top-[5180px] sm:left-[120px]  sm:w-120 sm:h-75
-          2sm:absolute 2sm:top-[5530px] 2sm:left-[78px]  2sm:w-120 2sm:h-75
-          3sm:absolute 3sm:top-[3380px] 3sm:left-[17%]  3sm:w-120 3sm:h-75
-          4sm:absolute 4sm:top-[3380px] 4sm:left-[17%]  4sm:w-120 4sm:h-75
+          xl:absolute xl:top-[3280px] xl:left-[55%] xl:w-150 xl:h-75
+          lg:absolute lg:top-[3980px] lg:left-[30%] lg:w-120  lg:h-75
+          4md:absolute 4md:top-[3980px] 4md:left-[27%]  4md:w-120 4md:h-75
+          3md:absolute 3md:top-[3440px] 3md:left-[25%] 3md:w-120 3md:h-75
+          2md:absolute 2md:top-[3440px] 2md:left-[230px] 2md:w-120 2md:h-75
+          md:absolute md:top-[3550px] md:left-[230px] md:w-180  md:h-105
+          sm:absolute sm:top-[5180px] sm:left-[160px]  sm:w-120 sm:h-75
+          2sm:absolute 2sm:top-[5530px] 2sm:left-[120px]  2sm:w-120 2sm:h-75
+          3sm:absolute 3sm:top-[5800px] 3sm:left-[85px]  3sm:w-[600px] 3sm:h-[500px]
+          4sm:absolute 4sm:top-[5080px] 4sm:left-[90px]  4sm:w-[500px] 4sm:h-[540px]
           
           "
-          // data-aos="fade-right"
+          data-aos="fade-right"
         >
           <div className="card-body">
             <h2
               className="card-title text-[40px] text-[#8d8d8d] font-extrabold text-justify
               
               "
-              data-aos="fade-left"
+              data-aos="fade-right"
             >
-              Become a Traveler
+              Become a Sender
             </h2>
 
-            <p className="text-justify 
-            xl:text-[18px]
+            <p
+              className="text-justify 
+            xl:text-[25px]
             lg:text-[18px]
             4md:text-[18px]
             3md:text-[18px]
@@ -320,22 +321,24 @@ export default function Home() {
             md:text-[25px] 
             sm:text-[25px]
             2sm:text-[25px]
-            3sm:text-[18px]
-            4sm:text-[18px]
+            3sm:text-[25px]
+            4sm:text-[25px]
             
-            " >
-              Traveling abroad soon? Earn extra income by delivering packages
-              for trusted users through Bring Me Home. Once verified, you can
-              browse available delivery requests and choose the ones that match
-              your travel plans. You’ll meet the sender, inspect and seal the
-              item with them, and hand it over at the destination—making travel
-              more rewarding and purposeful.
+            "
+            data-aos="fade-right"
+            >
+              Need to send something abroad? With Bring Me Home, you can connect
+              directly with verified travelers heading to your destination.
+              Whether it’s a gift, essential item, or document, our platform
+              helps you find a reliable person to hand-deliver your package
+              safely and quickly. Simply list your package, meet the traveler,
+              seal it in front of them, and track it every step of the way.
             </p>
-            <span data-aos="fade-right">
-              <div className="justify-end card-actions">
+            <span >
+              <div className="justify-end card-actions" data-aos="fade-right">
                 <button className="btn text-[#000000] font-bold bg-[#FF8B2A] p-5">
                   {" "}
-                  Buy Now
+                  Be a Sender
                 </button>
               </div>
             </span>
@@ -344,29 +347,28 @@ export default function Home() {
 
         <div
           className="card bg-[#8d8d8d] text-primary-content w-120 h-75 absolute 
-          xl:absolute xl:top-[3280px] xl:left-[15%] xl:w-150 xl:h-75
-          lg:absolute lg:top-[3380px] lg:left-[15%] lg:w-120  lg:h-75
-          4md:absolute 4md:top-[3380px] 4md:left-[11%]  4md:w-120 4md:h-75
-          3md:absolute 3md:top-[3440px] 3md:left-[8%] 3md:w-120 3md:h-75
-          2md:absolute 2md:top-[3440px] 2md:left-[6%] 2md:w-120 2md:h-75
-          md:absolute md:top-[4050px] md:left-[18%] md:w-180  md:h-105
-          sm:absolute sm:top-[5650px] sm:left-[120px]  sm:w-120 sm:h-75
-          2sm:absolute 2sm:top-[6000px] 2sm:left-[78px]  2sm:w-120 2sm:h-75
-          3sm:absolute 3sm:top-[3380px] 3sm:left-[17%]  3sm:w-120 3sm:h-75
-          4sm:absolute 4sm:top-[3380px] 4sm:left-[17%]  4sm:w-120 4sm:h-75
+          xl:absolute xl:top-[3280px] xl:left-[10%] xl:w-150 xl:h-75
+          lg:absolute lg:top-[3380px] lg:left-[30%] lg:w-120  lg:h-75
+          4md:absolute 4md:top-[3380px] 4md:left-[27%]  4md:w-120 4md:h-75
+          3md:absolute 3md:top-[4040px] 3md:left-[25%] 3md:w-120 3md:h-75
+          2md:absolute 2md:top-[4040px] 2md:left-[230px] 2md:w-120 2md:h-75
+          md:absolute md:top-[4150px] md:left-[230px] md:w-180  md:h-105
+          sm:absolute sm:top-[5750px] sm:left-[160px]  sm:w-120 sm:h-75
+          2sm:absolute 2sm:top-[6100px] 2sm:left-[120px]  2sm:w-120 2sm:h-75
+          3sm:absolute 3sm:top-[6380px] 3sm:left-[85px]  3sm:w-[600px] 3sm:h-[500px]
+          4sm:absolute 4sm:top-[5730px] 4sm:left-[90px]  4sm:w-[500px] 4sm:h-[540px]
           
           "
-          // data-aos="fade-left"
+          data-aos="fade-right"
+          
         >
-          <div className="card-body" >
-            <h2
-              className="card-title text-[40px] text-[#000000] font-extrabold text-justify"
-              
-            >
+          <div className="card-body">
+            <h2 className="card-title text-[40px] text-[#000000] font-extrabold text-justify" data-aos="fade-right">
               Become a Traveler
             </h2>
 
-            <p className="text-justify  xl:text-[18px]
+            <p
+              className="text-justify  xl:text-[25px]
             lg:text-[18px]
             4md:text-[18px]
             3md:text-[18px]
@@ -374,8 +376,10 @@ export default function Home() {
             md:text-[25px] 
             sm:text-[25px]
             2sm:text-[25px]
-            3sm:text-[18px]
-            4sm:text-[18px]">
+            3sm:text-[25px]
+            4sm:text-[25px]"
+            data-aos="fade-right"
+            >
               Traveling abroad soon? Earn extra income by delivering packages
               for trusted users through Bring Me Home. Once verified, you can
               browse available delivery requests and choose the ones that match
@@ -383,11 +387,11 @@ export default function Home() {
               item with them, and hand it over at the destination—making travel
               more rewarding and purposeful.
             </p>
-            <span >
+            <span>
               <div className="justify-end card-actions">
-                <button className="btn text-[#ffffff] font-bold bg-[#FF8B2A] p-5">
+                <button className="btn text-[#ffffff] font-bold bg-[#FF8B2A] p-5" data-aos="fade-right">
                   {" "}
-                  Buy Now
+                  Be a Traveler
                 </button>
               </div>
             </span>
@@ -395,7 +399,19 @@ export default function Home() {
         </div>
       </div>
 
-      {/* <footer class="footer footer-horizontal footer-center w-[10%] bg-[#000000] text-primary-content p-15 absolute top-[3480px] mb-10" data-aos="fade">
+      <footer class="footer footer-horizontal footer-center  bg-[#000000] text-primary-content 
+      xl:absolute xl:top-[4000px]  xl:w-[100%] xl:h-75 pt-25
+      lg:absolute lg:top-[4700px]  lg:w-[100%] lg:h-75 pt-25
+      4md:absolute 4md:top-[4700px] 4md:w-[100%] 4md:h-75 pt-25
+      3md:absolute 3md:top-[4700px] 3md:w-[100%] 3md:h-75 pt-25
+      2md:absolute 2md:top-[4700px] 2md:w-[100%] 2md:h-75 pt-25
+      md:absolute md:top-[4700px]  md:w-[100%]  md:h-75 pt-25
+      sm:absolute sm:top-[6500px] sm:w-[100%] sm:h-75 pt-25
+      2sm:absolute 2sm:top-[6800px] 2sm:w-[100%] 2sm:h-75 pt-25
+      3sm:absolute 3sm:top-[7000px] 3sm:w-[100%] 3sm:h-75 pt-25
+      4sm:absolute 4sm:top-[6400px] 4sm:w-[100%] 4sm:h-50 <pt-10></pt-10>
+      
+      " data-aos="fade">
         <aside>
           
           <p className="font-bold text-[#FF8B2A]"  >
@@ -422,7 +438,7 @@ export default function Home() {
             </a>
           </div>
         </nav>
-      </footer> */}
+      </footer>
     </div>
   );
 }
