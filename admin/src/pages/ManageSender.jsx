@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Sidebar from '../components/Sidebar';
+
 
 function ManageSender() {
   const [manageSender, setManageSender] = useState([{
@@ -15,6 +17,7 @@ function ManageSender() {
     paymentStatus: "",
     status: ""
   }]);
+    const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:3002/manageSenders")
@@ -36,6 +39,7 @@ function ManageSender() {
   return (
     <div className="flex items-center justify-center min-h-screen p-4 bg-blue-500">
       <div className="w-full max-w-screen-xl p-4 bg-white rounded shadow-lg">
+
         <h2 className="mb-4 text-xl font-bold">Sender Request Details</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm border border-gray-300">
