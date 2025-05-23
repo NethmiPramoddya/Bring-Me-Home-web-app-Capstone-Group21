@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Profile() {
     const [user, setUser] = useState([]);
+    const [wallet, setWallet] = useState(null);
     const navigate = useNavigate()
 
     const userId = localStorage.getItem("userId")
@@ -20,6 +21,16 @@ function Profile() {
                 console.log(result.data);
                 setUser(result.data)})
             .catch(err=>console.log(err))
+
+            // Fetch wallet info
+                axios.get(`http://localhost:3002/wallet/${userId}`)
+                .then(res => {
+                    setWallet(res.data);
+                })
+                .catch(err => {
+                    console.log("Wallet not found or error fetching wallet:", err);
+                    setWallet(null);
+                });
         }
     },[userId, navigate])
 
@@ -41,6 +52,7 @@ function Profile() {
         <h1 className="text-3xl font-semibold text-gray-800">Welcome, {user.name}</h1>
         <p className="text-xl text-gray-500">{user.email}</p>
     </div>
+
 
     {/* Profile Details */}
     <div className="flex flex-col items-center justify-center space-x-8 md:flex-row">
@@ -76,14 +88,48 @@ function Profile() {
     </div>
 
     {/* Profile Actions */}
-    <div className="flex justify-center mt-8 space-x-4">
-        <button className="px-6 py-2 text-white transition duration-200 bg-blue-500 rounded-lg hover:bg-blue-600">
+    <div className="flex justify-center mt-8 mb-10 space-x-4">
+        <button 
+        onClick={() => navigate("/edit-profile")}
+        className="px-6 py-2 text-white transition duration-200 bg-blue-500 rounded-lg hover:bg-blue-600">
             Edit Profile
         </button>
         <button onClick={handleLogout} className="px-6 py-2 text-white transition duration-200 bg-red-500 rounded-lg hover:bg-red-600">
             Logout
         </button>
     </div>
+
+        {/* Wallet Info */}
+{wallet && (
+  <div className="max-w-md p-6 mx-auto mb-8 transition-shadow duration-300 ease-in-out transform bg-white shadow-lg cursor-pointer rounded-xl hover:shadow-2xl hover:-translate-y-1">
+    <h2 className="mb-4 text-3xl font-extrabold text-center text-indigo-600">Wallet Details</h2>
+    <div className="flex items-center justify-between space-x-6">
+      <div className="flex items-center space-x-4">
+        {/* Icon: wallet */}
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M17 9V7a4 4 0 00-8 0v2M3 13v2a4 4 0 004 4h10a4 4 0 004-4v-2M7 13h10" />
+        </svg>
+        <div>
+          <p className="text-lg font-semibold text-gray-700">Actual Amount</p>
+          <p className="text-2xl font-bold text-gray-900">${wallet.actual_amount?.toFixed(2) ?? "0.00"}</p>
+        </div>
+      </div>
+
+      <div className="flex items-center space-x-4">
+        {/* Icon: cash */}
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div>
+          <p className="text-lg font-semibold text-gray-700">Can Withdraw Amount</p>
+          <p className="text-2xl font-bold text-gray-900">${wallet.can_withdrawal_amount?.toFixed(2) ?? "0.00"}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+
 </div>
   )
 }

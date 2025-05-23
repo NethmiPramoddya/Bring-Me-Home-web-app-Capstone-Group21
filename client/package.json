@@ -12,12 +12,17 @@
   "dependencies": {
     "aos": "^2.3.4",
     "axios": "^1.8.4",
+    "html-to-image": "^1.11.13",
     "lucide-react": "^0.487.0",
+    "qrcode.react": "^4.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",
+    "react-qr-code": "^2.0.15",
     "react-router-dom": "^7.4.1",
+    "react-scroll-to-bottom": "^4.2.0",
     "react-toastify": "^11.0.5",
+    "socket.io-client": "^4.8.1",
     "turbo-stream": "^3.1.0"
   },
   "devDependencies": {

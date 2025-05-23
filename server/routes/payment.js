@@ -1,6 +1,9 @@
 const SenderModel = require("../models/Senders");
 const express = require("express");
 const crypto = require("crypto");
+const Wallet = require("../models/Wallet");
+const WalletTransaction = require("../models/WalletTransaction");
+
 
 const router = express.Router();
 
@@ -87,12 +90,46 @@ router.post("/notify", async (req, res) => {
         paymentStatus = 'paid';
       }
 
+      // ✅ Generate 6-digit OTP
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
       sender.paidAmount = paidAmount;
       sender.paymentStatus = paymentStatus;
       sender.paymentDate = new Date();
+      sender.deliveryOtp = otp;
+      sender.deliveryStatus = 'pending'; // Mark sender request as pending
       await sender.save();
 
+      // Wallet logic
+        let wallet = await Wallet.findOne({ traveler_user_id: sender.traveller_user_id });
+        if (!wallet) {
+          wallet = new Wallet({
+            traveler_user_id: sender.traveller_user_id,
+          });
+          await wallet.save();
+        }
+
+        // Create wallet transaction
+        const travelerShare = sender.travelerShare || 0;
+
+        //  Update actual_amount immediately
+            wallet.actual_amount += travelerShare;
+            await wallet.save();
+
+        // Create wallet transaction
+          //const travelerShare = sender.travelerShare || 0;
+
+          const transaction = new WalletTransaction({
+            sender_request_id: sender._id,
+            wallet_id: wallet._id,
+            amount: travelerShare,
+            status: "pending", // not withdrawable yet
+          });
+          await transaction.save();
+
       console.log("Payment successful for order:", order_id);
+      console.log("Generated OTP:", otp);
+
 
       if (paymentStatus === 'paid') {
         console.log(`Notify traveler (user_id: ${sender.traveller_user_id}) - Payment received.`);

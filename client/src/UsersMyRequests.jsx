@@ -105,7 +105,10 @@ function UsersMyRequests() {
                 <p className="text-sm font-bold text-green-600">💳 Total Payment: ${(Number(request.itemPrice) + Number(request.tip)).toFixed(2)}</p>
               </>
             )}
-            <p className="text-xs text-gray-500">📊 System gets 0.25% (${(request.tip * 0.25).toFixed(2)}), Traveler gets 0.75% (${(Number(request.tip * 0.75)).toFixed(2)})</p>
+            <p className="text-xs text-gray-500">
+              📊 System gets 0.25% (${request.systemShare}), Traveler gets 0.75% (${request.travelerShare})
+            </p>
+
             <div className="flex gap-2 mt-4">
               {/* <Link to={`/edit/${request._id}`} className="flex items-center gap-1 px-4 py-2 border rounded-lg">
                 ✏️ Edit

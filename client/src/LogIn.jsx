@@ -18,7 +18,18 @@ function LogIn() {
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("userEmail", result.data.email);
           localStorage.setItem("userId", result.data.userId); //  Store userId
-          Navigate('/');
+          // Get user data to save username
+          axios.get(`http://localhost:3002/profile/${result.data.userId}`)
+            .then(userResponse => {
+              localStorage.setItem("username", userResponse.data.name || userResponse.data.username || result.data.email.split('@')[0]);
+              Navigate('/');
+            })
+            .catch(err => {
+              console.log("Error fetching user profile:", err);
+              // Fall back to email username if profile fetch fails
+              localStorage.setItem("username", result.data.email.split('@')[0]);
+              Navigate('/');
+            });
           }else{
             alert(result.data.message)
           }

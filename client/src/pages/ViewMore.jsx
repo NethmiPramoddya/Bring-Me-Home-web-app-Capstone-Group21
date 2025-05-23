@@ -1,11 +1,80 @@
 import React, { useState, useEffect } from 'react';
+import io from "socket.io-client";
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+
+const socket = io("http://localhost:3002"); 
+
+function generateUniqueId(length = 10) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  return Array.from({ length })
+    .map(() => characters.charAt(Math.floor(Math.random() * characters.length)))
+    .join('');
+}
 
 function ViewMore() {
-  const { id } = useParams();
+  const { id, roomId: urlRoomId } = useParams();
   const [viewMore, setViewMore] = useState(null);
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [storedUsername, setStoredUsername] = useState("");
+  const [userId, setUserId] = useState("");
+  const [roomId, setRoomId] = useState('');
+  const [socketId, setSocketId] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+  const storedRoom = localStorage.getItem('roomId');
+  if (storedRoom && !roomId) {
+    setRoomId(storedRoom);
+    console.log("Loaded roomId from localStorage:", storedRoom);
+  }
+}, []);
+
+
+ useEffect(() => {
+  axios
+    .get(`http://localhost:3002/view_more/${id}`)
+    .then((result) => {
+      setViewMore(result.data);
+      if (result.data.paymentStatus === 'paid' && result.data.roomId) {
+        setRoomId(result.data.roomId); // update state with roomId from URL
+        localStorage.setItem('roomId', result.data.roomId); 
+      }
+    })
+    .catch((err) => console.error('Error fetching data:', err));
+}, [id, urlRoomId]);
+
+
+    useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const uid = localStorage.getItem("userId");
+    const username = localStorage.getItem("username");
+    if (!isLoggedIn || isLoggedIn === "false" || !uid) {
+      alert("Please log in to chat");
+      return;
+    }
+
+    setUserId(uid);
+    setStoredUsername(username);
+  }, []);
+
+  // Socket setup
+  useEffect(() => {
+    if (!viewMore?.roomId || !storedUsername) return;
+
+    socket.connect();
+    socket.emit("join_room", viewMore.roomId);
+    setRoomId(viewMore.roomId);
+
+    socket.on("connect", () => {
+      setSocketId(socket.id);
+      console.log("Socket connected:", socket.id);
+    });
+
+   return () => {
+      socket.off("connect");
+    };
+  }, [viewMore?.roomId, storedUsername]);
 
   // Load PayHere script once when component mounts
   useEffect(() => {
@@ -21,6 +90,8 @@ function ViewMore() {
       document.body.removeChild(payhereScript);
     };
   }, []);
+
+
 
   const handlePayment = async () => {
     if (!scriptLoaded || !window.payhere) {
@@ -45,7 +116,7 @@ function ViewMore() {
     try {
       // Request backend to generate the hash value
       const response = await fetch(
-        'https://b42d-112-134-170-36.ngrok-free.app/payment/start',
+        'https://4f3e-2402-4000-2300-38da-edb2-e06a-2b1c-f2f4.ngrok-free.app/payment/start',
         {
           method: 'POST',
           headers: {
@@ -58,13 +129,26 @@ function ViewMore() {
       if (response.ok) {
         const { hash, merchant_id } = await response.json();
 
+        const newRoomId = generateUniqueId(16); // generate roomId
+        setRoomId(newRoomId);
+        localStorage.setItem('roomId', newRoomId);
+
+        // Save roomId in backend
+       await axios.post(`http://localhost:3002/chat/room`, {
+          roomId: newRoomId,
+          sender_request_id:viewMore._id,
+          sender_user_id: viewMore.buyer_id,       // Replace with correct field
+          traveler_user_id: viewMore.traveller_user_id    // Replace with correct field
+        });
+
+
         // Payment configuration
         const payment = {
           sandbox: true,
           merchant_id: merchant_id,
-          return_url: 'http://localhost:3000/payment/success',
-          cancel_url: 'http://localhost:3000/payment/cancel',
-          notify_url: 'https://b42d-112-134-170-36.ngrok-free.app/payment/notify',
+          return_url: `http://localhost:3002/payment/success`,
+          cancel_url: 'http://localhost:3002/payment/cancel',
+          notify_url: 'https://4f3e-2402-4000-2300-38da-edb2-e06a-2b1c-f2f4.ngrok-free.app/payment/notify',
           order_id: paymentDetails.order_id,
           items: viewMore.item,
           amount: paymentDetails.amount,
@@ -81,6 +165,13 @@ function ViewMore() {
 
         // Initialize PayHere payment
         window.payhere.startPayment(payment);
+        // Optimistically update viewMore
+            setViewMore((prev) => ({
+              ...prev,
+              paymentStatus: 'paid',
+              roomId: newRoomId,
+            }));
+            setRoomId(newRoomId);
       } else {
         console.error('Failed to generate hash for payment.');
         alert('Failed to initiate payment. Please try again.');
@@ -91,13 +182,76 @@ function ViewMore() {
     }
   };
 
-  // Fetch package details
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3002/view_more/${id}`)
-      .then((result) => setViewMore(result.data))
-      .catch((err) => console.error('Error fetching data:', err));
-  }, [id]);
+  const handleChat = async () => {
+    // Store the current sender request ID for error recovery
+    localStorage.setItem('currentViewMoreId', viewMore._id);
+    
+    if (!roomId && viewMore) {
+      try {
+        // First check if we already have a roomId in the viewMore data
+        if (viewMore.roomId) {
+          setRoomId(viewMore.roomId);
+          localStorage.setItem('roomId', viewMore.roomId);
+          navigate(`/chat/${viewMore.roomId}`);
+          return;
+        }
+        
+        // If not in state, try to fetch the latest data from server
+        const res = await axios.get(`http://localhost:3002/view_more/${viewMore._id}`);
+        if (res.data?.roomId) {
+          setRoomId(res.data.roomId);
+          localStorage.setItem('roomId', res.data.roomId);
+          navigate(`/chat/${res.data.roomId}`);
+          return;
+        }
+        
+        // If still no roomId, check if there's a chat room for this sender request
+        const roomResponse = await axios.get(`http://localhost:3002/chat/room/${viewMore._id}`);
+        if (roomResponse.data?.roomId) {
+          setRoomId(roomResponse.data.roomId);
+          localStorage.setItem('roomId', roomResponse.data.roomId);
+          navigate(`/chat/${roomResponse.data.roomId}`);
+          return;
+        }
+        
+        // If no room exists yet, we need to create one
+        if (viewMore.status === 'accepted' || viewMore.paymentStatus === 'paid') {
+          const newRoomId = generateUniqueId(16);
+          try {
+            await axios.post(`http://localhost:3002/update_room/${viewMore._id}`, {
+              roomId: newRoomId,
+              sender_user_id: viewMore.buyer_id,
+              traveler_user_id: viewMore.traveller_user_id
+            });
+            
+            setRoomId(newRoomId);
+            localStorage.setItem('roomId', newRoomId);
+            navigate(`/chat/${newRoomId}`);
+            return;
+          } catch (createErr) {
+            console.error("Failed to create chat room:", createErr);
+            alert("Unable to create chat room. Please try again.");
+            return;
+          }
+        } else {
+          alert("You can only chat after the traveler has accepted your request.");
+          return;
+        }
+      } catch (err) {
+        console.error("Error accessing chat room:", err);
+        alert("Unable to access chat. Please try again.");
+        return;
+      }
+    }
+
+    // If we already have a roomId, just navigate to it
+    if (roomId) {
+      navigate(`/chat/${roomId}`);
+    } else {
+      alert("Chat is not available. Please try again later.");
+    }
+  };
+
 
   if (!viewMore) return <p className="mt-10 text-center">Loading...</p>;
 
@@ -216,25 +370,53 @@ function ViewMore() {
           </p>
         </div>
 
+        <div className="flex items-center mb-3 space-x-2">
+          <div className="text-sm font-semibold text-[#b33434]">
+            🔐 Delivery OTP 
+          </div>
+          <p className="text-base font-medium text-gray-800">
+            {viewMore.deliveryOtp}
+          </p>
+        </div>
+        <div className="p-4 mb-2 border border-blue-300 rounded-xl bg-blue-50">
+            <p className="font-medium text-blue-700">
+              📦 Please share this package OTP only with the receiver 🔐
+            </p>
+          </div>
+          <div className="p-4 mb-3 border border-red-300 rounded-xl bg-red-50">
+            <p className="font-medium text-red-600">
+              ⚠️ Force receiver to scan QR 📲 and enter correct OTP ✅
+            </p>
+          </div>
+
+
         <div className="flex justify-center pt-2">
-          {viewMore.status === 'accepted' ? (
+          {viewMore.paymentStatus === 'paid'? (
+            <>
+              <button
+                className="w-1/3 px-4 py-1 mx-3 text-lg text-white bg-blue-600 rounded hover:bg-blue-700"
+                onClick={handleChat}
+              >
+                💬 Chat with Traveler
+              </button>
+              
+            </>
+          ) : viewMore.status === 'accepted' ? (
             <button
-              className="bg-[rgb(48,120,22)] hover:bg-[#1e824b] w-[33.33%] mx-3 text-white py-1 px-4 rounded text-lg transition"
-              id="payhere-payment"
+              className="w-1/3 px-4 py-1 mx-3 text-lg text-white bg-green-600 rounded hover:bg-green-700"
               onClick={handlePayment}
-              disabled={!scriptLoaded} // Disable button until script is loaded
+              disabled={!scriptLoaded}
             >
               💳 Pay Now
             </button>
           ) : (
-            <p className="text-gray-600 w-[33.33%] mx-3 text-center">
+            <p className="w-1/3 mx-3 text-center text-gray-600">
               😔 Waiting for traveler to accept...
             </p>
           )}
-
           <Link
             to="/"
-            className="bg-[#b33434] hover:bg-[#a12d2d] w-[33.33%] text-center text-white py-1 px-4 rounded text-lg transition"
+            className="bg-[#b33434] hover:bg-[#a12d2d] w-1/3 text-center text-white py-1 px-4 rounded text-lg"
           >
             ⬅️ Go Back
           </Link>

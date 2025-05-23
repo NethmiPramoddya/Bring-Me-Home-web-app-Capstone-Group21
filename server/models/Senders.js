@@ -43,7 +43,27 @@ const SendersSchema = new mongoose.Schema({
         enum: ['unpaid', 'partial', 'paid'],
         default: 'unpaid'
     },
-    paymentDate: Date
+    paymentDate: Date,
+    roomId:String,
+    deliveryOtp: {
+        type: Number,
+        default: null
+    },
+    systemShare: {
+    type: Number,
+    required: true
+    },
+    travelerShare: {
+    type: Number,
+    required: true
+    },
+    deliveryStatus:  {
+        type: String,
+        default: 'pending', // default when first created
+        enum: ['pending', 'received']
+    },
+
+
 
 })
 

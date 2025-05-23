@@ -15,9 +15,13 @@ import MySenderRequests from './MySenderRequests'
 import MyTravelingData from './MyTravelingData'
 import ViewMore from './pages/ViewMore'
 import Home from './Home'
+import RoomId from './RoomId'
+import OnGoingTasks from './OnGoingTasks'
+import ReceiverDetails from './ReceiverDetails'
+import EditProfile from './EditProfile'
 
 function App() {
-  const userId = localStorage.getItem('userId'); 
+  const userId = localStorage.getItem('userId');
 
   return (
     <div>
@@ -40,9 +44,10 @@ function App() {
         <Route path='/mySenderRequests/:id' element={<MySenderRequests/>}></Route>
         <Route path='/travelingData/:id' element={<MyTravelingData/>}></Route>
         <Route path='/view_more/:id' element={<ViewMore/>}></Route>
-        
-
-
+        <Route path="/chat/:roomId" element={<RoomId />} />
+        <Route path='/onGoingTasks/:id' element={<OnGoingTasks/>}></Route>
+        <Route path="/receiver/:id" element={<ReceiverDetails />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
 
       </Routes>
       

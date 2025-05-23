@@ -1,12 +1,22 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser');
 const cors = require('cors')
+const http = require('http');
+const { Server } = require('socket.io');
 const SenderModel = require('./models/Senders')
 const UserModel = require('./models/user')
 const TravelerModel = require('./models/Traveler')
 const NotificationModel = require('./models/Notification');
 const paymentRouter = require('./routes/payment');
-const SenderRouter = require('./routes/sender')
+const SenderRouter = require('./routes/sender');
+const chatRouter = require('./routes/chat');
+const MessageModel = require('./models/Masseges');
+const RoomChatModel = require('./models/ChatRoom');
+const deliveryRouter = require('./routes/delivery');
+const adminRoutes = require("./routes/admin");
+const WalletModel = require("./models/Wallet")
+const WalletTransaction = require("./models/WalletTransaction")
 
 
 const app = express()
@@ -18,16 +28,26 @@ mongoose.connect("mongodb://127.0.0.1:27017/Send_a_package")
 // Configure CORS
 app.use(
   cors({
-    origin: "http://localhost:5173", // Adjust this if your frontend is hosted elsewhere
+    origin:  [
+    'http://localhost:5173',  // admin
+    'http://localhost:5174',   // client
+    'https://e711-2402-4000-2300-38da-edb2-e06a-2b1c-f2f4.ngrok-free.app'
+  ], // Adjust this if your frontend is hosted elsewhere
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true, // Allow credentials if needed
   })
 );
 
+app.use(bodyParser.json());
+
 // Set up routes (payment)
 app.use("/payment", paymentRouter);
+app.use("/api/payment",deliveryRouter)
 app.use("", SenderRouter);
+app.use("/chat", chatRouter);
+app.use("/admin", adminRoutes);
+
 
 app.get('/', (req,res) => {
     SenderModel.find({ $or: [{ status: 'pending' }, { status: { $exists: false } }] })
@@ -46,11 +66,17 @@ app.put('/editUser/:id', (req, res) => {
 
 app.post("/create",async(req,res)=>{
     try{
+       const tip = parseFloat(req.body.tip);
         if (req.body.needsPurchase) {
             req.body.totalCost = parseFloat(req.body.itemPrice) + parseFloat(req.body.tip);
         } else {
             req.body.totalCost = parseFloat(req.body.tip);
         }
+
+        // 💸 Calculate system and traveler share from tip
+        req.body.systemShare = Number((tip * 0.25).toFixed(2));     // 25%
+        req.body.travelerShare = Number((tip * 0.75).toFixed(2));   // 75%
+
           
     const senderData =await SenderModel.create(req.body)
     const from_country = senderData.fcountry;
@@ -72,7 +98,7 @@ app.post("/create",async(req,res)=>{
             from_id:senderId,
             to_id:traveler.traveler_id.toString(),
             content: "You have a new buyer request",
-            link: `http://localhost:5173/more_info/${senderRequestId}`,
+            link: `http://localhost:5174/more_info/${senderRequestId}`,
             dateTime: new Date(),
             status: false
         }
@@ -137,9 +163,6 @@ app.post('/register',(req,res)=>{
 })
 
 
-app.listen(3002, ()=>{
-    console.log("Server is Running")
-})
 
 // traveler requests
 
@@ -167,7 +190,7 @@ app.post("/createTraveler",async(req,res)=>{
             from_id:sender.buyer_id,
             to_id:travelerId,
             content:"A sender is looking for a traveler matching your route!",
-            link: `http://localhost:5173/more_info/${sender._id}`,
+            link: `http://localhost:5174/more_info/${sender._id}`,
             dateTime: new Date(),
             status: false   
         }
@@ -190,17 +213,63 @@ app.post("/createTraveler",async(req,res)=>{
 
 //profile
 
-app.get("/profile/:id",async(req,res)=>{
-    try{const userId = req.params.id;
-    const user = await UserModel.findById(userId)
-    if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      res.json(user);
-    }catch(error){
-        res.status(500).json({ message: error.message });
+app.get("/profile/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await UserModel.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.put("/profile/:id", async (req, res) => {
+  const userId = req.params.id;
+  const { name, about, phone, location, bankName, accountNumber, branch } = req.body;
+
+  try {
+    // Update user profile info
+    await UserModel.findByIdAndUpdate(userId, {
+      name,
+      about,
+      phone,
+      location,
+    });
+
+    // Check if wallet exists
+    const wallet = await WalletModel.findOne({ traveler_user_id: userId });
+
+    if (wallet) {
+      // Only update bank details if wallet exists
+      wallet.bankDetails = {
+        bankName,
+        accountNumber,
+        branch,
+      };
+      await wallet.save();
     }
-})
+
+    res.json({ message: "Profile updated successfully." });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get('/wallet/:userId', async (req, res) => {
+  try {
+    const wallet = await WalletModel.findOne({ traveler_user_id: req.params.userId });
+    if (!wallet) {
+      return res.status(404).json({ message: "Wallet not found" });
+    }
+    res.json(wallet);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
 
 //Notifications
 
@@ -272,7 +341,7 @@ app.post("/acceptRequest", async (req, res) => {
         from_id: travelerData.traveler_id,
         to_id: senderRequest.buyer_id,
         content: "A traveler has accepted your delivery request!",
-        link: `http://localhost:5173/view_more/${senderRequest._id}`, // Same as sender's my requests view
+        link: `http://localhost:5174/view_more/${senderRequest._id}`, // Same as sender's my requests view
         dateTime: new Date(),
         status: false
       });
@@ -374,4 +443,183 @@ app.get("/view_more/:id", async (req,res)=>{
     }catch(error){
         res.status(500).json({ message: err.message });
     }
+})
+
+
+// Socket.io setup
+const server = http.createServer(app);
+
+
+const io = new Server(server, {
+    cors: {
+        origin:  [
+            'http://localhost:5173',  // admin
+            'http://localhost:5174'   // client
+  ],
+        methods: ["GET","POST"],
+    },
+});
+
+io.on("connection", (Socket) => {
+    console.log(`User Connected: ${Socket.id}`);
+
+    Socket.on("join_room", async(data) => {
+        // Support both string roomId and object with roomId/userId
+        const roomId = typeof data === 'object' ? data.roomId : data;
+        const userId = typeof data === 'object' ? data.userId : null;
+
+        Socket.join(roomId);
+        console.log(`User with ID: ${Socket.id} joined room: ${roomId}`);
+
+        // Send existing chat history from DB
+        try {
+            const messages = await MessageModel.find({ room: roomId }).sort({ createdAt: 1 });
+            Socket.emit("chat_history", messages);
+
+            // Mark messages as read if userId is provided
+            if (userId) {
+                await MessageModel.updateMany({ room: roomId, receiver_id: userId, is_read: false }, { $set: { is_read: true } });
+            }
+        } catch (err) {
+            console.error("Error fetching chat history:", err);
+        }
+    });
+
+    Socket.on("send_message", async(data) => {
+        try {
+            // Save to DB with required fields
+            if (!data.sender_id || !data.receiver_id) {
+                console.error("Missing sender_id or receiver_id in message data");
+                Socket.emit("message_error", { error: "Missing required fields" });
+                return;
+            }
+
+            // Create message in database
+            const savedMessage = await MessageModel.create(data);
+
+            // Send to everyone else in the room
+            Socket.to(data.room).emit("receive_message", savedMessage);
+
+            // Confirm to sender that message was saved
+            Socket.emit("message_sent", savedMessage);
+
+            // Create notification for the receiver
+            try {
+                await NotificationModel.create({
+                    from_id: data.sender_id,
+                    to_id: data.receiver_id,
+                    content: `New message from ${data.author}`,
+                    link: `/chat/${data.room}`,
+                    dateTime: new Date(),
+                    status: false
+                });
+            } catch (notifyErr) {
+                console.error("Error creating notification:", notifyErr);
+                // Continue even if notification fails
+            }
+        } catch (err) {
+            console.error("Error saving message:", err);
+            Socket.emit("message_error", { error: "Failed to save message" });
+        }
+    });
+
+    Socket.on("disconnect", () => {
+        console.log("User disconnected:", Socket.id);
+    });
+});
+
+
+app.post('/update_room/:id', async (req, res) => {
+  const { id } = req.params;
+  const { roomId, sender_user_id, traveler_user_id } = req.body;
+
+  try {
+  let chatroom = await RoomChatModel.findOne({ sender_request_id: id });
+
+  if (chatroom) {
+    // Update existing chatroom
+    chatroom.roomID = roomId;
+    chatroom.sender_user_id = sender_user_id;
+    chatroom.traveller_user_id  = traveler_user_id;
+    await chatroom.save();
+  } else {
+    // Create new chatroom
+    await RoomChatModel.create({
+      roomID: roomId,
+      sender_request_id: id,
+      sender_user_id,
+      traveler_user_id
+    });
+  }
+
+  const updatedSender = await SenderModel.findByIdAndUpdate(
+      id,
+      { roomId: roomId },
+      { new: true }
+    );
+
+    if (!updatedSender) {
+      return res.status(404).json({ message: 'Sender request not found to update roomId' });
+    }
+
+  res.status(200).json({ message: 'Room ID updated or created successfully' , updatedSender});
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to update or create room ID' });
+  }
+});
+
+server.listen(3002, () => {
+    console.log("Server with Socket.io is running on port 3002");
+});
+
+
+//OnGoing Tasks
+app.get("/onGoingTasks/:id",async(req,res)=>{
+    try{
+        const userId = req.params.id;
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const ongoingTasks = await SenderModel.find({
+        traveller_user_id: userId,
+        status: "accepted",
+        paymentStatus: "paid",
+        date: { $gte: today }
+        });
+    if (!ongoingTasks) {
+        return res.status(404).json({ message: "ongoingTasks data not found" });
+      }
+      res.json(ongoingTasks);
+    }catch(error){
+        res.status(500).json({ message: error.message });
+    }
+})
+
+// receiver QR route
+app.get('/receiver/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const senderTask = await SenderModel.findById(id);
+    if (!senderTask) return res.status(404).send("Sender task not found");
+
+    const traveler = await TravelerModel.findOne({ traveler_id: senderTask.traveller_user_id });
+    const tname = traveler ? traveler.tname : "Unknown Traveler";
+
+    res.json({ ...senderTask.toObject(), tname });
+  } catch (err) {
+    console.error("Error fetching receiver details:", err);
+    res.status(500).send("Server error");
+  }
+});
+
+
+//admin
+app.get('/manageSenders', (req,res)=>{
+    SenderModel.find({})
+    .then(senders => res.json(senders))
+    .catch(err =>res.json(err))
 })
