@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 const cors = require('cors')
-const http = require ('http');
+const http = require('http');
 const { Server } = require('socket.io');
 const SenderModel = require('./models/Senders')
 const UserModel = require('./models/user')
@@ -10,6 +10,7 @@ const TravelerModel = require('./models/Traveler')
 const NotificationModel = require('./models/Notification');
 const paymentRouter = require('./routes/payment');
 const SenderRouter = require('./routes/sender');
+const chatRouter = require('./routes/chat');
 const MessageModel = require('./models/Masseges');
 const RoomChatModel = require('./models/ChatRoom');
 const deliveryRouter = require('./routes/delivery');
@@ -44,6 +45,7 @@ app.use(bodyParser.json());
 app.use("/payment", paymentRouter);
 app.use("/api/payment",deliveryRouter)
 app.use("", SenderRouter);
+app.use("/chat", chatRouter);
 app.use("/admin", adminRoutes);
 
 
@@ -458,37 +460,71 @@ const io = new Server(server, {
     },
 });
 
-io.on("connection",(Socket)=>{
+io.on("connection", (Socket) => {
     console.log(`User Connected: ${Socket.id}`);
 
-    Socket.on("join_room", async (data)=>{
-        Socket.join(data);
-        console.log(`User with ID: ${Socket.id} joined room: ${data}`)
+    Socket.on("join_room", async(data) => {
+        // Support both string roomId and object with roomId/userId
+        const roomId = typeof data === 'object' ? data.roomId : data;
+        const userId = typeof data === 'object' ? data.userId : null;
 
+        Socket.join(roomId);
+        console.log(`User with ID: ${Socket.id} joined room: ${roomId}`);
 
-    // Send existing chat history from DB
-    try {
-      const messages = await MessageModel.find({ room: data }).sort({ createdAt: 1 });
-      Socket.emit("chat_history", messages);
-    } catch (err) {
-      console.error("Error fetching chat history:", err);
-    }
+        // Send existing chat history from DB
+        try {
+            const messages = await MessageModel.find({ room: roomId }).sort({ createdAt: 1 });
+            Socket.emit("chat_history", messages);
 
+            // Mark messages as read if userId is provided
+            if (userId) {
+                await MessageModel.updateMany({ room: roomId, receiver_id: userId, is_read: false }, { $set: { is_read: true } });
+            }
+        } catch (err) {
+            console.error("Error fetching chat history:", err);
+        }
     });
 
-    Socket.on("send_message",async (data)=>{
-       try{
-        // Save to DB
-      await MessageModel.create(data);
+    Socket.on("send_message", async(data) => {
+        try {
+            // Save to DB with required fields
+            if (!data.sender_id || !data.receiver_id) {
+                console.error("Missing sender_id or receiver_id in message data");
+                Socket.emit("message_error", { error: "Missing required fields" });
+                return;
+            }
 
-        Socket.to(data.room).emit("receive_message",data)
-       }catch(err){
-         console.error("Error saving message:", err);
-       }
+            // Create message in database
+            const savedMessage = await MessageModel.create(data);
+
+            // Send to everyone else in the room
+            Socket.to(data.room).emit("receive_message", savedMessage);
+
+            // Confirm to sender that message was saved
+            Socket.emit("message_sent", savedMessage);
+
+            // Create notification for the receiver
+            try {
+                await NotificationModel.create({
+                    from_id: data.sender_id,
+                    to_id: data.receiver_id,
+                    content: `New message from ${data.author}`,
+                    link: `/chat/${data.room}`,
+                    dateTime: new Date(),
+                    status: false
+                });
+            } catch (notifyErr) {
+                console.error("Error creating notification:", notifyErr);
+                // Continue even if notification fails
+            }
+        } catch (err) {
+            console.error("Error saving message:", err);
+            Socket.emit("message_error", { error: "Failed to save message" });
+        }
     });
 
-    Socket.on("disconnect",()=>{
-        console.log("user Disconnected", Socket.id);
+    Socket.on("disconnect", () => {
+        console.log("User disconnected:", Socket.id);
     });
 });
 

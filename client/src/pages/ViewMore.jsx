@@ -134,8 +134,9 @@ function ViewMore() {
         localStorage.setItem('roomId', newRoomId);
 
         // Save roomId in backend
-       await axios.post(`http://localhost:3002/update_room/${viewMore._id}`, {
+       await axios.post(`http://localhost:3002/chat/room`, {
           roomId: newRoomId,
+          sender_request_id:viewMore._id,
           sender_user_id: viewMore.buyer_id,       // Replace with correct field
           traveler_user_id: viewMore.traveller_user_id    // Replace with correct field
         });
@@ -182,28 +183,74 @@ function ViewMore() {
   };
 
   const handleChat = async () => {
-  if (!roomId && viewMore && viewMore._id) {
-    try {
-      const res = await axios.get(`http://localhost:3002/view_more/${viewMore._id}`);
-      if (res.data?.roomId) {
-        setRoomId(res.data.roomId);
-        navigate(`/chat/${res.data.roomId}`);
+    // Store the current sender request ID for error recovery
+    localStorage.setItem('currentViewMoreId', viewMore._id);
+    
+    if (!roomId && viewMore) {
+      try {
+        // First check if we already have a roomId in the viewMore data
+        if (viewMore.roomId) {
+          setRoomId(viewMore.roomId);
+          localStorage.setItem('roomId', viewMore.roomId);
+          navigate(`/chat/${viewMore.roomId}`);
+          return;
+        }
+        
+        // If not in state, try to fetch the latest data from server
+        const res = await axios.get(`http://localhost:3002/view_more/${viewMore._id}`);
+        if (res.data?.roomId) {
+          setRoomId(res.data.roomId);
+          localStorage.setItem('roomId', res.data.roomId);
+          navigate(`/chat/${res.data.roomId}`);
+          return;
+        }
+        
+        // If still no roomId, check if there's a chat room for this sender request
+        const roomResponse = await axios.get(`http://localhost:3002/chat/room/${viewMore._id}`);
+        if (roomResponse.data?.roomId) {
+          setRoomId(roomResponse.data.roomId);
+          localStorage.setItem('roomId', roomResponse.data.roomId);
+          navigate(`/chat/${roomResponse.data.roomId}`);
+          return;
+        }
+        
+        // If no room exists yet, we need to create one
+        if (viewMore.status === 'accepted' || viewMore.paymentStatus === 'paid') {
+          const newRoomId = generateUniqueId(16);
+          try {
+            await axios.post(`http://localhost:3002/update_room/${viewMore._id}`, {
+              roomId: newRoomId,
+              sender_user_id: viewMore.buyer_id,
+              traveler_user_id: viewMore.traveller_user_id
+            });
+            
+            setRoomId(newRoomId);
+            localStorage.setItem('roomId', newRoomId);
+            navigate(`/chat/${newRoomId}`);
+            return;
+          } catch (createErr) {
+            console.error("Failed to create chat room:", createErr);
+            alert("Unable to create chat room. Please try again.");
+            return;
+          }
+        } else {
+          alert("You can only chat after the traveler has accepted your request.");
+          return;
+        }
+      } catch (err) {
+        console.error("Error accessing chat room:", err);
+        alert("Unable to access chat. Please try again.");
         return;
       }
-    } catch (err) {
-      console.error("Failed to fetch room ID", err);
-      alert("Unable to retrieve chat room. Please try again.");
-      return;
     }
-  }
 
-  if (!roomId) {
-    alert("Room ID is not available. Please check back later.");
-    return;
-  }
-
-  navigate(`/chat/${roomId}`);
-};
+    // If we already have a roomId, just navigate to it
+    if (roomId) {
+      navigate(`/chat/${roomId}`);
+    } else {
+      alert("Chat is not available. Please try again later.");
+    }
+  };
 
 
   if (!viewMore) return <p className="mt-10 text-center">Loading...</p>;
