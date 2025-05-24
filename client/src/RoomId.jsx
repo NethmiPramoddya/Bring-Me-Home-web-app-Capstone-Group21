@@ -185,7 +185,7 @@ function RoomId() {
           {chatPartner && (
             <div className="p-4 mb-2 bg-white rounded shadow-md">
               <p className="text-lg">
-                Chat (<span className="font-semibold">{chatPartner.username || chatPartner.name || 'User'}</span>)
+                Chatting with: <span className="font-semibold">{chatPartner.username || chatPartner.name || 'User'}</span>
               </p>
             </div>
           )}
