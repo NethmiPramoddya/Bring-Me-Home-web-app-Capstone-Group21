@@ -19,6 +19,7 @@ router.post("/withdraw/:traveler_user_id", async (req, res) => {
     }
 
     // Set withdrawal amount to 0
+    wallet.actual_amount=(wallet.actual_amount-wallet.can_withdrawal_amount);
     wallet.can_withdrawal_amount = 0;
     await wallet.save();
 
