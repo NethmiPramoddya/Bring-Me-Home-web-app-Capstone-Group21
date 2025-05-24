@@ -587,6 +587,7 @@ app.get("/onGoingTasks/:id",async(req,res)=>{
         traveller_user_id: userId,
         status: "accepted",
         paymentStatus: "paid",
+        deliveryStatus:"pending",
         date: { $gte: today }
         });
     if (!ongoingTasks) {

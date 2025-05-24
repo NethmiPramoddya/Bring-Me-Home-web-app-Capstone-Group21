@@ -3,6 +3,7 @@ const express = require("express");
 const crypto = require("crypto");
 const Wallet = require("../models/Wallet");
 const WalletTransaction = require("../models/WalletTransaction");
+const NotificationModel = require("../models/Notification");
 
 
 const router = express.Router();
@@ -90,7 +91,7 @@ router.post("/notify", async (req, res) => {
         paymentStatus = 'paid';
       }
 
-      // ✅ Generate 6-digit OTP
+      // to Generate 6-digit OTP
       const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
       sender.paidAmount = paidAmount;
@@ -132,8 +133,20 @@ router.post("/notify", async (req, res) => {
 
 
       if (paymentStatus === 'paid') {
-        console.log(`Notify traveler (user_id: ${sender.traveller_user_id}) - Payment received.`);
-        console.log(`Notify sender (email: ${sender.semail}) - Payment successful.`);
+        // Create notification for the traveler
+          try {
+              await NotificationModel.create({
+                  from_id: sender.buyer_id,
+                  to_id: sender.traveller_user_id,
+                  content: `${sender.sname} paid $ ${sender.travelerShare} for deliver ${sender.item}`,
+                  link: `/onGoingTasks/${sender.traveller_user_id}`,
+                  dateTime: new Date(),
+                  status: false
+              });
+          } catch (notifyErr) {
+              console.error("Error creating notification:", notifyErr);
+              // Continue even if notification fails
+          }
       }
 
       return res.sendStatus(200); // ✅ Only this one
