@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const WalletTransactionSchema = new mongoose.Schema({
   sender_request_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Sender",
+    ref: "senders",
     required: true,
   },
   wallet_id: {
