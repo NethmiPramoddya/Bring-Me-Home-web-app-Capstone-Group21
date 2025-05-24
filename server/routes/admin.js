@@ -2,6 +2,7 @@ const express = require("express");
 const Wallet = require("../models/Wallet");
 const WalletTransaction = require("../models/WalletTransaction");
 const Senders = require("../models/Senders");
+const UserModel = require("../models/user");
 const router = express.Router();
 
 // POST /admin/withdraw/:traveler_user_id
@@ -53,5 +54,14 @@ router.get("/wallets/:walletId/transactions", async (req, res) => {
   }
 });
 
+router.get("/users", async (req, res) => {
+  try {
+    const users = await UserModel.find().select("name email phone location about");
+    res.json(users);
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 module.exports = router;

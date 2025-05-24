@@ -8,7 +8,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
 
   const links = [
     ['Dashboard', <Menu size={18} />, '/'],
-    ['Users', <Users size={18} />, '/admin/users'],
+    ['Users', <Users size={18} />, '/users'],
     ['Sender Requests', <Package size={18} />, '/manageSenders'],
     ['Traveler Forms', <ClipboardList size={18} />, '/admin/travelers'],
     ['Ongoing Tasks', <ClipboardList size={18} />, '/admin/tasks'],
