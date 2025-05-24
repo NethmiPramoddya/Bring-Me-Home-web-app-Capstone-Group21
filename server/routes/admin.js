@@ -1,6 +1,7 @@
 const express = require("express");
 const Wallet = require("../models/Wallet");
 const WalletTransaction = require("../models/WalletTransaction");
+const Senders = require("../models/Senders");
 const router = express.Router();
 
 // POST /admin/withdraw/:traveler_user_id
