@@ -116,7 +116,7 @@ function ViewMore() {
     try {
       // Request backend to generate the hash value
       const response = await fetch(
-        'https://4f3e-2402-4000-2300-38da-edb2-e06a-2b1c-f2f4.ngrok-free.app/payment/start',
+        'https://dcdd-2402-4000-2300-38da-65d1-aafe-82b6-28f.ngrok-free.app/payment/start',
         {
           method: 'POST',
           headers: {
@@ -148,7 +148,7 @@ function ViewMore() {
           merchant_id: merchant_id,
           return_url: `http://localhost:3002/payment/success`,
           cancel_url: 'http://localhost:3002/payment/cancel',
-          notify_url: 'https://4f3e-2402-4000-2300-38da-edb2-e06a-2b1c-f2f4.ngrok-free.app/payment/notify',
+          notify_url: 'https://dcdd-2402-4000-2300-38da-65d1-aafe-82b6-28f.ngrok-free.app/payment/notify',
           order_id: paymentDetails.order_id,
           items: viewMore.item,
           amount: paymentDetails.amount,
@@ -279,7 +279,11 @@ function ViewMore() {
           <div className="text-sm font-semibold text-[#b33434]">
             📅 Delivery Date
           </div>
-          <p className="text-base font-medium text-gray-800">{viewMore.date}</p>
+            <p className="text-base font-medium text-gray-800">{new Date(viewMore.date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}</p>
         </div>
 
         <div className="flex items-center mb-3 space-x-2">
