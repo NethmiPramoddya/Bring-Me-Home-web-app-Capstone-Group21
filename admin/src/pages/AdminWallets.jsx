@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Users, Package, ClipboardList, Wallet } from 'lucide-react';
-import { motion } from 'framer-motion';
-import axios from 'axios';
 import Sidebar from '../components/Sidebar';
 
 export default function AdminWallets() {
@@ -11,17 +9,35 @@ export default function AdminWallets() {
   const [selectedWalletId, setSelectedWalletId] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [users, setUsers] = useState({});
 
   useEffect(() => {
     fetchWallets();
   }, []);
 
   const fetchWallets = async () => {
-    const res = await fetch("http://localhost:3002/admin/wallets");
-    const data = await res.json();
-    setWallets(data);
-    setLoading(false);
-  };
+  const res = await fetch("http://localhost:3002/admin/wallets");
+  const data = await res.json();
+  setWallets(data);
+
+  // Fetch user details in parallel
+  const userMap = {};
+  await Promise.all(
+    data.map(async (wallet) => {
+      try {
+        const userRes = await fetch(`http://localhost:3002/users/${wallet.traveler_user_id}`);
+        const userData = await userRes.json();
+        userMap[wallet.traveler_user_id] = userData;
+      } catch (err) {
+        console.error("Error fetching user", wallet.traveler_user_id, err);
+      }
+    })
+  );
+
+  setUsers(userMap);
+  setLoading(false);
+};
+
 
   const handleWithdraw = async (userId) => {
     const res = await fetch(`http://localhost:3002/admin/withdraw/${userId}`, { method: "POST" });
@@ -62,18 +78,36 @@ export default function AdminWallets() {
             <table className="w-full text-left border table-auto">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="p-3">Traveler ID</th>
+                  <th className="p-3">Traveler Details</th>
                   <th className="p-3">Actual Amount</th>
                   <th className="p-3">Can Withdraw</th>
+                  <th className="p-3">Bank Details</th>
                   <th className="p-3">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {wallets.map((wallet) => (
                   <tr key={wallet._id} className="border-t">
-                    <td className="p-3">{wallet.traveler_user_id}</td>
+                    <td className="p-3">
+                      <div>
+                        <div><strong>ID:</strong> {wallet.traveler_user_id}</div>
+                        <div><strong>Name:</strong> {users[wallet.traveler_user_id]?.name || "Loading..."}</div>
+                        <div><strong>Email:</strong> {users[wallet.traveler_user_id]?.email || "Loading..."}</div>
+                      </div>
+                    </td>
                     <td className="p-3">{wallet.actual_amount.toFixed(2)}</td>
                     <td className="p-3">{wallet.can_withdrawal_amount.toFixed(2)}</td>
+                    <td className="p-3">
+                      {wallet.bankDetails ? (
+                        <div>
+                          <div><strong>Bank:</strong> {wallet.bankDetails.bankName}</div>
+                          <div><strong>Acc:</strong> {wallet.bankDetails.accountNumber}</div>
+                          <div><strong>Branch:</strong> {wallet.bankDetails.branch}</div>
+                        </div>
+                      ) : (
+                        <span className="text-red-500">Not updated bank details</span>
+                      )}
+                    </td>
                     <td className="p-3 space-x-2">
                       <button
                         onClick={() => handleWithdraw(wallet.traveler_user_id)}

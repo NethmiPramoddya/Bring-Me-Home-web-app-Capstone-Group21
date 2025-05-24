@@ -623,3 +623,14 @@ app.get('/manageSenders', (req,res)=>{
     .then(senders => res.json(senders))
     .catch(err =>res.json(err))
 })
+
+app.get("/users/:id", async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.id).select("name email");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
