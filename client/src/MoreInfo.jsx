@@ -32,7 +32,7 @@ function MoreInfo() {
 
             if (acceptResponse.data.success) {
               alert("Request accepted successfully!");
-              window.location.reload(); // This will reload the current page
+              window.location.reload(); 
             } else {
               alert(acceptResponse.data.message || "Your travel details do not match this request!");
             }
