@@ -9,7 +9,7 @@ function OnGoingTasks() {
     const [storedUsername, setStoredUsername] = useState("");
     const [userId, setUserId] = useState("");
     const navigate = useNavigate();
-    const qrRefs = useRef({}); // Store refs for each QR code
+    const qrRefs = useRef({}); 
 
     useEffect(() => {
         if (userId) {

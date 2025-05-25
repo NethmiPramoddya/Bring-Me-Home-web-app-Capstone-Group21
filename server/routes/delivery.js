@@ -24,12 +24,12 @@ router.post("/verify-otp", async (req, res) => {
         }
 
 
-    //  Mark delivery as received
+   
     sender.deliveryStatus = "received";
-    //sender.status = "delivered"; // Optional: track overall status too
+    //sender.status = "delivered"; /
     await sender.save();
 
-    //  Fetch pending wallet transaction
+    
     const transaction = await WalletTransaction.findOne({
       sender_request_id: sender._id,
       status: "pending",
@@ -49,7 +49,7 @@ router.post("/verify-otp", async (req, res) => {
     wallet.can_withdrawal_amount += transaction.amount;
     await wallet.save();
 
-    // Mark transaction as success
+    
     transaction.status = "success";
     await transaction.save();
 
