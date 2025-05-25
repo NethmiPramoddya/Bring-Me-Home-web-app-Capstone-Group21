@@ -14,10 +14,10 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.setItem("isLoggedIn", false); 
-    localStorage.removeItem("userId"); // or other auth token
+    localStorage.removeItem("userId"); 
     localStorage.removeItem("userEmail");
     localStorage.removeItem("userPhone");
-    navigate("/login"); // redirect to login
+    navigate("/login"); 
   };
 
   useEffect(() => {

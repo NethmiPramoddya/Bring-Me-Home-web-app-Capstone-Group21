@@ -635,3 +635,79 @@ app.get("/users/:id", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+//AdminTravelers
+app.get("/travelers", async (req, res) => {
+  try {
+    const travelers = await TravelerModel.find().select(
+      "tname temail depature_country destination Luggage_space depature_date arrival_date post_date contactinfo_d contactinfo_a profile1 profile2 note"
+    );
+    res.json(travelers);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+//Admin Sender Requests
+app.get("/sender-requests", async (req, res) => {
+  try {
+    const requests = await SenderModel.find().select(
+      "sname semail rname remail plink item date fcountry dcountry weight length width height tip itemPrice totalCost post_date content message contactinfo_d contactinfo_a profile1 profile2 status paidAmount paymentStatus deliveryOtp systemShare travelerShare deliveryStatus needsPurchase paymentDate"
+    );
+    res.json(requests);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.get("/sender-request/:id", async (req, res) => {
+  try {
+    const request = await SenderModel.findById(req.params.id);
+    if (!request) return res.status(404).json({ message: "Request not found" });
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.delete("/sender-request/:id", async (req, res) => {
+  try {
+    const deleted = await SenderModel.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ message: "Request not found" });
+    res.json({ message: "Request deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// dashboard cards
+app.get("/api/admin/dashboard", async (req, res) => {
+  try {
+    const totalUsers = await UserModel.countDocuments();
+    const senderRequests = await SenderModel.countDocuments();
+    const totalTransactions = await WalletTransaction.countDocuments();
+    const revenueResult = await WalletTransaction.aggregate([
+      { $group: { _id: null, total: { $sum: "$amount" } } }
+    ]);
+
+    const totalRevenue = revenueResult[0]?.total || 0;
+
+    res.json({
+      totalUsers,
+      senderRequests,
+      totalTransactions,
+      totalRevenue,
+    });
+  } catch (err) {
+    console.error("Dashboard fetch error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
+

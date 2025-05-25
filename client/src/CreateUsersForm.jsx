@@ -157,7 +157,7 @@ function CreateUsersForm() {
 
             {formData.needsPurchase && (
             <div className="flex flex-col my-2">
-                <label htmlFor="itemPrice" className="block mb-1 font-medium text-gray-700 text-md">Item Price</label>
+                <label htmlFor="itemPrice" className="block mb-1 font-medium text-gray-700 text-md">Item Price $</label>
                 <input
                 type="number"
                 name="itemPrice"
@@ -170,7 +170,7 @@ function CreateUsersForm() {
             )}
 
             <div className="flex flex-col my-2">
-            <label className="block mb-1 font-medium text-gray-700 text-md">Tip (calculated automatically)</label>
+            <label className="block mb-1 font-medium text-gray-700 text-md">Tip $(calculated automatically)</label>
             <input
                 type="number"
                 value={formData.tip}

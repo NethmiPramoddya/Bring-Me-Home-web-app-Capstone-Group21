@@ -59,7 +59,7 @@ export default function AdminWallets() {
       <Sidebar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
       <main className="flex-1 p-6 overflow-auto">
-        {/* Optional mobile toggle button */}
+        {/* mobile toggle button */}
         <div className="block mb-4 md:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}

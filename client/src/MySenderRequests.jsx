@@ -20,12 +20,12 @@ function MySenderRequests() {
             try {
                 await axios.delete(`http://localhost:3002/deleteSenderRequest/${id}`);
         
-                // Make a copy of the current list
+                
                 const updatedList = mySenderRequests.filter(request => {
-                    return request._id !== id; // Keep only requests that are NOT the deleted one
+                    return request._id !== id; 
                 });
         
-                // Update the state with the new list
+                
                 setMySenderRequests(updatedList);
             } catch (err) {
                 console.log("Error deleting request:", err);

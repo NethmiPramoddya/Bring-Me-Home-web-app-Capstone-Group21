@@ -93,7 +93,11 @@ function UsersMyRequests() {
             <p className="text-red-600">
             🌍✈️🌎{request.fcountry} → {request.dcountry}
             </p>
-            <p className="text-sm font-bold text-gray-500">Requested Date: {request.date}</p>
+            <p className="text-sm font-bold text-gray-500">Requested Date: {new Date(request.date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}</p>
             <p className="text-sm text-gray-500">⚖️Weight of {request.item}(kg): {request.weight}</p>
             <p className="text-sm text-gray-500">📦➡️Length of {request.item}(cm): {request.length}</p>
             <p className="text-sm text-gray-500">📦⬆️⬇️Height of {request.item}(cm): {request.height}</p>

@@ -19,12 +19,12 @@ function MyTravelingData() {
                 try {
                     await axios.delete(`http://localhost:3002/deleteTravelerData/${id}`);
             
-                    // Make a copy of the current list
+                    
                     const updatedList = myTravelingData.filter(travelerData => {
-                        return travelerData._id !== id; // Keep only requests that are NOT the deleted one
+                        return travelerData._id !== id; 
                     });
             
-                    // Update the state with the new list
+                    
                     setMyTravelingData(updatedList);
                 } catch (err) {
                     console.log("Error deleting request:", err);
