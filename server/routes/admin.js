@@ -5,7 +5,7 @@ const Senders = require("../models/Senders");
 const UserModel = require("../models/user");
 const router = express.Router();
 
-// POST /admin/withdraw/:traveler_user_id
+
 router.post("/withdraw/:traveler_user_id", async (req, res) => {
   const { traveler_user_id } = req.params;
 
@@ -19,7 +19,7 @@ router.post("/withdraw/:traveler_user_id", async (req, res) => {
       return res.status(400).json({ message: "No funds to withdraw" });
     }
 
-    // Set withdrawal amount to 0
+    
     wallet.actual_amount=(wallet.actual_amount-wallet.can_withdrawal_amount);
     wallet.can_withdrawal_amount = 0;
     await wallet.save();

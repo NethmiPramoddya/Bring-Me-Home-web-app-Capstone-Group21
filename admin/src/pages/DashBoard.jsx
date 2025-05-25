@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 import logo from '../assets/logo.png';
 
-// Simple Card and CardContent components to replace missing imports
 function Card({ children, className }) {
   return <div className={`shadow-lg rounded-2xl bg-white ${className}`}>{children}</div>;
 }
@@ -26,28 +25,17 @@ function DashBoard() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    // For frontend only testing, you can comment out this axios call and set dummy data
-    /*
     axios
-      .get('/api/admin/dashboard')
+      .get('http://localhost:3002/api/admin/dashboard') 
       .then((res) => {
         setDashboardData(res.data);
         setLoading(false);
       })
       .catch((err) => {
+        console.error(err);
         setError('Failed to fetch dashboard data');
         setLoading(false);
       });
-    */
-
-    // Dummy data for frontend testing without backend
-    setDashboardData({
-      totalUsers: 1245,
-      senderRequests: 367,
-      totalTransactions: 23580.5,
-      totalRevenue: 3455.0,
-    });
-    setLoading(false);
   }, []);
 
   return (
@@ -64,23 +52,23 @@ function DashBoard() {
         } md:relative md:translate-x-0`}
       >
         <div className="flex items-center p-6 border-b border-gray-200">
-                <img src={logo} alt="Logo" className="w-10 h-auto" />
-                <h3 className='ml-3 text-red-600 '>Bring Me Home</h3>
-                </div>
+          <img src={logo} alt="Logo" className="w-10 h-auto" />
+          <h3 className="ml-3 text-red-600">Bring Me Home</h3>
+        </div>
         <nav className="p-4 space-y-4 text-gray-700">
           {[
             ['Dashboard', <Menu size={18} />, '/'],
-            ['Users', <Users size={18} />, '/admin/users'],
-            ['Sender Requests', <Package size={18} />, '/manageSenders'],
-            ['Traveler Forms', <ClipboardList size={18} />, '/admin/travelers'],
-            ['Ongoing Tasks', <ClipboardList size={18} />, '/admin/tasks'],
+            ['Users', <Users size={18} />, '/users'],
+            ['Sender Requests', <Package size={18} />, '/sender-requests'],
+            ['Traveler Forms', <ClipboardList size={18} />, '/travelers'],
+            ['Ongoing Tasks', <ClipboardList size={18} />, '/onGoingTasks'],
             ['Wallets', <Wallet size={18} />, '/withdrawal'],
           ].map(([label, icon, path], i) => (
             <Link
               key={i}
               to={path}
               className="flex items-center gap-2 transition duration-200 transform cursor-pointer hover:text-red-700 hover:scale-105"
-              onClick={() => setMenuOpen(false)} // close menu on link click (mobile)
+              onClick={() => setMenuOpen(false)}
             >
               {icon} {label}
             </Link>
@@ -133,7 +121,7 @@ function DashBoard() {
                 <Card className="transition bg-white border-l-4 border-yellow-500 shadow-lg rounded-2xl">
                   <CardContent className="p-6">
                     <h2 className="text-sm text-gray-500">Total Transactions</h2>
-                    <p className="text-3xl font-bold text-yellow-600">${dashboardData.totalTransactions.toFixed(2)}</p>
+                    <p className="text-3xl font-bold text-yellow-600">{dashboardData.totalTransactions.toFixed(2)}</p>
                   </CardContent>
                 </Card>
               </motion.div>

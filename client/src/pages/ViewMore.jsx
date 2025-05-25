@@ -116,7 +116,7 @@ function ViewMore() {
     try {
       // Request backend to generate the hash value
       const response = await fetch(
-        'https://dcdd-2402-4000-2300-38da-65d1-aafe-82b6-28f.ngrok-free.app/payment/start',
+        'https://ee89-2402-4000-2310-3ca9-f162-1520-476-c642.ngrok-free.app/payment/start',
         {
           method: 'POST',
           headers: {
@@ -148,7 +148,7 @@ function ViewMore() {
           merchant_id: merchant_id,
           return_url: `http://localhost:3002/payment/success`,
           cancel_url: 'http://localhost:3002/payment/cancel',
-          notify_url: 'https://dcdd-2402-4000-2300-38da-65d1-aafe-82b6-28f.ngrok-free.app/payment/notify',
+          notify_url: 'https://ee89-2402-4000-2310-3ca9-f162-1520-476-c642.ngrok-free.app/payment/notify',
           order_id: paymentDetails.order_id,
           items: viewMore.item,
           amount: paymentDetails.amount,
@@ -163,9 +163,9 @@ function ViewMore() {
           hash: hash,
         };
 
-        // Initialize PayHere payment
+        // Initializing PayHere payment
         window.payhere.startPayment(payment);
-        // Optimistically update viewMore
+        
             setViewMore((prev) => ({
               ...prev,
               paymentStatus: 'paid',
@@ -183,12 +183,12 @@ function ViewMore() {
   };
 
   const handleChat = async () => {
-    // Store the current sender request ID for error recovery
+    
     localStorage.setItem('currentViewMoreId', viewMore._id);
     
     if (!roomId && viewMore) {
       try {
-        // First check if we already have a roomId in the viewMore data
+        //  checking  roomId in the viewMore
         if (viewMore.roomId) {
           setRoomId(viewMore.roomId);
           localStorage.setItem('roomId', viewMore.roomId);
@@ -196,7 +196,7 @@ function ViewMore() {
           return;
         }
         
-        // If not in state, try to fetch the latest data from server
+        
         const res = await axios.get(`http://localhost:3002/view_more/${viewMore._id}`);
         if (res.data?.roomId) {
           setRoomId(res.data.roomId);
@@ -214,7 +214,7 @@ function ViewMore() {
           return;
         }
         
-        // If no room exists yet, we need to create one
+        // If no room exists 
         if (viewMore.status === 'accepted' || viewMore.paymentStatus === 'paid') {
           const newRoomId = generateUniqueId(16);
           try {
@@ -244,7 +244,7 @@ function ViewMore() {
       }
     }
 
-    // If we already have a roomId, just navigate to it
+    
     if (roomId) {
       navigate(`/chat/${roomId}`);
     } else {
@@ -309,7 +309,11 @@ function ViewMore() {
             🕒 Current Date
           </div>
           <p className="text-base font-medium text-gray-800">
-            {viewMore.post_date}
+            {new Date(viewMore.post_date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
           </p>
         </div>
 
@@ -384,12 +388,12 @@ function ViewMore() {
         </div>
         <div className="p-4 mb-2 border border-blue-300 rounded-xl bg-blue-50">
             <p className="font-medium text-blue-700">
-              📦 Please share this package OTP only with the receiver 🔐
+               Please share this package OTP only with the receiver 
             </p>
           </div>
           <div className="p-4 mb-3 border border-red-300 rounded-xl bg-red-50">
             <p className="font-medium text-red-600">
-              ⚠️ Force receiver to scan QR 📲 and enter correct OTP ✅
+               Force receiver to scan QR and enter correct OTP 
             </p>
           </div>
 

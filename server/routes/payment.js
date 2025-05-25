@@ -9,8 +9,8 @@ const NotificationModel = require("../models/Notification");
 const router = express.Router();
 
 // Merchant details
-const merchant_id = "1230370"; // Replace with your actual Merchant ID
-const merchant_secret = "MTEwODI1ODM0ODI0MDY0MTg1MDQxMzk2NTQyMzcxMjIwOTgzNTU="; // Replace with your Merchant Secret
+const merchant_id = "1230370"; 
+const merchant_secret = "MTEwODI1ODM0ODI0MDY0MTg1MDQxMzk2NTQyMzcxMjIwOTgzNTU="; 
 
 router.post("/start", (req, res) => {
   const { order_id, amount, currency } = req.body;
@@ -91,7 +91,7 @@ router.post("/notify", async (req, res) => {
         paymentStatus = 'paid';
       }
 
-      // to Generate 6-digit OTP
+      //  6-digit OTP
       const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
       sender.paidAmount = paidAmount;
@@ -110,21 +110,21 @@ router.post("/notify", async (req, res) => {
           await wallet.save();
         }
 
-        // Create wallet transaction
+        
         const travelerShare = sender.travelerShare || 0;
 
-        //  Update actual_amount immediately
+        
             wallet.actual_amount += travelerShare;
             await wallet.save();
 
-        // Create wallet transaction
+       
           //const travelerShare = sender.travelerShare || 0;
 
           const transaction = new WalletTransaction({
             sender_request_id: sender._id,
             wallet_id: wallet._id,
             amount: travelerShare,
-            status: "pending", // not withdrawable yet
+            status: "pending", 
           });
           await transaction.save();
 
@@ -133,7 +133,7 @@ router.post("/notify", async (req, res) => {
 
 
       if (paymentStatus === 'paid') {
-        // Create notification for the traveler
+        //  notification for the traveler
           try {
               await NotificationModel.create({
                   from_id: sender.buyer_id,
@@ -145,11 +145,11 @@ router.post("/notify", async (req, res) => {
               });
           } catch (notifyErr) {
               console.error("Error creating notification:", notifyErr);
-              // Continue even if notification fails
+              
           }
       }
 
-      return res.sendStatus(200); // ✅ Only this one
+      return res.sendStatus(200); 
     } catch (error) {
       console.error("Error updating sender payment:", error);
       return res.sendStatus(500);

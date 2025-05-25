@@ -36,12 +36,12 @@ function Profile() {
 
     
   const handleLogout = () => {
-    localStorage.removeItem("userId"); // or other auth token
-    navigate("/login"); // redirect to login
+    localStorage.removeItem("userId"); 
+    navigate("/login"); 
   };
 
     if (!user.name) {
-        return <div>Loading...</div>; // Show loading message while data is being fetched
+        return <div>Loading...</div>; 
     }
 
 
