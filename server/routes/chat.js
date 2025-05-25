@@ -6,7 +6,7 @@ const NotificationModel = require('../models/Notification');
 const SenderModel = require('../models/Senders');
 const UserModel = require('../models/user');
 
-// Get room ID by sender request ID
+
 router.get('/room/:senderRequestId', async (req, res) => {
     try {
         const chatRoom = await RoomChatModel.findOne({ sender_request_id: req.params.senderRequestId });
@@ -20,7 +20,7 @@ router.get('/room/:senderRequestId', async (req, res) => {
     }
 });
 
-// Get room details by roomId
+//  room details by roomId
 router.get('/room-details/:roomId', async (req, res) => {
     try {
         const chatRoom = await RoomChatModel.findOne({ roomID: req.params.roomId });
@@ -28,7 +28,7 @@ router.get('/room-details/:roomId', async (req, res) => {
             return res.status(404).json({ message: 'Chat room not found' });
         }
 
-        // Get sender and traveler details
+        //  sender and traveler details
         let senderInfo = null;
         let travelerInfo = null;
 
@@ -52,7 +52,7 @@ router.get('/room-details/:roomId', async (req, res) => {
     }
 });
 
-// Get message history
+//  message history
 router.get('/messages/:roomId', async (req, res) => {
     try {
         const messages = await MessageModel.find({ room: req.params.roomId }).sort({ createdAt: 1 });

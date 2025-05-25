@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 function ReceiverDetails() {
-  const { id } = useParams(); // sender_request_id from URL
+  const { id } = useParams(); 
   const [task, setTask] = useState(null);
   const [otp, setOtp] = useState("");
   const [message, setMessage] = useState("");

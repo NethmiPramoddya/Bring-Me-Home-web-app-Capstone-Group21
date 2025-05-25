@@ -33,7 +33,7 @@ function EditProfile() {
           location: user.location || '',
         }));
 
-        // Fetch wallet info (optional, if you want to pre-fill bank details)
+       
         axios.get(`http://localhost:3002/wallet/${userId}`)
           .then(walletRes => {
             const bank = walletRes.data.bankDetails || {};

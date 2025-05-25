@@ -14,11 +14,11 @@ function LogIn() {
         axios.post('http://localhost:3002/login', {email,password})
         .then(result => {console.log(result)
           if(result.data.message === "Success"){
-          // Store simple login state in localStorage
+          
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("userEmail", result.data.email);
           localStorage.setItem("userId", result.data.userId); //  Store userId
-          // Get user data to save username
+          
           axios.get(`http://localhost:3002/profile/${result.data.userId}`)
             .then(userResponse => {
               localStorage.setItem("username", userResponse.data.name || userResponse.data.username || result.data.email.split('@')[0]);
@@ -26,7 +26,7 @@ function LogIn() {
             })
             .catch(err => {
               console.log("Error fetching user profile:", err);
-              // Fall back to email username if profile fetch fails
+              
               localStorage.setItem("username", result.data.email.split('@')[0]);
               Navigate('/');
             });
