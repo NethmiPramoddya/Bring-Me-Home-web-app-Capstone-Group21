@@ -3,19 +3,15 @@ from langgraph.graph import StateGraph, START, END
 from langchain_ollama.llms import OllamaLLM
 
 
-# Step 1: Define State
 class State(Dict):
     messages: List[Dict[str, str]] 
 
 
-# Step 2: Initialize StateGraph
 graph_builder = StateGraph(State)
 
-# Initialize the LLM
 llm = OllamaLLM(model="llama3.2")
 
 
-# Define chatbot function
 def chatbot(state: State):
     response = llm.invoke(state["messages"])
     state["messages"].append({"role": "assistant", "content": response})  # Treat response as a string
@@ -23,7 +19,6 @@ def chatbot(state: State):
 
 
 
-# Add nodes and edges
 graph_builder.add_node("chatbot", chatbot)
 graph_builder.add_edge(START, "chatbot")
 graph_builder.add_edge("chatbot", END)
@@ -33,7 +28,6 @@ graph_builder.add_edge("chatbot", END)
 graph = graph_builder.compile()
 
 
-# Stream updates
 def stream_graph_updates(user_input: str):    
     state = {"messages": [{"role": "user", "content": user_input}]}
     for event in graph.stream(state):
@@ -42,7 +36,6 @@ def stream_graph_updates(user_input: str):
 
 
 
-# Run chatbot in a loop
 if __name__ == "__main__":
     while True:
         try:
