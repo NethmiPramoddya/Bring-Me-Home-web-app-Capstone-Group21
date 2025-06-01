@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Bell, User } from "lucide-react";
+import { Bell, User, MessageCircle } from "lucide-react";
 import logo from './assets/logo.png'
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
@@ -73,7 +73,14 @@ const Navbar = () => {
               )}
             </button>
               )}
-        
+      
+      {/* Chat Icon */}
+        <button
+              className="text-gray-700 hover:text-red-600"
+              onClick={() => navigate('/chat')}
+        >
+        <MessageCircle className="w-5 h-5" />
+        </button>
 
         {/* User Profile Dropdown */}
         <div className="relative" ref={dropdownRef}>
