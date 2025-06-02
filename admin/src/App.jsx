@@ -6,6 +6,7 @@ import DashBoard from './pages/DashBoard'
 import AdminUsers from './pages/Users'
 import AdminTravelers from './pages/AdminTravelers'
 import AdminSenderRequests from './pages/AdminSenderRequests'
+import AdminOngoingTasks from './pages/AdminOngoingTasks'
 
 
 
@@ -22,6 +23,7 @@ function App() {
           <Route path='/users'element={<AdminUsers/>}></Route>
           <Route path='/travelers'element={<AdminTravelers/>}></Route>
           <Route path='/sender-requests'element={<AdminSenderRequests/>}></Route>
+          <Route path='/onGoingTasks'element={<AdminOngoingTasks/>}></Route>
           
           
 

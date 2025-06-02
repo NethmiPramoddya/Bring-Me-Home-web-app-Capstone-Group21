@@ -113,20 +113,22 @@ router.post("/notify", async (req, res) => {
         
         const travelerShare = sender.travelerShare || 0;
 
-        
-            wallet.actual_amount += travelerShare;
-            await wallet.save();
+        if(sender.itemPrice!=null){
+          itemPrice=sender.itemPrice;
+        }else{
+          itemPrice=0;
+        }
+        transactionAmount=(travelerShare+(itemPrice));
+        wallet.actual_amount += transactionAmount;
+        await wallet.save();
 
-       
-          //const travelerShare = sender.travelerShare || 0;
-
-          const transaction = new WalletTransaction({
-            sender_request_id: sender._id,
-            wallet_id: wallet._id,
-            amount: travelerShare,
-            status: "pending", 
-          });
-          await transaction.save();
+        const transaction = new WalletTransaction({
+          sender_request_id: sender._id,
+          wallet_id: wallet._id,
+          amount: transactionAmount,
+          status: "pending", 
+        });
+        await transaction.save();
 
       console.log("Payment successful for order:", order_id);
       console.log("Generated OTP:", otp);
@@ -138,7 +140,7 @@ router.post("/notify", async (req, res) => {
               await NotificationModel.create({
                   from_id: sender.buyer_id,
                   to_id: sender.traveller_user_id,
-                  content: `${sender.sname} paid $ ${sender.travelerShare} for deliver ${sender.item}`,
+                  content: `${sender.sname} paid $ ${transactionAmount} for deliver ${sender.item}`,
                   link: `/onGoingTasks/${sender.traveller_user_id}`,
                   dateTime: new Date(),
                   status: false
