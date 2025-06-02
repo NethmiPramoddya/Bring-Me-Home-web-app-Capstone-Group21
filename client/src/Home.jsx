@@ -7,8 +7,10 @@ import Safe_logo from "./assets/safe.png";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Home() {
+  const navigate = useNavigate();
   useEffect(() => {
     AOS.init({ duration: 1300 });
   });
@@ -78,6 +80,9 @@ export default function Home() {
           helping traveler.
         </p>
         <button
+          onClick={() => {
+              navigate("/sender-requests");
+          }}
           class="flex-shrink-0 rounded-[13px] bg-[#6A6A6A] absolute top-[420px] left-[40px]
         
 

@@ -137,7 +137,7 @@ function MoreInfo() {
                   </button>
                 )}
           
-          <Link to="/" className="bg-[#b33434] hover:bg-[#a12d2d] w-[33.33%] text-center text-white py-1 px-4 rounded text-lg transition">
+          <Link to="/sender-requests" className="bg-[#b33434] hover:bg-[#a12d2d] w-[33.33%] text-center text-white py-1 px-4 rounded text-lg transition">
              ⬅️ Go Back
           </Link>
           </div>

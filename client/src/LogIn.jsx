@@ -22,13 +22,13 @@ function LogIn() {
           axios.get(`http://localhost:3002/profile/${result.data.userId}`)
             .then(userResponse => {
               localStorage.setItem("username", userResponse.data.name || userResponse.data.username || result.data.email.split('@')[0]);
-              Navigate('/');
+              Navigate('/sender-requests');
             })
             .catch(err => {
               console.log("Error fetching user profile:", err);
               
               localStorage.setItem("username", result.data.email.split('@')[0]);
-              Navigate('/');
+              Navigate('/sender-requests');
             });
           }else{
             alert(result.data.message)
