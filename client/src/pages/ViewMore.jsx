@@ -114,9 +114,10 @@ function ViewMore() {
     };
 
     try {
+      const paymentUrl = import.meta.env.VITE_NGROQ_PAYMENT_URL;
       // Request backend to generate the hash value
       const response = await fetch(
-        'https://ee89-2402-4000-2310-3ca9-f162-1520-476-c642.ngrok-free.app/payment/start',
+          paymentUrl+'/payment/start',
         {
           method: 'POST',
           headers: {
@@ -148,7 +149,7 @@ function ViewMore() {
           merchant_id: merchant_id,
           return_url: `http://localhost:3002/payment/success`,
           cancel_url: 'http://localhost:3002/payment/cancel',
-          notify_url: 'https://ee89-2402-4000-2310-3ca9-f162-1520-476-c642.ngrok-free.app/payment/notify',
+          notify_url: paymentUrl+'/payment/notify',
           order_id: paymentDetails.order_id,
           items: viewMore.item,
           amount: paymentDetails.amount,

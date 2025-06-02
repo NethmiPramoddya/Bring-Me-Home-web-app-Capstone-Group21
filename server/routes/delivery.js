@@ -53,7 +53,7 @@ router.post("/verify-otp", async (req, res) => {
     transaction.status = "success";
     await transaction.save();
 
-    return res.status(200).json({ message: "Delivery confirmed. Wallet updated." });
+    return res.status(200).json({ message: "Delivery confirmed. Thankyou!." });
   } catch (error) {
   console.error("OTP verification error:", error.message);
   console.error(error.stack);
