@@ -58,7 +58,7 @@ function CreateUsersForm() {
         axios.post("http://localhost:3002/create", submissionData)
         .then(result => {
             console.log(result)
-            navigate("/")
+            navigate("/sender-requests")
         })
         .catch(err => console.log(err))
       };
