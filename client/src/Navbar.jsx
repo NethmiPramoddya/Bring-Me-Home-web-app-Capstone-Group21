@@ -75,12 +75,12 @@ const Navbar = () => {
               )}
       
       {/* Chat Icon */}
-        <button
+        {/* <button
               className="text-gray-700 hover:text-red-600"
               onClick={() => navigate('/chat')}
         >
         <MessageCircle className="w-5 h-5" />
-        </button>
+        </button> */}
 
         {/* User Profile Dropdown */}
         <div className="relative" ref={dropdownRef}>
