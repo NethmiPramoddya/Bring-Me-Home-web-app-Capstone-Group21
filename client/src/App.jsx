@@ -30,8 +30,8 @@ function App() {
         <Navbar/>
         
         <Routes>
-          <Route path='/' element={<UsersMyRequestes/>}></Route>
-          <Route path='/Home' element={<Home/>}></Route>
+          <Route path='/sender-requests' element={<UsersMyRequestes/>}></Route>
+          <Route path='/' element={<Home/>}></Route>
           <Route path='/create' element={<CreateUsersForm/>}></Route>
           <Route path='/edit/:id' element={<EditUsers/>}></Route>
           <Route path='/register' element={<SignUp/>}></Route>
