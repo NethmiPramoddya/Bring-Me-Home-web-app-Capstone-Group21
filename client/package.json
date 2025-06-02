@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "aos": "^2.3.4",
     "axios": "^1.8.4",
+    "groq-sdk": "^0.23.0",
     "html-to-image": "^1.11.13",
     "lucide-react": "^0.487.0",
     "qrcode.react": "^4.2.0",
