@@ -147,8 +147,8 @@ function ViewMore() {
         const payment = {
           sandbox: true,
           merchant_id: merchant_id,
-          return_url: `http://localhost:3002/payment/success`,
-          cancel_url: 'http://localhost:3002/payment/cancel',
+          return_url: `http://localhost:5174/view_more/`+paymentDetails.order_id,
+          cancel_url: `http://localhost:5174/view_more/`+paymentDetails.order_id,
           notify_url: paymentUrl+'/payment/notify',
           order_id: paymentDetails.order_id,
           items: viewMore.item,
@@ -169,7 +169,7 @@ function ViewMore() {
         
             setViewMore((prev) => ({
               ...prev,
-              paymentStatus: 'paid',
+              // paymentStatus: 'paid',
               roomId: newRoomId,
             }));
             setRoomId(newRoomId);
@@ -424,7 +424,7 @@ function ViewMore() {
             </p>
           )}
           <Link
-            to="/"
+            to="/sender-requests"
             className="bg-[#b33434] hover:bg-[#a12d2d] w-1/3 text-center text-white py-1 px-4 rounded text-lg"
           >
             ⬅️ Go Back
