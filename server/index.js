@@ -708,6 +708,36 @@ app.get("/api/admin/dashboard", async (req, res) => {
   }
 });
 
+//Admin OnGoing Tasks
+app.get("/admin/ongoingTasks", async(req,res)=>{
+    try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const ongoingTasks = await SenderModel.find({
+            status: "accepted",
+            paymentStatus: "paid",
+            deliveryStatus: "pending",
+            date: { $gte: today }
+        }).sort({ date: 1 });
+
+        // Get traveler names for each task
+        const tasksWithNames = await Promise.all(ongoingTasks.map(async (task) => {
+            const traveler = await TravelerModel.findOne({ traveler_id: task.traveller_user_id });
+            return {
+                ...task.toObject(),
+                tname: traveler ? traveler.tname : "Unknown Traveler",
+                contactinfo_d: traveler ? traveler.contactinfo_d : "No contact info"
+            };
+        }));
+
+        res.json(tasksWithNames);
+    } catch (error) {
+        console.error("Error fetching admin ongoing tasks:", error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 
 
