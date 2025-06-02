@@ -42,7 +42,7 @@ function TravelerForm() {
         axios.post("http://localhost:3002/createTraveler", submissionData)
         .then(result => {
             console.log(result)
-            navigate("/")
+            navigate("/sender-requests")
         })
         .catch(err => console.log(err))
       };
