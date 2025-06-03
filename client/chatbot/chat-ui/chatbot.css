@@ -56,3 +56,22 @@ body {
   border-bottom-left-radius: 4px;
   margin-right: auto;
 }
+.input-area {
+  display: flex;
+  padding: 10px;
+  background: #fff;
+  border-top: 1px solid #ccc;
+}
+textarea {
+  flex: 1;
+  resize: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border 0.3s ease;
+}
+textarea:focus {
+  border-color: #0078d7;
+}
