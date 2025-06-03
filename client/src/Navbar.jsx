@@ -58,7 +58,7 @@ const Navbar = () => {
 
       {/* Right side links & icons */}
       <div className="flex items-center gap-6">
-        <Link to="/" className="font-medium text-gray-700 hover:text-red-600">
+        <Link to="/sender-requests" className="font-medium text-gray-700 hover:text-red-600">
           Sender Requests
         </Link>
         <Link to="/become-traveler" className="font-medium text-gray-700 hover:text-red-600">
