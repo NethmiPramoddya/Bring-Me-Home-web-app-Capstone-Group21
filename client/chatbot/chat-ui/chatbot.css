@@ -22,3 +22,23 @@ body {
   font-size: 1.5rem;
   font-weight: bold;
 }
+.chat-box {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #e5e5e5;
+  display: flex;
+  flex-direction: column;
+}
+.message-container {
+  display: flex;
+  margin-bottom: 12px;
+}
+.message {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 20px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
