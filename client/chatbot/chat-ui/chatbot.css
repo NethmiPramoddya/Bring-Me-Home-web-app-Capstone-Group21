@@ -42,3 +42,17 @@ body {
   word-wrap: break-word;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
+.user {
+  background-color: #0078d7;
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+  margin-left: auto;
+}
+.assistant {
+  background-color: #f1f0f0;
+  color: #333;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+  margin-right: auto;
+}
