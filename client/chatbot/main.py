@@ -1,0 +1,25 @@
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import List, Dict
+from langgraph.graph import StateGraph, START, END
+from langchain_ollama.llms import OllamaLLM
+
+class State(Dict):
+    messages: List[Dict[str, str]]
+
+llm = OllamaLLM(model="llama3.2")
+graph_builder = StateGraph(State)
+
+def chatbot(state: State):
+    response = llm.invoke(state["messages"])
+    state["messages"].append({"role": "assistant", "content": response})
+    return {"messages": state["messages"]}
+
+graph_builder.add_node("chatbot", chatbot)
+graph_builder.add_edge(START, "chatbot")
+graph_builder.add_edge("chatbot", END)
+graph = graph_builder.compile()
+
+
+app = FastAPI()
