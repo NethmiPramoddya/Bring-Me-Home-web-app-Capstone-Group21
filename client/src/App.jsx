@@ -19,7 +19,6 @@ import RoomId from './RoomId'
 import OnGoingTasks from './OnGoingTasks'
 import ReceiverDetails from './ReceiverDetails'
 import EditProfile from './EditProfile'
-import ChatBot from './ChatBot'
 
 function App() {
   const userId = localStorage.getItem('userId');
@@ -50,7 +49,6 @@ function App() {
           <Route path="/edit-profile" element={<EditProfile />} />
         </Routes>
         
-        <ChatBot />
       </BrowserRouter>
     </div>
   )
