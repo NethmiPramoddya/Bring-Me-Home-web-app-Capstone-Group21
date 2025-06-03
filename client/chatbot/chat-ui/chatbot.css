@@ -90,3 +90,10 @@ button:disabled {
   background-color: #7daedc;
   cursor: not-allowed;
 }
+.loading {
+  padding-left: 15px;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #666;
+  align-self: center;
+}
