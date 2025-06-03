@@ -12,4 +12,13 @@ function App() {
   );
 }
 
+<div className="chat-box">
+  {messages.map((msg, index) => (
+    <div key={index} className="message-container">
+      <div className={`message ${msg.role}`}>{msg.content}</div>
+    </div>
+  ))}
+</div>
+
+
 export default App;
