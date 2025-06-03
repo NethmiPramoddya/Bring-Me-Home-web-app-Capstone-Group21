@@ -20,5 +20,18 @@ function App() {
   ))}
 </div>
 
+const [input, setInput] = useState("");
+
+<div className="input-area">
+  <textarea
+    rows="1"
+    value={input}
+    onChange={(e) => setInput(e.target.value)}
+    placeholder="Type a message..."
+  />
+  <button onClick={sendMessage}>Send</button>
+</div>
+
+
 
 export default App;
