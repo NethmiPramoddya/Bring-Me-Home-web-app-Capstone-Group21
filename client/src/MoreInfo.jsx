@@ -3,11 +3,13 @@ import axios from 'axios';
 import { useParams,Link } from 'react-router-dom';
 
 
-function MoreInfo() {
+function MoreInfo() 
+{
     const { id } = useParams();
     const [info, setInfo] =useState(null);
 
-    useEffect(() => {
+    useEffect(() => 
+      {
         axios.get(`http://localhost:3002/more_info/${id}`)
           .then(result => setInfo(result.data))
           .catch(err => console.log(err))
@@ -15,33 +17,44 @@ function MoreInfo() {
 
       if (!info) return <p className="mt-10 text-center">Loading...</p>;
 
-      const handleAccept = async () => {
-        try {
+      const handleAccept = async () => 
+        {
+        try 
+        {
           const travelerId = localStorage.getItem("userId"); // Traveler logged in
-          if (!travelerId) {
+          if (!travelerId) 
+            {
             alert("Please login first!");
             return;
           }
       
           // Make Accept API call
-          try {
-            const acceptResponse = await axios.post(`http://localhost:3002/acceptRequest`, {
+          try 
+          {
+            const acceptResponse = await axios.post(`http://localhost:3002/acceptRequest`, 
+              {
               requestId: info._id,
               travelerId: travelerId,
-            });
+            }
+          );
 
-            if (acceptResponse.data.success) {
+            if (acceptResponse.data.success) 
+              {
               alert("Request accepted successfully!");
               window.location.reload(); 
-            } else {
+            } 
+            else 
+            {
               alert(acceptResponse.data.message || "Your travel details do not match this request!");
             }
-          } catch (error) {
+          } catch (error) 
+          {
             console.error("Error during accept request:", error);
             alert(error.response?.data?.message || "An error occurred while processing your request.");
           }
             
-        } catch (error) {
+        } catch (error) 
+        {
           console.error(error);
           alert("An error occurred!");
         }

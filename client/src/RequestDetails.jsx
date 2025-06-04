@@ -2,11 +2,13 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios';
 import { useParams,Link } from 'react-router-dom';
 
-function RequestDetails() {
+function RequestDetails() 
+{
   const { senderRequestId } = useParams();
   const [details, setDetails] =useState(null);
 
-  useEffect(() => {
+  useEffect(() => 
+    {
       axios.get(`http://localhost:3002/buyer-requests/${senderRequestId}`)
         .then(result => setDetails(result.data))
         .catch(err => console.log(err))

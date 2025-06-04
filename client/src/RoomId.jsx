@@ -8,7 +8,8 @@ import Chats from './Chats';
 const socket = io('http://localhost:3002', { autoConnect: false });
 const API_URL = 'http://localhost:3002';
 
-function RoomId() {
+function RoomId() 
+{
   const { roomId } = useParams();
   const navigate = useNavigate();
   
@@ -21,12 +22,14 @@ function RoomId() {
   const [showChat, setShowChat] = useState(false);
   
   // Check authentication and get user info
-  useEffect(() => {
+  useEffect(() => 
+    {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const userId = localStorage.getItem("userId");
     const username = localStorage.getItem("username");
     
-    if (!isLoggedIn || !userId) {
+    if (!isLoggedIn || !userId) 
+      {
       navigate('/login');
       return;
     }
@@ -36,31 +39,42 @@ function RoomId() {
   }, [navigate]);
   
   // Set room ID from URL parameter
-  useEffect(() => {
-    if (roomId) {
+  useEffect(() => 
+    {
+    if (roomId) 
+      {
       setRoom(roomId);
       localStorage.setItem('currentChatRoom', roomId);
-    } else {
+    } 
+    else 
+    {
       const savedRoom = localStorage.getItem('currentChatRoom');
-      if (savedRoom) {
+      if (savedRoom) 
+        {
         navigate(`/chat/${savedRoom}`, { replace: true });
-      } else {
+      } else 
+      {
         setError('No chat room found');
         setLoading(false);
       }
     }
-  }, [roomId, navigate]);
+  }, [roomId, navigate]
+);
   
   // Fetch room details and partner info
-  useEffect(() => {
+  useEffect(() => 
+    {
     if (!room || !userId) return;
     
-    const fetchRoomDetails = async () => {
-      try {
+    const fetchRoomDetails = async () => 
+      {
+      try 
+      {
         setLoading(true);
         
         // First check if room exists
-        try {
+        try 
+        {
           const roomResponse = await axios.get(`${API_URL}/chat/room-details/${room}`);
           console.log("Room details:", roomResponse.data);
           
@@ -70,11 +84,15 @@ function RoomId() {
             : roomResponse.data.sender_user_id;
           
           // Get partner details if we have a partner ID
-          if (partnerId) {
-            try {
+          if (partnerId) 
+            {
+            try 
+            {
               const userResponse = await axios.get(`${API_URL}/profile/${partnerId}`);
               setChatPartner(userResponse.data);
-            } catch (userErr) {
+            } 
+            catch (userErr) 
+            {
               console.error("Error fetching partner details:", userErr);
               // Continue even if we can't get partner details
             }
@@ -83,37 +101,49 @@ function RoomId() {
           setLoading(false);
           setShowChat(true);
           
-        } catch (roomErr) {
+        } 
+        catch (roomErr) 
+        {
           console.error("Room not found, checking update_room endpoint:", roomErr);
           
           // If room doesn't exist, try to find it in SenderModel
           const viewMoreId = localStorage.getItem('currentViewMoreId');
           
-          if (viewMoreId) {
-            try {
+          if (viewMoreId) 
+            {
+            try 
+            {
               const senderResponse = await axios.get(`${API_URL}/view_more/${viewMoreId}`);
               
-              if (senderResponse.data.roomId) {
+              if (senderResponse.data.roomId) 
+                {
                 // If sender has a roomId but it doesn't match our current one, navigate to it
-                if (senderResponse.data.roomId !== room) {
+                if (senderResponse.data.roomId !== room) 
+                  {
                   navigate(`/chat/${senderResponse.data.roomId}`, { replace: true });
                   return;
                 }
-              } else {
+              } else 
+              {
                 setError("This chat room does not exist. Please go back to the sender request.");
                 setLoading(false);
               }
-            } catch (senderErr) {
+            } 
+            catch (senderErr) 
+            {
               console.error("Error checking sender:", senderErr);
               setError("Could not find chat room. Please try again later.");
               setLoading(false);
             }
-          } else {
+          } else 
+          {
             setError("Chat room not found. Please go back to the sender request.");
             setLoading(false);
           }
         }
-      } catch (err) {
+      } 
+      catch (err) 
+      {
         console.error("Error in room fetching process:", err);
         setError("Could not load chat room. Please try again later.");
         setLoading(false);
@@ -124,7 +154,8 @@ function RoomId() {
   }, [room, userId, navigate]);
   
   // Connect to socket.io and join room
-  useEffect(() => {
+  useEffect(() => 
+    {
     if (!room || !userId || !username || !showChat) return;
     
     console.log(`Connecting to socket for room: ${room}, user: ${userId}`);
@@ -136,17 +167,20 @@ function RoomId() {
     // Join the room with user ID for read receipts
     socket.emit('join_room', { roomId: room, userId });
     
-    socket.on('connect', () => {
+    socket.on('connect', () => 
+      {
       console.log('Socket connected with ID:', socket.id);
     });
     
-    socket.on('connect_error', (error) => {
+    socket.on('connect_error', (error) => 
+      {
       console.error('Socket connection error:', error);
       setError("Could not connect to chat server. Please try again later.");
     });
     
     // Clean up on unmount
-    return () => {
+    return () => 
+      {
       console.log('Disconnecting socket');
       socket.off('connect');
       socket.off('connect_error');
@@ -155,7 +189,8 @@ function RoomId() {
   }, [room, userId, username, showChat]);
   
   // Loading state
-  if (loading) {
+  if (loading) 
+    {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="w-12 h-12 border-4 border-t-4 border-gray-200 rounded-full animate-spin border-t-blue-600"></div>
@@ -164,7 +199,8 @@ function RoomId() {
   }
   
   // Error state
-  if (error) {
+  if (error) 
+    {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
         <div className="mb-4 text-lg text-red-500">{error}</div>
@@ -198,7 +234,8 @@ function RoomId() {
             partner={chatPartner}
           />
         </div>
-      )}
+      )
+      }
     </div>
   );
 }

@@ -3,24 +3,30 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
-function UsersMyRequests() {
+function UsersMyRequests() 
+{
   const [requests, setRequests] = useState([]);
   const [fromFilter, setFromFilter] = useState("");
   const [toFilter, setToFilter] = useState("");
   const Navigate = useNavigate();
 
-  useEffect(() => {
+  useEffect(() => 
+    {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
-    if (!isLoggedIn) {
+    if (!isLoggedIn) 
+      {
       Navigate('/login');
     }
-  }, []);
+  }, 
+  []);
 
-  useEffect(() => {
+  useEffect(() => 
+    {
     axios.get("http://localhost:3002")
       .then(result => setRequests(result.data))
       .catch(err => console.log(err))
-  }, []);
+  }, 
+  []);
 
   // const handleDelete = (id) => {
   //   axios.delete('http://localhost:3002/deleteRequest/' + id)
@@ -32,8 +38,10 @@ function UsersMyRequests() {
   // }
 
   // Function to determine status color
-  const getStatusColor = (status) => {
-    switch (status) {
+  const getStatusColor = (status) => 
+    {
+    switch (status) 
+    {
       case "Pending":
         return "text-yellow-500";
       case "Accepted":
@@ -50,7 +58,8 @@ function UsersMyRequests() {
     const fromMatch = request.fcountry && request.fcountry.toLowerCase().includes(fromFilter.toLowerCase());
     const toMatch = request.dcountry && request.dcountry.toLowerCase().includes(toFilter.toLowerCase());
     return fromMatch && toMatch;
-  });
+  }
+);
 
   return (
     <div className="min-h-screen p-6 bg-gray-100">
@@ -97,7 +106,10 @@ function UsersMyRequests() {
             year: "numeric",
             month: "long",
             day: "numeric",
-          })}</p>
+          }
+          )
+          }
+          </p>
             <p className="text-sm text-gray-500">⚖️Weight of {request.item}(kg): {request.weight}</p>
             <p className="text-sm text-gray-500">📦➡️Length of {request.item}(cm): {request.length}</p>
             <p className="text-sm text-gray-500">📦⬆️⬇️Height of {request.item}(cm): {request.height}</p>
@@ -108,7 +120,8 @@ function UsersMyRequests() {
                 <p className="text-sm text-gray-600">🛒 Item Price: ${request.itemPrice}</p>
                 <p className="text-sm font-bold text-green-600">💳 Total Payment: ${(Number(request.itemPrice) + Number(request.tip)).toFixed(2)}</p>
               </>
-            )}
+            )
+            }
             <p className="text-xs text-gray-500">
               📊 System gets 0.25% (${request.systemShare}), Traveler gets 0.75% (${request.travelerShare})
             </p>
@@ -125,7 +138,9 @@ function UsersMyRequests() {
               </Link>
             </div>
           </div>
-        ))}
+        )
+        )
+        }
       </div>
     </div>
   );

@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { Menu, Users, Package, ClipboardList, Wallet } from 'lucide-react';
 import Sidebar from '../components/Sidebar';
 
-export default function AdminWallets() {
+export default function AdminWallets() 
+{
   const [wallets, setWallets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedWalletId, setSelectedWalletId] = useState(null);
@@ -11,11 +12,13 @@ export default function AdminWallets() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [users, setUsers] = useState({});
 
-  useEffect(() => {
+  useEffect(() => 
+    {
     fetchWallets();
   }, []);
 
-  const fetchWallets = async () => {
+  const fetchWallets = async () => 
+    {
   const res = await fetch("http://localhost:3002/admin/wallets");
   const data = await res.json();
   setWallets(data);
@@ -23,15 +26,20 @@ export default function AdminWallets() {
   // Fetch user details in parallel
   const userMap = {};
   await Promise.all(
-    data.map(async (wallet) => {
-      try {
+    data.map(async (wallet) =>
+       {
+      try 
+      {
         const userRes = await fetch(`http://localhost:3002/users/${wallet.traveler_user_id}`);
         const userData = await userRes.json();
         userMap[wallet.traveler_user_id] = userData;
-      } catch (err) {
+      } 
+      catch (err) 
+      {
         console.error("Error fetching user", wallet.traveler_user_id, err);
       }
-    })
+    }
+  )
   );
 
   setUsers(userMap);
@@ -39,14 +47,16 @@ export default function AdminWallets() {
 };
 
 
-  const handleWithdraw = async (userId) => {
+  const handleWithdraw = async (userId) => 
+    {
     const res = await fetch(`http://localhost:3002/admin/withdraw/${userId}`, { method: "POST" });
     const data = await res.json();
     alert(data.message);
     fetchWallets(); // refresh list
   };
 
-  const viewTransactions = async (walletId) => {
+  const viewTransactions = async (walletId) => 
+    {
     const res = await fetch(`http://localhost:3002/admin/wallets/${walletId}/transactions`);
     const data = await res.json();
     setSelectedWalletId(walletId);
@@ -106,7 +116,8 @@ export default function AdminWallets() {
                         </div>
                       ) : (
                         <span className="text-red-500">Not updated bank details</span>
-                      )}
+                      )
+                      }
                     </td>
                     <td className="p-3 space-x-2">
                       <button
@@ -123,11 +134,14 @@ export default function AdminWallets() {
                       </button>
                     </td>
                   </tr>
-                ))}
+                )
+                )
+                }
               </tbody>
             </table>
           </div>
-        )}
+        )
+        }
 
         {selectedWalletId && (
           <div className="mt-6">
@@ -147,11 +161,14 @@ export default function AdminWallets() {
                     <td className="p-2">{tx.amount}</td>
                     <td className="p-2">{tx.status}</td>
                   </tr>
-                ))}
+                )
+                )
+                }
               </tbody>
             </table>
           </div>
-        )}
+        )
+        }
       </main>
     </div>
   );

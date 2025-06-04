@@ -1,44 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 
-export default function AdminSenderRequests() {
+export default function AdminSenderRequests() 
+{
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => 
+    {
     fetchSenderRequests();
   }, []);
 
-  const fetchSenderRequests = async () => {
-    try {
+  const fetchSenderRequests = async () => 
+    {
+    try 
+    {
       const res = await fetch("http://localhost:3002/sender-requests");
       const data = await res.json();
       setRequests(data);
       setLoading(false);
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       console.error("Error fetching sender requests", error);
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id) => 
+    {
     const confirmDelete = window.confirm("Are you sure you want to delete this request?");
     if (!confirmDelete) return;
-    try {
-      const res = await fetch(`http://localhost:3002/sender-request/${id}`, {
+    try 
+    {
+      const res = await fetch(`http://localhost:3002/sender-request/${id}`, 
+        {
         method: "DELETE",
-      });
-      if (res.ok) {
+      }
+    );
+      if (res.ok) 
+        {
         setRequests((prev) => prev.filter((r) => r._id !== id));
       }
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       console.error("Error deleting request", error);
     }
   };
 
-  const handleView = (req) => {
+  const handleView = (req) => 
+    {
     setSelectedRequest(req);
     setShowModal(true);
   };
@@ -99,11 +113,14 @@ export default function AdminSenderRequests() {
                       </button>
                     </td>
                   </tr>
-                ))}
+                )
+                )
+                }
               </tbody>
             </table>
           </div>
-        )}
+        )
+        }
 
         {showModal && selectedRequest && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -117,7 +134,9 @@ export default function AdminSenderRequests() {
                       ? new Date(value["$date"]).toLocaleString()
                       : value?.toString()}
                   </div>
-                ))}
+                )
+                )
+                }
               </div>
               <div className="flex justify-end mt-4">
                 <button
@@ -129,7 +148,8 @@ export default function AdminSenderRequests() {
               </div>
             </div>
           </div>
-        )}
+        )
+        }
       </main>
     </div>
   );

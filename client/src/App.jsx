@@ -21,7 +21,8 @@ import ReceiverDetails from './ReceiverDetails'
 import EditProfile from './EditProfile'
 import ChatBot from '../chatbot/chat-ui/src/chatbot';
 
-function App() {
+function App() 
+{
   const userId = localStorage.getItem('userId');
 
   return (

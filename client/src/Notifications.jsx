@@ -2,26 +2,34 @@ import React,{useEffect,useState} from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 
-function Notifications() {
+function Notifications() 
+{
     const [notifications, setNotifications] = useState([])
     const navigate = useNavigate()
     
     const userId = localStorage.getItem("userId")
     
-    useEffect(() => {
+    useEffect(() => 
+      {
         const isLoggedIn = localStorage.getItem("isLoggedIn");
-        if (!isLoggedIn || isLoggedIn === "false" || !userId ) {
+        if (!isLoggedIn || isLoggedIn === "false" || !userId ) 
+          {
           navigate('/login');
         }
       }, [navigate]);
 
-    useEffect(()=>{
+    useEffect(()=>
+      {
         console.log("User ID:", userId);
-        if(userId){
+        if(userId)
+          {
             axios.get(`http://localhost:3002/notifications/${userId}`)
-            .then(res=>{
+            .then(res=>
+              {
                 console.log(res.data);
-                setNotifications(res.data)})
+                setNotifications(res.data)
+              }
+            )
             .catch(err => console.error("Error fetching notifications:", err))
         }
     },[userId])
@@ -40,10 +48,13 @@ function Notifications() {
                 </Link>
                 <p className="text-sm text-gray-500">{new Date(notification.dateTime).toLocaleString()}</p>
             </li>
-        ))}
+        )
+        )
+        }
 
         </ul>
-      )}
+      )
+      }
     </div>
   )
 }

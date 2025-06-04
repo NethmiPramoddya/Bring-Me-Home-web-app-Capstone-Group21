@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
-const TravelerSchema = new mongoose.Schema({
+const TravelerSchema = new mongoose.Schema(
+    {
     traveler_id: String,
     tname: String,
     temail: String,
@@ -17,7 +18,8 @@ const TravelerSchema = new mongoose.Schema({
     profile2: String,
     sender_user_id: String,
     sender_form_id: String,
-})
+}
+)
 
 
 const TravelerModel = mongoose.model("travelers", TravelerSchema)

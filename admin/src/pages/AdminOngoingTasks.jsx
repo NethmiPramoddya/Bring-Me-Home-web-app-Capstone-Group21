@@ -2,35 +2,43 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import { MessageSquare } from 'lucide-react';
 
-export default function AdminOngoingTasks() {
+export default function AdminOngoingTasks() 
+{
   const [ongoingTasks, setOngoingTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => 
+    {
     fetchOngoingTasks();
   }, []);
 
-  const fetchOngoingTasks = async () => {
-    try {
+  const fetchOngoingTasks = async () =>
+     {
+    try 
+    {
       const res = await fetch("http://localhost:3002/admin/ongoingTasks");
       const data = await res.json();
       setOngoingTasks(data);
       setLoading(false);
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       console.error("Error fetching ongoing tasks", error);
       setLoading(false);
     }
   };
 
-  const openModal = (task) => {
+  const openModal = (task) => 
+    {
     setSelectedTask(task);
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = () => 
+    {
     setIsModalOpen(false);
     setSelectedTask(null);
   };
@@ -95,7 +103,8 @@ export default function AdminOngoingTasks() {
               </tbody>
             </table>
           </div>
-        )}
+        )
+        }
 
         {/* Modal */}
         {isModalOpen && selectedTask && (
@@ -133,7 +142,8 @@ export default function AdminOngoingTasks() {
               </div>
             </div>
           </div>
-        )}
+        )
+        }
       </main>
     </div>
   );

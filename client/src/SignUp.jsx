@@ -4,14 +4,16 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import logo from './assets/logo.png'
 
-function SignUp() {
+function SignUp() 
+{
     const[name, setName] = useState("")
     const[email, setEmail] = useState("")
     const[phone, setPhone] = useState("")
     const[password, setPassword] = useState("")
     const navigate = useNavigate()
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = (e) =>
+      {
         e.preventDefault()
         axios.post('http://localhost:3002/register', {name,email,phone,password})
         .then(result => {console.log(result)
@@ -19,7 +21,8 @@ function SignUp() {
             localStorage.setItem("userEmail", result.data.email);
             localStorage.setItem("userPhone", result.data.phone);
             navigate('/login')
-        })
+        }
+      )
         .catch(err => console.log(err))
     }
 

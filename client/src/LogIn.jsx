@@ -4,37 +4,46 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import logo from './assets/logo.png'
 
-function LogIn() {
+function LogIn() 
+{
   const[email, setEmail] = useState("")
   const[password, setPassword] = useState("")
   const Navigate = useNavigate()
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = (e) =>
+      {
         e.preventDefault()
         axios.post('http://localhost:3002/login', {email,password})
         .then(result => {console.log(result)
-          if(result.data.message === "Success"){
+          if(result.data.message === "Success")
+            {
           
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("userEmail", result.data.email);
           localStorage.setItem("userId", result.data.userId); //  Store userId
           
           axios.get(`http://localhost:3002/profile/${result.data.userId}`)
-            .then(userResponse => {
+            .then(userResponse => 
+              {
               localStorage.setItem("username", userResponse.data.name || userResponse.data.username || result.data.email.split('@')[0]);
               Navigate('/sender-requests');
-            })
-            .catch(err => {
+            }
+          )
+            .catch(err => 
+              {
               console.log("Error fetching user profile:", err);
               
               localStorage.setItem("username", result.data.email.split('@')[0]);
               Navigate('/sender-requests');
-            });
-          }else{
+            }
+          );
+          }else
+          {
             alert(result.data.message)
           }
           
-        })
+        }
+      )
         .catch(err => console.log(err))
     }
 

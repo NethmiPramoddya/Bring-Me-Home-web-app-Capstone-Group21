@@ -1,26 +1,35 @@
 const mongoose = require("mongoose");
 
-const WalletTransactionSchema = new mongoose.Schema({
-  sender_request_id: {
+const WalletTransactionSchema = new mongoose.Schema(
+  {
+  sender_request_id: 
+  {
     type: mongoose.Schema.Types.ObjectId,
     ref: "senders",
     required: true,
   },
-  wallet_id: {
+
+  wallet_id: 
+  {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Wallet",
     required: true,
   },
-  amount: {
+
+  amount:
+   {
     type: Number,
     required: true,
   },
-  status: {
+
+  status: 
+  {
     type: String,
     enum: ["pending", "success"],
     default: "pending",
   },
-});
+}
+);
 
 const WalletTransaction = mongoose.model("WalletTransaction", WalletTransactionSchema);
 

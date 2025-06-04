@@ -5,14 +5,16 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 
 const socket = io("http://localhost:3002"); 
 
-function generateUniqueId(length = 10) {
+function generateUniqueId(length = 10) 
+{
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   return Array.from({ length })
     .map(() => characters.charAt(Math.floor(Math.random() * characters.length)))
     .join('');
 }
 
-function ViewMore() {
+function ViewMore() 
+{
   const { id, roomId: urlRoomId } = useParams();
   const [viewMore, setViewMore] = useState(null);
   const [scriptLoaded, setScriptLoaded] = useState(false);
@@ -22,7 +24,8 @@ function ViewMore() {
   const [socketId, setSocketId] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useEffect(() => 
+    {
   const storedRoom = localStorage.getItem('roomId');
   if (storedRoom && !roomId) {
     setRoomId(storedRoom);
@@ -31,7 +34,8 @@ function ViewMore() {
 }, []);
 
 
- useEffect(() => {
+ useEffect(() => 
+  {
   axios
     .get(`http://localhost:3002/view_more/${id}`)
     .then((result) => {
@@ -40,44 +44,53 @@ function ViewMore() {
         setRoomId(result.data.roomId); // update state with roomId from URL
         localStorage.setItem('roomId', result.data.roomId); 
       }
-    })
+    }
+  )
     .catch((err) => console.error('Error fetching data:', err));
 }, [id, urlRoomId]);
 
 
-    useEffect(() => {
+    useEffect(() => 
+      {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const uid = localStorage.getItem("userId");
     const username = localStorage.getItem("username");
-    if (!isLoggedIn || isLoggedIn === "false" || !uid) {
+    if (!isLoggedIn || isLoggedIn === "false" || !uid) 
+      {
       alert("Please log in to chat");
       return;
     }
 
     setUserId(uid);
     setStoredUsername(username);
-  }, []);
+  },
+   []);
 
   // Socket setup
-  useEffect(() => {
+  useEffect(() => 
+    {
     if (!viewMore?.roomId || !storedUsername) return;
 
     socket.connect();
     socket.emit("join_room", viewMore.roomId);
     setRoomId(viewMore.roomId);
 
-    socket.on("connect", () => {
+    socket.on("connect", () => 
+      {
       setSocketId(socket.id);
       console.log("Socket connected:", socket.id);
-    });
+    }
+  );
 
-   return () => {
+   return () => 
+    {
       socket.off("connect");
     };
   }, [viewMore?.roomId, storedUsername]);
 
   // Load PayHere script once when component mounts
-  useEffect(() => {
+  useEffect(() => 
+    {
     const payhereScript = document.createElement('script');
     payhereScript.src = 'https://www.payhere.lk/lib/payhere.js';
     payhereScript.async = true;
@@ -86,21 +99,25 @@ function ViewMore() {
     document.body.appendChild(payhereScript);
 
     // Cleanup: Remove script when component unmounts
-    return () => {
+    return () => 
+      {
       document.body.removeChild(payhereScript);
     };
   }, []);
 
 
 
-  const handlePayment = async () => {
-    if (!scriptLoaded || !window.payhere) {
+  const handlePayment = async () => 
+    {
+    if (!scriptLoaded || !window.payhere) 
+      {
       console.error('PayHere script not loaded yet');
       alert('Payment gateway is not ready. Please try again later.');
       return;
     }
 
-    const paymentDetails = {
+    const paymentDetails = 
+    {
       order_id: viewMore._id,
       amount: viewMore.totalCost.toFixed(2),
       currency: 'USD',
@@ -113,21 +130,24 @@ function ViewMore() {
       country: viewMore.fcountry,
     };
 
-    try {
+    try 
+    {
       const paymentUrl = import.meta.env.VITE_NGROQ_PAYMENT_URL;
       // Request backend to generate the hash value
       const response = await fetch(
           paymentUrl+'/payment/start',
         {
           method: 'POST',
-          headers: {
+          headers: 
+          {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(paymentDetails),
         }
       );
 
-      if (response.ok) {
+      if (response.ok) 
+        {
         const { hash, merchant_id } = await response.json();
 
         const newRoomId = generateUniqueId(16); // generate roomId
@@ -135,12 +155,14 @@ function ViewMore() {
         localStorage.setItem('roomId', newRoomId);
 
         // Save roomId in backend
-       await axios.post(`http://localhost:3002/chat/room`, {
+       await axios.post(`http://localhost:3002/chat/room`, 
+        {
           roomId: newRoomId,
           sender_request_id:viewMore._id,
           sender_user_id: viewMore.buyer_id,       // Replace with correct field
           traveler_user_id: viewMore.traveller_user_id    // Replace with correct field
-        });
+        }
+      );
 
 
         // Payment configuration
@@ -167,30 +189,42 @@ function ViewMore() {
         // Initializing PayHere payment
         window.payhere.startPayment(payment);
         
-            setViewMore((prev) => ({
+            setViewMore((prev) => 
+              (
+              {
               ...prev,
               // paymentStatus: 'paid',
               roomId: newRoomId,
-            }));
+            }
+          )
+        );
             setRoomId(newRoomId);
-      } else {
+      } 
+      else 
+      {
         console.error('Failed to generate hash for payment.');
         alert('Failed to initiate payment. Please try again.');
       }
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       console.error('An error occurred:', error);
       alert('An error occurred during payment. Please try again.');
     }
   };
 
-  const handleChat = async () => {
+  const handleChat = async () => 
+    {
     
     localStorage.setItem('currentViewMoreId', viewMore._id);
     
-    if (!roomId && viewMore) {
-      try {
+    if (!roomId && viewMore) 
+      {
+      try 
+      {
         //  checking  roomId in the viewMore
-        if (viewMore.roomId) {
+        if (viewMore.roomId) 
+          {
           setRoomId(viewMore.roomId);
           localStorage.setItem('roomId', viewMore.roomId);
           navigate(`/chat/${viewMore.roomId}`);
@@ -199,7 +233,8 @@ function ViewMore() {
         
         
         const res = await axios.get(`http://localhost:3002/view_more/${viewMore._id}`);
-        if (res.data?.roomId) {
+        if (res.data?.roomId) 
+          {
           setRoomId(res.data.roomId);
           localStorage.setItem('roomId', res.data.roomId);
           navigate(`/chat/${res.data.roomId}`);
@@ -208,7 +243,8 @@ function ViewMore() {
         
         // If still no roomId, check if there's a chat room for this sender request
         const roomResponse = await axios.get(`http://localhost:3002/chat/room/${viewMore._id}`);
-        if (roomResponse.data?.roomId) {
+        if (roomResponse.data?.roomId) 
+          {
           setRoomId(roomResponse.data.roomId);
           localStorage.setItem('roomId', roomResponse.data.roomId);
           navigate(`/chat/${roomResponse.data.roomId}`);
@@ -216,29 +252,39 @@ function ViewMore() {
         }
         
         // If no room exists 
-        if (viewMore.status === 'accepted' || viewMore.paymentStatus === 'paid') {
+        if (viewMore.status === 'accepted' || viewMore.paymentStatus === 'paid') 
+          {
           const newRoomId = generateUniqueId(16);
-          try {
-            await axios.post(`http://localhost:3002/update_room/${viewMore._id}`, {
+          try 
+          {
+            await axios.post(`http://localhost:3002/update_room/${viewMore._id}`, 
+              {
               roomId: newRoomId,
               sender_user_id: viewMore.buyer_id,
               traveler_user_id: viewMore.traveller_user_id
-            });
+            }
+          );
             
             setRoomId(newRoomId);
             localStorage.setItem('roomId', newRoomId);
             navigate(`/chat/${newRoomId}`);
             return;
-          } catch (createErr) {
+          } 
+          catch (createErr) 
+          {
             console.error("Failed to create chat room:", createErr);
             alert("Unable to create chat room. Please try again.");
             return;
           }
-        } else {
+        } 
+        else 
+        {
           alert("You can only chat after the traveler has accepted your request.");
           return;
         }
-      } catch (err) {
+      } 
+      catch (err) 
+      {
         console.error("Error accessing chat room:", err);
         alert("Unable to access chat. Please try again.");
         return;
@@ -246,9 +292,11 @@ function ViewMore() {
     }
 
     
-    if (roomId) {
+    if (roomId) 
+      {
       navigate(`/chat/${roomId}`);
-    } else {
+    } else 
+    {
       alert("Chat is not available. Please try again later.");
     }
   };
@@ -284,7 +332,10 @@ function ViewMore() {
             year: "numeric",
             month: "long",
             day: "numeric",
-          })}</p>
+          }
+          )
+          }
+          </p>
         </div>
 
         <div className="flex items-center mb-3 space-x-2">
@@ -422,7 +473,8 @@ function ViewMore() {
             <p className="w-1/3 mx-3 text-center text-gray-600">
               😔 Waiting for traveler to accept...
             </p>
-          )}
+          )
+          }
           <Link
             to="/sender-requests"
             className="bg-[#b33434] hover:bg-[#a12d2d] w-1/3 text-center text-white py-1 px-4 rounded text-lg"

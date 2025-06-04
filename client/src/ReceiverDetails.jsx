@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-function ReceiverDetails() {
+function ReceiverDetails() 
+{
   const { id } = useParams(); 
   const [task, setTask] = useState(null);
   const [otp, setOtp] = useState("");
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
+  useEffect(() => 
+    {
     axios.get(`http://localhost:3002/receiver/${id}`)
       .then(res => setTask(res.data))
       .catch(err => console.error("Error loading task:", err));
@@ -16,15 +18,20 @@ function ReceiverDetails() {
 
   const handleOtpChange = (e) => setOtp(e.target.value);
 
-  const handleOtpSubmit = async () => {
-    try {
-      const res = await axios.post("http://localhost:3002/api/payment/verify-otp", {
+  const handleOtpSubmit = async () => 
+    {
+    try 
+    {
+      const res = await axios.post("http://localhost:3002/api/payment/verify-otp", 
+        {
         sender_request_id: id,
         enteredOtp: otp,
-      });
+      }
+    );
 
       setMessage(res.data.message);
-    } catch (error) {
+    } catch (error) 
+    {
       const msg = error.response?.data?.message || "Verification failed.";
       setMessage(msg);
     }
@@ -61,7 +68,8 @@ function ReceiverDetails() {
           </div>
         ) : (
           <p>Loading details...</p>
-        )}
+        )
+        }
       </div>
     </div>
   );

@@ -2,13 +2,15 @@ import {React, useState, useEffect} from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
 
-function EditUsers() {
+function EditUsers() 
+{
 
   const { id } = useParams()
 
 
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState(
+    {
           sname: "",
           semail: "",
           rname: "",
@@ -23,27 +25,34 @@ function EditUsers() {
           contactinfo: "",
           profile1: "",
           profile2: "",
-        });
+        }
+    );
   
         const navigate  = useNavigate()
 
-        useEffect(()=>{
+        useEffect(()=>
+            {
             axios.get("http://localhost:3002/getUser/" +id)
-            .then(result => {
+            .then(result => 
+                {
                 console.log(result)
                 setFormData(result.data)
-            })
+            }
+        )
             .catch(err => console.log(err))
           },[id])
       
-        const handleChange = (e) => {
+        const handleChange = (e) => 
+            {
           setFormData({ ...formData, [e.target.name]: e.target.value });
         };
       
-        const editSubmit = (e) => {
+        const editSubmit = (e) => 
+            {
           e.preventDefault();
           axios.put("http://localhost:3002/editUser/"+id, formData)
-          .then(result => {
+          .then(result => 
+            {
               console.log(result)
               navigate("/")
           })

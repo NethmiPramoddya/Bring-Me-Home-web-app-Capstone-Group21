@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const ChatroomSchema = new mongoose.Schema({
+const ChatroomSchema = new mongoose.Schema(
+  {
   roomID: String,
   sender_request_id: String,
   sender_user_id: String,
