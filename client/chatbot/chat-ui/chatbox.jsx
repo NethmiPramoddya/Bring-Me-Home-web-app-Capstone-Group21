@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 
-function App() {
+function App() 
+{
   const [messages, setMessages] = useState([
     { role: "assistant", content: "Hello! How can I assist you today?" },
-  ]);
+  ]
+);
 
   return (
     <div className="app">
@@ -17,7 +19,8 @@ function App() {
     <div key={index} className="message-container">
       <div className={`message ${msg.role}`}>{msg.content}</div>
     </div>
-  ))}
+  )
+  )}
 </div>
 
 const [input, setInput] = useState("");
@@ -32,6 +35,52 @@ const [input, setInput] = useState("");
   <button onClick={sendMessage}>Send</button>
 </div>
 
+const sendMessage = async () => 
+  {
+  if (!input.trim()) return;
 
+  const newMessages = [...messages, { role: "user", content: input }];
+  setMessages(newMessages);
+  setInput("");
+  setLoading(true);
+
+  try {
+    const response = await fetch("http://localhost:8000/chat", 
+      {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: newMessages }),
+    }
+  );
+
+    const data = await response.json();
+
+    if (data.messages) {
+      setMessages(data.messages);
+    } 
+    else 
+    {
+      setMessages(
+        [
+        ...newMessages,
+        { role: "assistant", content: "No response from the server." },
+      ]
+    );
+    }
+  } 
+  catch (error) 
+  {
+    setMessages([
+      ...newMessages,
+      { role: "assistant", content: "Error: Unable to connect to server." },
+    ]
+  );
+
+  } 
+  finally 
+  {
+    setLoading(false);
+  }
+};
 
 export default App;
