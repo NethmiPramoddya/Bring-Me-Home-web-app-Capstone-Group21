@@ -37,6 +37,7 @@ async def chat_endpoint(req: ChatRequest):
             for value in event.values():
                 print("Assistant replied:", value["messages"][-1]["content"])
                 return {"messages": value["messages"]}
+            
     except Exception as e:
         import traceback
         traceback.print_exc() 
