@@ -44,3 +44,35 @@ if __name__ == "__main__":
             print(f"An error occurred: {e}")
             break            
 
+
+
+
+from datetime import datetime
+
+class ChatSessionInfo:
+    """Stores metadata about a chat session."""
+    def __init__(self, session_id: str, user_id: str = "anonymous"):
+        self.session_id = session_id
+        self.user_id = user_id
+        self.start_time = datetime.utcnow()
+    
+    def duration_seconds(self) -> float:
+        return (datetime.utcnow() - self.start_time).total_seconds()
+
+def format_messages(messages: List[Dict[str, str]]) -> str:
+    """Format chat messages as a readable string."""
+    return "\n".join(f"{msg['role'].capitalize()}: {msg['content']}" for msg in messages)
+
+def dummy_logger(state: Dict):
+    """Dummy logger that does nothing but illustrates possible future logging."""
+    pass
+
+
+sample_messages = [
+    {"role": "user", "content": "What time is it?"},
+    {"role": "assistant", "content": "I don't have a clock, but you can check your device!"}
+]
+
+
+if False:
+    print("Formatted sample conversation:\n", format_messages(sample_messages))
