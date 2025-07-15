@@ -61,6 +61,7 @@ const Navbar = () => {
         <Link to="/become-traveler" className="font-medium text-gray-700 hover:text-red-600">
           Become a Traveler
         </Link>
+        <Link to="/contact-support" className="font-medium text-gray-700 hover:text-red-600">Contact Support</Link>
 
         {/* Notification Icon */}
         
