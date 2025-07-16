@@ -4,9 +4,7 @@ import Sidebar from '../components/Sidebar';
 
 
 function ManageSender() {
-  const [manageSender, setManageSender] = useState(
-    [
-      {
+  const [manageSender, setManageSender] = useState([{
     sname: "",
     semail: "",
     rname: "",
@@ -18,25 +16,20 @@ function ManageSender() {
     needsPurchase: false,
     paymentStatus: "",
     status: ""
-  }
-]
-);
+  }]);
     const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => 
-    {
+  useEffect(() => {
     axios.get("http://localhost:3002/manageSenders")
       .then(result => setManageSender(result.data))
       .catch(err => console.log(err))
   }, []);
 
-  const handleEdit = () => 
-    {
+  const handleEdit = () => {
     alert("Edit button clicked!");
   };
 
-  const handleDelete = () => 
-    {
+  const handleDelete = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this record?");
     if (confirmDelete) {
       alert("Deleted!");
@@ -67,8 +60,7 @@ function ManageSender() {
               </tr>
             </thead>
             <tbody>
-              {manageSender.map((sender, index) => 
-              {
+              {manageSender.map((sender, index) => {
                 return (
                   <tr className="text-gray-700" key={index}>
                     <td className="p-2 border">{sender.sname}</td>
@@ -98,9 +90,7 @@ function ManageSender() {
                     </td>
                   </tr>
                 );
-              }
-              )
-              }
+              })}
             </tbody>
           </table>
         </div>

@@ -1,8 +1,7 @@
 const mongoose = require('mongoose')
 
 
-const SendersSchema = new mongoose.Schema(
-    {
+const SendersSchema = new mongoose.Schema({
     buyer_id: String,
     sname: String,
     semail: String,
@@ -30,48 +29,35 @@ const SendersSchema = new mongoose.Schema(
     profile2: String,
     traveller_user_id: String,
     travelling_form_id: String,
-    status: 
-    {
+    status: {
         type: String,
         default: 'pending', // default when first created
         enum: ['pending', 'accepted', 'rejected', 'cancelled', 'completed']
     },
-
-    paidAmount: 
-    {
+    paidAmount: {
     type: Number,
     default: 0
     },
-
-    paymentStatus: 
-    {
+    paymentStatus: {
         type: String,
         enum: ['unpaid', 'partial', 'paid'],
         default: 'unpaid'
     },
-
     paymentDate: Date,
     roomId:String,
-    deliveryOtp: 
-    {
+    deliveryOtp: {
         type: Number,
         default: null
     },
-
-    systemShare: 
-    {
+    systemShare: {
     type: Number,
     required: true
     },
-
-    travelerShare:
-     {
+    travelerShare: {
     type: Number,
     required: true
     },
-
-    deliveryStatus:  
-    {
+    deliveryStatus:  {
         type: String,
         default: 'pending', // default when first created
         enum: ['pending', 'received']
@@ -79,8 +65,7 @@ const SendersSchema = new mongoose.Schema(
 
 
 
-}
-)
+})
 
 
 const SenderModel = mongoose.model("senders", SendersSchema)

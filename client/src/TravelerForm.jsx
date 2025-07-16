@@ -3,10 +3,8 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { Luggage } from 'lucide-react';
 
-function TravelerForm() 
-{
-    const [formData, setFormData] = useState(
-      {
+function TravelerForm() {
+    const [formData, setFormData] = useState({
         tname: "",
         temail: "",
         depature_country: "",
@@ -20,40 +18,32 @@ function TravelerForm()
         contactinfo_a:"",
         profile1: "",
         profile2: "",
-      }
-    );
+      });
 
       const navigate  = useNavigate()
-      useEffect(() => 
-        {
+      useEffect(() => {
               const isLoggedIn = localStorage.getItem("isLoggedIn");
               if (!isLoggedIn) {
                 navigate('/login');
               }
-            }, []
-          );
+            }, []);
     
-      const handleChange = (e) => 
-        {
+      const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
       };
     
-      const handleSubmit = (e) => 
-        {
+      const handleSubmit = (e) => {
         e.preventDefault();
         const travelerID = localStorage.getItem("userId");
-        const submissionData = 
-        {
+        const submissionData = {
             ...formData,
             traveler_id: travelerID,
           };
         axios.post("http://localhost:3002/createTraveler", submissionData)
-        .then(result => 
-          {
+        .then(result => {
             console.log(result)
             navigate("/sender-requests")
-        }
-      )
+        })
         .catch(err => console.log(err))
       };
 

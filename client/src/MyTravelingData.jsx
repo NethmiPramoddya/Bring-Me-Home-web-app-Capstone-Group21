@@ -1,54 +1,42 @@
 import React,{useEffect, useState} from 'react'
 import axios from 'axios'
 
-function MyTravelingData() 
-{
+function MyTravelingData() {
      const [myTravelingData, setMyTravelingData] =useState([])
      const [selectedTravelingData, setSelectedTravelingData] = useState(null);
      const [showModal, setShowModal] = useState(false);
      const userId = localStorage.getItem("userId")
         
-            useEffect(()=>
-                {
+            useEffect(()=>{
                 axios.get(`http://localhost:3002/travelingData/${userId}`)
-                .then(result=>
-                    {
+                .then(result=>{
                     console.log(result.data);
-                    setMyTravelingData(result.data)
-                }
-            )
+                    setMyTravelingData(result.data)})
                 .catch(err=>console.log(err))
             },[userId])
     
-            const handleDelete = async (id) => 
-                {
-                try 
-                {
+            const handleDelete = async (id) => {
+                try {
                     await axios.delete(`http://localhost:3002/deleteTravelerData/${id}`);
             
                     
-                    const updatedList = myTravelingData.filter(travelerData => 
-                        {
+                    const updatedList = myTravelingData.filter(travelerData => {
                         return travelerData._id !== id; 
-                    }
-                );
+                    });
             
                     
                     setMyTravelingData(updatedList);
-                } catch (err) 
-                {
+                } catch (err) {
                     console.log("Error deleting request:", err);
                 }
             };
 
-            const handleViewMore = (travelData) =>
-                {
+            const handleViewMore = (travelData) =>{
                 setSelectedTravelingData(travelData);
                 setShowModal(true);
             }
 
-            const closeModel = ()=>
-                {
+            const closeModel = ()=>{
                 setShowModal(false);
                 setSelectedTravelingData(null)
             }
@@ -83,12 +71,9 @@ function MyTravelingData()
                         </button>
                     </div>
                 </li>
-            )
-            )
-            }
+            ))}
         </ul>
-    )
-    }
+    )}
 
     {showModal && selectedTravelingData && (<div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50' onClick={closeModel}>
         <div className='relative w-full max-w-md p-6 bg-white rounded-lg shadow-lg' onClick={(e)=>e.stopPropagation()}>
@@ -102,8 +87,7 @@ function MyTravelingData()
             <p><strong>Note: </strong>{selectedTravelingData.note|| 'No Note'}</p>
             <button onClick={closeModel} className='px-4 py-2 mt-6 text-white bg-gray-700 rounded hover:bg-gray-800'>Close</button>
             </div>
-            </div>)
-            }
+            </div>)}
 </div>
   )
 }

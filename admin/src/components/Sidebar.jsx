@@ -3,8 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, Users, Package, ClipboardList, Wallet } from 'lucide-react';
 import logo from '../assets/logo.png';
 
-const Sidebar = ({ menuOpen, setMenuOpen }) => 
-  {
+const Sidebar = ({ menuOpen, setMenuOpen }) => {
   const location = useLocation();
 
   const links = [
@@ -20,8 +19,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) =>
     <aside
       className={`fixed top-0 left-0 z-50 w-64 h-full bg-white shadow-lg transform transition-transform duration-300 md:relative md:translate-x-0 ${
         menuOpen ? 'translate-x-0' : '-translate-x-full'
-      }`
-    }
+      }`}
     >
       <div className="flex items-center p-6 border-b border-gray-200">
         <img src={logo} alt="Logo" className="w-10 h-auto" />
@@ -35,14 +33,11 @@ const Sidebar = ({ menuOpen, setMenuOpen }) =>
             onClick={() => setMenuOpen(false)}
             className={`flex items-center gap-2 p-2 rounded transition-transform duration-200 hover:bg-gray-100 hover:text-red-700 ${
               location.pathname === path ? 'bg-gray-100 text-red-700 font-semibold' : ''
-            }`
-          }
+            }`}
           >
             {icon} {label}
           </Link>
-        )
-        )
-        }
+        ))}
       </nav>
     </aside>
   );

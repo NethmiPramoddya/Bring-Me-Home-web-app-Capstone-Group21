@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function EditProfile() 
-{
-  const [formData, setFormData] = useState(
-    {
+function EditProfile() {
+  const [formData, setFormData] = useState({
     name: '',
     about: '',
     phone: '',
@@ -13,68 +11,50 @@ function EditProfile()
     bankName: '',
     accountNumber: '',
     branch: '',
-  }
-);
+  });
 
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
 
-  useEffect(() => 
-    {
-    if (!userId) 
-      {
+  useEffect(() => {
+    if (!userId) {
       navigate("/login");
       return;
     }
 
     axios.get(`http://localhost:3002/profile/${userId}`)
-      .then(res => 
-        {
+      .then(res => {
         const user = res.data;
-        setFormData(prev => 
-          (
-            {
+        setFormData(prev => ({
           ...prev,
           name: user.name || '',
           about: user.about || '',
           phone: user.phone || '',
           location: user.location || '',
-        }
-      )
-    );
+        }));
 
        
         axios.get(`http://localhost:3002/wallet/${userId}`)
-          .then(walletRes => 
-            {
+          .then(walletRes => {
             const bank = walletRes.data.bankDetails || {};
-            setFormData(prev => 
-              (
-                {
+            setFormData(prev => ({
               ...prev,
               bankName: bank.bankName || '',
               accountNumber: bank.accountNumber || '',
               branch: bank.branch || '',
-            }
-          )
-        );
-          }
-        );
-      }
-    );
+            }));
+          });
+      });
   }, [userId, navigate]);
 
-  const handleChange = (e) => 
-    {
+  const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => 
-    {
+  const handleSubmit = (e) => {
     e.preventDefault();
     axios.put(`http://localhost:3002/profile/${userId}`, formData)
-      .then(() => 
-        {
+      .then(() => {
         alert("Profile updated successfully!");
         navigate("/profile/:id");
       })

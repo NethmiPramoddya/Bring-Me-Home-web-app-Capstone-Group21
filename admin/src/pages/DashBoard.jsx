@@ -5,47 +5,37 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 import logo from '../assets/logo.png';
 
-function Card({ children, className }) 
-{
+function Card({ children, className }) {
   return <div className={`shadow-lg rounded-2xl bg-white ${className}`}>{children}</div>;
 }
 
-function CardContent({ children, className }) 
-{
+function CardContent({ children, className }) {
   return <div className={`p-6 ${className}`}>{children}</div>;
 }
 
-function DashBoard() 
-{
-  const [dashboardData, setDashboardData] = useState(
-    {
+function DashBoard() {
+  const [dashboardData, setDashboardData] = useState({
     totalUsers: 0,
     senderRequests: 0,
     totalTransactions: 0,
     totalRevenue: 0,
-  }
-);
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => 
-    {
+  useEffect(() => {
     axios
       .get('http://localhost:3002/api/admin/dashboard') 
-      .then((res) => 
-        {
+      .then((res) => {
         setDashboardData(res.data);
         setLoading(false);
-      }
-    )
-      .catch((err) => 
-        {
+      })
+      .catch((err) => {
         console.error(err);
         setError('Failed to fetch dashboard data');
         setLoading(false);
-      }
-    );
+      });
   }, []);
 
   return (
@@ -82,9 +72,7 @@ function DashBoard()
             >
               {icon} {label}
             </Link>
-          )
-          )
-          }
+          ))}
         </nav>
       </aside>
 
@@ -150,8 +138,7 @@ function DashBoard()
               </motion.div>
             </Link>
           </div>
-        )
-        }
+        )}
       </main>
     </div>
   );

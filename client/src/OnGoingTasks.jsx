@@ -4,36 +4,29 @@ import { useNavigate } from 'react-router-dom';
 import QRCode from 'react-qr-code';
 import * as htmlToImage from 'html-to-image';
 
-function OnGoingTasks() 
-{
+function OnGoingTasks() {
     const [onGoingTasks, setOnGoingTasks] = useState([]);
     const [storedUsername, setStoredUsername] = useState("");
     const [userId, setUserId] = useState("");
     const navigate = useNavigate();
     const qrRefs = useRef({}); 
 
-    useEffect(() => 
-        {
-        if (userId) 
-            {
+    useEffect(() => {
+        if (userId) {
             axios.get(`http://localhost:3002/onGoingTasks/${userId}`)
-                .then(result => 
-                    {
+                .then(result => {
                     console.log("Ongoing tasks:", result.data);
                     setOnGoingTasks(result.data);
-                }
-            )
+                })
                 .catch(err => console.log("Error fetching tasks:", err));
         }
     }, [userId]);
 
-    useEffect(() => 
-        {
+    useEffect(() => {
         const isLoggedIn = localStorage.getItem("isLoggedIn");
         const uid = localStorage.getItem("userId");
         const username = localStorage.getItem("username");
-        if (!isLoggedIn || isLoggedIn === "false" || !uid) 
-            {
+        if (!isLoggedIn || isLoggedIn === "false" || !uid) {
             alert("Please log in to chat");
             return;
         }
@@ -42,36 +35,28 @@ function OnGoingTasks()
         setStoredUsername(username);
     }, []);
 
-    const handleChat = (roomId) => 
-        {
-        if (roomId) 
-            {
+    const handleChat = (roomId) => {
+        if (roomId) {
             navigate(`/chat/${roomId}`);
-        } else 
-        {
+        } else {
             alert("No chat room ID found for this request.");
         }
     };
 
-    const downloadQRCode = (requestId) => 
-        {
+    const downloadQRCode = (requestId) => {
         const node = qrRefs.current[requestId];
         if (!node) return;
 
         htmlToImage.toPng(node)
-            .then((dataUrl) => 
-                {
+            .then((dataUrl) => {
                 const link = document.createElement('a');
                 link.download = `qr-${requestId}.png`;
                 link.href = dataUrl;
                 link.click();
-            }
-        )
-            .catch((error) => 
-                {
+            })
+            .catch((error) => {
                 console.error('QR code generation failed:', error);
-            }
-        );
+            });
     };
 
     return (
@@ -81,8 +66,7 @@ function OnGoingTasks()
                 <p>No ongoing tasks found.</p>
             ) : (
                 <ul className="space-y-6">
-                    {onGoingTasks.map((task, index) => 
-                    {
+                    {onGoingTasks.map((task, index) => {
                         const qrUrl = `http://localhost:5174/receiver/${task._id}`;
                         return (
                             <li key={index} className="flex flex-col justify-between gap-4 p-4 bg-white border rounded shadow-sm md:flex-row">
@@ -114,12 +98,9 @@ function OnGoingTasks()
                                 </div>
                             </li>
                         );
-                    }
-                    )
-                    }
+                    })}
                 </ul>
-            )
-            }
+            )}
         </div>
     );
 }

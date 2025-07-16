@@ -4,8 +4,7 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:3002';
 
-function Chats({ socket, username, userId, room, partner }) 
-{
+function Chats({ socket, username, userId, room, partner }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,20 +13,16 @@ function Chats({ socket, username, userId, room, partner })
   const scrollRef = useRef(null);
   
   // Calculate receiver ID based on chat partner
-  const getReceiverId = () => 
-    {
-    if (partner) 
-      {
+  const getReceiverId = () => {
+    if (partner) {
       return partner._id;
     }
     return null;
   };
   
   // Fetch message history when component mounts
-  useEffect(() => 
-    {
-    const fetchMessages = async () => 
-      {
+  useEffect(() => {
+    const fetchMessages = async () => {
       try {
         setLoading(true);
         const response = await axios.get(`${API_URL}/chat/messages/${room}`);
@@ -36,43 +31,34 @@ function Chats({ socket, username, userId, room, partner })
         
         // Mark messages as read
         if (userId) {
-          await axios.post(`${API_URL}/chat/messages/read`, 
-            {
+          await axios.post(`${API_URL}/chat/messages/read`, {
             roomId: room,
             userId
-          }
-        );
+          });
         }
-
-      } catch (err) 
-      {
+      } catch (err) {
         console.error("Error fetching messages:", err);
         setError("Could not load messages");
         setLoading(false);
       }
     };
     
-    if (room) 
-      {
+    if (room) {
       fetchMessages();
     }
   }, [room, userId]);
   
   // Listen for socket events
-  useEffect(() => 
-    {
+  useEffect(() => {
     if (!socket) return;
     
     // Handle new incoming messages
-    const handleReceiveMessage = (data) => 
-      {
+    const handleReceiveMessage = (data) => {
       setMessageList(prev => [...prev, data]);
       
       // Mark received messages as read immediately
-      if (data.receiver_id === userId) 
-        {
-        axios.post(`${API_URL}/chat/messages/read`, 
-          {
+      if (data.receiver_id === userId) {
+        axios.post(`${API_URL}/chat/messages/read`, {
           roomId: room,
           userId
         }).catch(err => console.error("Error marking message as read:", err));
@@ -80,14 +66,12 @@ function Chats({ socket, username, userId, room, partner })
     };
     
     // Handle message sent confirmation
-    const handleMessageSent = (data) => 
-      {
+    const handleMessageSent = (data) => {
       setMessageList(prev => [...prev, data]);
     };
     
     // Handle errors
-    const handleError = (error) => 
-      {
+    const handleError = (error) => {
       console.error("Socket error:", error);
       setError("There was an error with the chat. Please try again.");
     };
@@ -99,12 +83,10 @@ function Chats({ socket, username, userId, room, partner })
     socket.on("chat_history", (messages) => {
       setMessageList(messages);
       setLoading(false);
-    }
-  );
+    });
     
     // Clean up
-    return () => 
-      {
+    return () => {
       socket.off("receive_message", handleReceiveMessage);
       socket.off("message_sent", handleMessageSent);
       socket.off("message_error", handleError);
@@ -113,8 +95,7 @@ function Chats({ socket, username, userId, room, partner })
   }, [socket, userId, room]);
   
   // Send a message
-  const sendMessage = async () => 
-    {
+  const sendMessage = async () => {
     if (currentMessage.trim() === "") return;
     
     // Format the current time
@@ -144,8 +125,7 @@ function Chats({ socket, username, userId, room, partner })
   };
   
   // Handle enter key press
-  const handleKeyPress = (e) => 
-    {
+  const handleKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
@@ -153,8 +133,7 @@ function Chats({ socket, username, userId, room, partner })
   };
   
   // Show loading spinner while fetching messages
-  if (loading) 
-    {
+  if (loading) {
     return (
       <div className="w-full chat-window">
         <div className="px-4 py-3 text-white bg-gray-800 rounded-t-lg">
@@ -168,8 +147,7 @@ function Chats({ socket, username, userId, room, partner })
   }
   
   // Show error message if something went wrong
-  if (error) 
-    {
+  if (error) {
     return (
       <div className="w-full chat-window">
         <div className="px-4 py-3 text-white bg-gray-800 rounded-t-lg">
@@ -192,8 +170,7 @@ function Chats({ socket, username, userId, room, partner })
       <div className="h-[400px] border-x border-gray-300">
         <ScrollToBottom className="h-full overflow-x-hidden" ref={scrollRef}>
           <div className="p-4 space-y-3">
-            {messageList.map((msg, index) => 
-            {
+            {messageList.map((msg, index) => {
               const isCurrentUser = userId === msg.sender_id;
               
               return (
@@ -214,24 +191,19 @@ function Chats({ socket, username, userId, room, partner })
                         <span className="ml-1 opacity-75">
                           {msg.is_read ? '✓✓' : '✓'}
                         </span>
-                      )
-                      }
+                      )}
                     </div>
                   </div>
                 </div>
               );
-            }
-            )
-            }
+            })}
             
             {/* Show when there are no messages */}
-            {messageList.length === 0 && 
-            (
+            {messageList.length === 0 && (
               <div className="py-8 text-center text-gray-500">
                 No messages yet. Start your conversation!
               </div>
-            )
-            }
+            )}
           </div>
         </ScrollToBottom>
       </div>

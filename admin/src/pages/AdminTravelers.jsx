@@ -1,42 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 
-export default function AdminTravelers() 
-{
+export default function AdminTravelers() {
   const [travelers, setTravelers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedTraveler, setSelectedTraveler] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => 
-    {
+  useEffect(() => {
     fetchTravelers();
   }, []);
 
-  const fetchTravelers = async () => 
-    {
-    try 
-    {
+  const fetchTravelers = async () => {
+    try {
       const res = await fetch("http://localhost:3002/travelers");
       const data = await res.json();
       setTravelers(data);
       setLoading(false);
-    } 
-    catch (error)
-     {
+    } catch (error) {
       console.error("Error fetching travelers", error);
     }
   };
 
-  const openModal = (traveler) => 
-    {
+  const openModal = (traveler) => {
     setSelectedTraveler(traveler);
     setIsModalOpen(true);
   };
 
-  const closeModal = () => 
-    {
+  const closeModal = () => {
     setIsModalOpen(false);
     setSelectedTraveler(null);
   };
@@ -93,8 +85,7 @@ export default function AdminTravelers()
               </tbody>
             </table>
           </div>
-        )
-        }
+        )}
 
         {/* Modal */}
         {isModalOpen && selectedTraveler && (
@@ -121,8 +112,7 @@ export default function AdminTravelers()
               <p><strong>Notes:</strong> {selectedTraveler.note}</p>
             </div>
           </div>
-        )
-        }
+        )}
       </main>
     </div>
   );

@@ -3,55 +3,44 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 
-function Profile() 
-{
+function Profile() {
     const [user, setUser] = useState([]);
     const [wallet, setWallet] = useState(null);
     const navigate = useNavigate()
 
     const userId = localStorage.getItem("userId")
 
-    useEffect(()=>
-      {
-        if (!userId) 
-          {
+    useEffect(()=>{
+        if (!userId) {
             navigate("/login"); // Redirect to login if userId is null
             return;
         }
-        if(userId)
-          {
+        if(userId){
             axios.get(`http://localhost:3002/profile/${userId}`)
-            .then(result=>
-              {
+            .then(result=>{
                 console.log(result.data);
-                setUser(result.data)
-              }
-            )
+                setUser(result.data)})
             .catch(err=>console.log(err))
 
             // Fetch wallet info
                 axios.get(`http://localhost:3002/wallet/${userId}`)
-                .then(res => 
-                  {
+                .then(res => {
                     setWallet(res.data);
                 })
                 .catch(err => {
                     console.log("Wallet not found or error fetching wallet:", err);
                     setWallet(null);
-                }
-              );
+                });
         }
     },[userId, navigate])
 
     
-  const handleLogout = () => 
-    {
+  const handleLogout = () => {
     localStorage.removeItem("userId"); 
     navigate("/login"); 
   };
 
-    if (!user.name) 
-      {
+    if (!user.name) {
         return <div>Loading...</div>; 
     }
 
@@ -75,8 +64,7 @@ function Profile()
                 <div className="flex items-center justify-center w-full h-full text-2xl font-bold text-white bg-gray-300 rounded-full">
                     {user.name[0]}
                 </div>
-            )
-            }
+            )}
         </div>
 
         {/* Profile Info */}
@@ -139,8 +127,7 @@ function Profile()
       </div>
     </div>
   </div>
-)
-}
+)}
 
 
 </div>

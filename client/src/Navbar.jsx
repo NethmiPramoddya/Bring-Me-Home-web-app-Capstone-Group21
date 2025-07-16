@@ -6,8 +6,7 @@ import axios from "axios";
 import ChatBot from '../chatbot/chat-ui/src/chatbot'; 
 
 
-const Navbar = () => 
-  {
+const Navbar = () => {
   const userId = localStorage.getItem("userId");
   
   const navigate = useNavigate();
@@ -16,8 +15,7 @@ const Navbar = () =>
   const [showChatBot, setShowChatBot] = useState(false);
   const dropdownRef = useRef(null);
 
-  const handleLogout = () => 
-    {
+  const handleLogout = () => {
     localStorage.setItem("isLoggedIn", false); 
     localStorage.removeItem("userId"); 
     localStorage.removeItem("userEmail");
@@ -25,32 +23,24 @@ const Navbar = () =>
     navigate("/login"); 
   };
 
-  useEffect(() => 
-    {
-    const fetchNotificationCount = async () => 
-      {
-      try 
-      {
+  useEffect(() => {
+    const fetchNotificationCount = async () => {
+      try {
         const response = await axios.get(`http://localhost:3002/notifications/${userId}`);
         setNotificationCount(response.data.length); // Use setState here
-      } catch (error) 
-      {
+      } catch (error) {
         console.error("Error fetching notification count:", error);
       }
     };
-    if (userId) 
-      {
+    if (userId) {
       fetchNotificationCount();
     }
   }, [userId]);
 
   // Close dropdown when clicked outside
-  useEffect(() => 
-    {
-    const handleClickOutside = (e) => 
-      {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target))
-         {
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setShowDropdown(false);
       }
     };
@@ -83,11 +73,9 @@ const Navbar = () =>
               {/* Optional badge */}
               {notificationCount > 0 && (
                 <span className="absolute px-1 text-xs text-white bg-red-500 rounded-full -top-1 -right-1">{notificationCount}</span>
-              )
-              }
+              )}
             </button>
-              )
-              }
+              )}
       
       {/* Chat Icon */}
         <button
@@ -118,8 +106,7 @@ const Navbar = () =>
                 >
                   View Profile
                 </button>
-              )
-              }
+              )}
 
               {userId && (
                 <button
@@ -128,8 +115,7 @@ const Navbar = () =>
                 >
                   My Sender Requests
                 </button>
-              )
-              }
+              )}
 
               {userId && (
                 <button
@@ -138,8 +124,7 @@ const Navbar = () =>
                 >
                   Traveling data
                 </button>
-              )
-              }
+              )}
 
               {userId && (
                 <button
@@ -147,8 +132,7 @@ const Navbar = () =>
                   className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
                 >OnGoing Tasks
                 </button>
-              )
-              }
+              )}
 
               {userId && (
               <button
@@ -157,31 +141,26 @@ const Navbar = () =>
               >
                 Logout
               </button>
-              )
-              }
+              )}
               {!userId && (
                 <Link to="/login" className="block px-4 py-2 text-left text-gray-700 hover:bg-gray-100">
                   Login
                 </Link>
-              )
-              }
+              )}
               {!userId && (
                 <Link to="/register" className="block px-4 py-2 text-left text-gray-700 hover:bg-gray-100">
                   Register
                 </Link>
-              )
-              }
+              )}
             </div>
-          )
-          }
+          )}
         </div>
       </div>
       {showChatBot && (
   <div className="fixed bottom-4 right-4 z-50 w-[350px] shadow-lg">
     <ChatBot />
   </div>
-)
-}
+)}
 
     </nav>
   );

@@ -2,51 +2,42 @@ import React,{useEffect, useState} from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom';
 
-function MySenderRequests() 
-{
+function MySenderRequests() {
     const [mySenderRequests, setMySenderRequests] =useState([])
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [showModal, setShowModal] = useState(false);
      const userId = localStorage.getItem("userId")
     
-        useEffect(()=>
-            {
+        useEffect(()=>{
             axios.get(`http://localhost:3002/mySenderRequests/${userId}`)
-            .then(result=>
-                {
+            .then(result=>{
                 console.log(result.data);
                 setMySenderRequests(result.data)})
             .catch(err=>console.log(err))
         },[userId])
 
-        const handleDelete = async (id) => 
-            {
-            try 
-            {
+        const handleDelete = async (id) => {
+            try {
                 await axios.delete(`http://localhost:3002/deleteSenderRequest/${id}`);
         
                 
                 const updatedList = mySenderRequests.filter(request => {
                     return request._id !== id; 
-                }
-            );
+                });
         
                 
                 setMySenderRequests(updatedList);
-            } catch (err) 
-            {
+            } catch (err) {
                 console.log("Error deleting request:", err);
             }
         };
 
-        // const handleViewMore = (request) => 
-        //    {
+        // const handleViewMore = (request) => {
         //     setSelectedRequest(request);
         //     setShowModal(true);
         //   };
 
-          const closeModal = () => 
-            {
+          const closeModal = () => {
             setShowModal(false);
             setSelectedRequest(null);
           };

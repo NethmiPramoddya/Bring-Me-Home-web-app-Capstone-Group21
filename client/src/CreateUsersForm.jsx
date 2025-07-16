@@ -2,11 +2,9 @@ import {React, useState,useEffect} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
-function CreateUsersForm() 
-{
+function CreateUsersForm() {
 
-    const [formData, setFormData] = useState(
-        {
+    const [formData, setFormData] = useState({
         sname: "",
         semail: "",
         rname: "",
@@ -30,48 +28,38 @@ function CreateUsersForm()
         contactinfo_a:"",
         profile1: "",
         profile2: "",
-      }
-    );
+      });
 
       const navigate  = useNavigate()
 
-      useEffect(() => 
-        {
+      useEffect(() => {
         const weight = parseFloat(formData.weight);
-        if (!isNaN(weight)) 
-            {
+        if (!isNaN(weight)) {
           const calculatedTip = (weight * 5).toFixed(2); // Example: 5 currency units per kg
           setFormData(prev => ({ ...prev, tip: calculatedTip }));
         }
-      }, 
-      [formData.weight]
-    );
+      }, [formData.weight]);
       
     
-      const handleChange = (e) => 
-        {
+      const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
       };
       
     
-      const handleSubmit = (e) => 
-        {
+      const handleSubmit = (e) => {
         e.preventDefault();
         const senderID = localStorage.getItem("userId");
-        const submissionData = 
-        {
+        const submissionData = {
             ...formData,
             buyer_id: senderID,
           };
 
         axios.post("http://localhost:3002/create", submissionData)
-        .then(result => 
-            {
+        .then(result => {
             console.log(result)
             navigate("/sender-requests")
-        }
-    )
+        })
         .catch(err => console.log(err))
       };
 
@@ -167,8 +155,7 @@ function CreateUsersForm()
             />
             </div>
 
-            {formData.needsPurchase && 
-            (
+            {formData.needsPurchase && (
             <div className="flex flex-col my-2">
                 <label htmlFor="itemPrice" className="block mb-1 font-medium text-gray-700 text-md">Item Price $</label>
                 <input
@@ -180,8 +167,7 @@ function CreateUsersForm()
                 required
                 />
             </div>
-            )
-            }
+            )}
 
             <div className="flex flex-col my-2">
             <label className="block mb-1 font-medium text-gray-700 text-md">Tip $(calculated automatically)</label>

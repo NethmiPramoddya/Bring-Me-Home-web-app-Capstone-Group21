@@ -1,28 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 
-export default function AdminUsers() 
-{
+export default function AdminUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => 
-    {
+  useEffect(() => {
     fetchUsers();
   }, []);
 
-  const fetchUsers = async () => 
-    {
-    try 
-    {
+  const fetchUsers = async () => {
+    try {
       const res = await fetch("http://localhost:3002/admin/users");
       const data = await res.json();
       setUsers(data);
       setLoading(false);
-    } 
-    catch (error) 
-    {
+    } catch (error) {
       console.error("Error fetching users", error);
     }
   };
@@ -66,14 +60,11 @@ export default function AdminUsers()
                     <td className="p-3">{user.location}</td>
                     <td className="p-3">{user.about}</td>
                   </tr>
-                )
-                )
-                }
+                ))}
               </tbody>
             </table>
           </div>
-        )
-        }
+        )}
       </main>
     </div>
   );
