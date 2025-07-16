@@ -3,7 +3,7 @@ import { Bell, User, MessageCircle } from "lucide-react";
 import logo from './assets/logo.png'
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import ChatBot from '../chatbot/chat-ui/src/chatbot'; 
+import ChatBot from '../chatbot/chat-ui/chatbox';
 
 
 const Navbar = () => 
@@ -91,7 +91,7 @@ const Navbar = () =>
       
       {/* Chat Icon */}
         <button
-  className="text-gray-700 hover:text-red-600 relative"
+  className="relative text-gray-700 hover:text-red-600"
   onClick={() => setShowChatBot(!showChatBot)}
 >
   <MessageCircle className="w-5 h-5" />
