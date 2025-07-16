@@ -4,6 +4,7 @@ import { Menu, Users, Package, ClipboardList, Wallet } from 'lucide-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import logo from '../assets/logo.png';
+import { useNavigate } from 'react-router-dom';
 
 function Card({ children, className }) {
   return <div className={`shadow-lg rounded-2xl bg-white ${className}`}>{children}</div>;
@@ -23,6 +24,17 @@ function DashBoard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const navigate = useNavigate()
+        
+        const adminId = localStorage.getItem("adminId")
+        
+        useEffect(() => {
+            const isLoggedIn = localStorage.getItem("isAdminLoggedIn");
+            if (!isLoggedIn || isLoggedIn === "false" || !adminId ) {
+              navigate('/admin/login');
+            }
+          }, [adminId, navigate]);
 
   useEffect(() => {
     axios
