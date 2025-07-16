@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 
+import { useNavigate } from 'react-router-dom';
+
 export default function AdminSenderRequests() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+
+    const navigate = useNavigate()
+        
+        const adminId = localStorage.getItem("adminId")
+        
+        useEffect(() => {
+            const isLoggedIn = localStorage.getItem("isAdminLoggedIn");
+            if (!isLoggedIn || isLoggedIn === "false" || !adminId ) {
+              navigate('/admin/login');
+            }
+          }, [adminId, navigate]);
 
   useEffect(() => {
     fetchSenderRequests();

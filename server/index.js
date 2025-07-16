@@ -26,7 +26,7 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI) //MONGO_URI_LOCAL or MONGO_URI
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 

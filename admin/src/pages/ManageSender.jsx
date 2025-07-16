@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sidebar from '../components/Sidebar';
-
+import { useNavigate } from 'react-router-dom';
 
 function ManageSender() {
+
+  const navigate = useNavigate()
+        
+        const adminId = localStorage.getItem("adminId")
+        
+        useEffect(() => {
+            const isLoggedIn = localStorage.getItem("isAdminLoggedIn");
+            if (!isLoggedIn || isLoggedIn === "false" || !adminId ) {
+              navigate('/admin/login');
+            }
+          }, [adminId, navigate]);
+
   const [manageSender, setManageSender] = useState([{
     sname: "",
     semail: "",

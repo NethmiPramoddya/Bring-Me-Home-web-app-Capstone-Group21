@@ -31,6 +31,12 @@ router.post('/', (req,res)=>{
         }
         else{
             res.json({message:"No recored existed"})
+            //  const passwordHash = bcrypt.hashSync(req.body.password, 10)
+            // const adminUserData = {
+            //     email :req.body.username,
+            //     password :passwordHash
+            // }
+            // AdminUserModel.create(adminUserData)
         }
     })
 })

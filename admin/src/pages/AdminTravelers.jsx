@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminTravelers() {
   const [travelers, setTravelers] = useState([]);
@@ -7,6 +8,17 @@ export default function AdminTravelers() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedTraveler, setSelectedTraveler] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const navigate = useNavigate()
+      
+      const adminId = localStorage.getItem("adminId")
+      
+      useEffect(() => {
+          const isLoggedIn = localStorage.getItem("isAdminLoggedIn");
+          if (!isLoggedIn || isLoggedIn === "false" || !adminId ) {
+            navigate('/admin/login');
+          }
+        }, [adminId, navigate]);
 
   useEffect(() => {
     fetchTravelers();
