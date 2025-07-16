@@ -86,26 +86,11 @@ const sendMessage = async () =>
 const [loading, setLoading] = useState(false);
 const chatBoxRef = useRef(null);
 
-useEffect(
-  () => {
+useEffect(() => {
   chatBoxRef.current?.scrollTo(0, chatBoxRef.current.scrollHeight);
-}, 
-[messages]
-);
+}, [messages]);
 
 {loading && <div className="loading">Thinking...</div>}
 
-const handleKeyDown = (e) => 
-  {
-  if (e.key === "Enter" && !e.shiftKey) 
-    {
-    e.preventDefault();
-    sendMessage();
-  }
-};
-
-<textarea
-  onKeyDown={handleKeyDown}
-/>
 
 export default App;
