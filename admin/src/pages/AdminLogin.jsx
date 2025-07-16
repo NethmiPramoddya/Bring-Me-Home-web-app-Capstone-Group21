@@ -1,27 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, Navigate } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from '../assets/logo.png';
 import "./AdminLogin.css";
+import axios from 'axios'
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Implement login logic here
-    console.log("Login with", { username, password });
+  const handleSubmit = (e) =>{
+        e.preventDefault()
+        axios.post('http://localhost:3002/adminLogin', {username,password})
+        .then(result => {console.log(result)
+          if(result.data.message === "Success"){
+          
+            localStorage.setItem("isAdminLoggedIn", "true");
+            localStorage.setItem("adminEmail", result.data.email);
+            localStorage.setItem("adminId", result.data.userId); //  Store userId
+            navigate('/');
+          
+          }else{
+            alert(result.data.message)
+          }
+          
+        })
+        .catch(err => console.log(err))
+    }
 
-    
-    
-        if (username === "admin" && password === "admin123") {
-          navigate("/");
-        } else {
-          alert("Invalid username or password");
-        }
-      
-  };
 
   return (
     <div className="login-container">

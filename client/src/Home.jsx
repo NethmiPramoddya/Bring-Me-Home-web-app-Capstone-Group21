@@ -341,8 +341,8 @@ export default function Home() {
             </p>
             <span >
               <div className="justify-end card-actions" data-aos="fade-right">
-                <button className="btn text-[#000000] font-bold bg-[#FF8B2A] p-5">
-                  {" "}
+                <button className="btn text-[#000000] font-bold bg-[#FF8B2A] p-5"
+                 onClick={() => navigate("/create")}>
                   Be a Sender
                 </button>
               </div>
@@ -394,8 +394,11 @@ export default function Home() {
             </p>
             <span>
               <div className="justify-end card-actions">
-                <button className="btn text-[#ffffff] font-bold bg-[#FF8B2A] p-5" data-aos="fade-right">
-                  {" "}
+                <button
+                  className="btn text-[#ffffff] font-bold bg-[#FF8B2A] p-5"
+                  data-aos="fade-right"
+                  onClick={() => navigate("/become-traveler")}
+                >
                   Be a Traveler
                 </button>
               </div>
