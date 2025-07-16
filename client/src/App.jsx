@@ -48,6 +48,7 @@ function App() {
           <Route path='/onGoingTasks/:id' element={<OnGoingTasks/>}></Route>
           <Route path="/receiver/:id" element={<ReceiverDetails />} />
           <Route path="/edit-profile" element={<EditProfile />} />
+          {/* <Route path="/contact-support" element={<ContactSupport />} /> */}
         </Routes>
         
         <ChatBot />
