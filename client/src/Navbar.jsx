@@ -3,7 +3,6 @@ import { Bell, User, MessageCircle } from "lucide-react";
 import logo from './assets/logo.png'
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import ChatBot from '../chatbot/chat-ui/src/chatbot'; 
 
 
 const Navbar = () => {
@@ -12,7 +11,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
-  const [showChatBot, setShowChatBot] = useState(false);
+  // const [showChatBot, setShowChatBot] = useState(false);
   const dropdownRef = useRef(null);
 
   const handleLogout = () => {
@@ -78,12 +77,12 @@ const Navbar = () => {
               )}
       
       {/* Chat Icon */}
-        <button
-  className="text-gray-700 hover:text-red-600 relative"
-  onClick={() => setShowChatBot(!showChatBot)}
->
-  <MessageCircle className="w-5 h-5" />
-</button>
+        {/* <button
+              className="text-gray-700 hover:text-red-600"
+              onClick={() => navigate('/chat')}
+        >
+        <MessageCircle className="w-5 h-5" />
+        </button> */}
 
 
         {/* User Profile Dropdown */}
@@ -156,11 +155,11 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      {showChatBot && (
+      {/* {showChatBot && (
   <div className="fixed bottom-4 right-4 z-50 w-[350px] shadow-lg">
     <ChatBot />
   </div>
-)}
+)} */}
 
     </nav>
   );
