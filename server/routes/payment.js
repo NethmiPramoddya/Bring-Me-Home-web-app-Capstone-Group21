@@ -4,13 +4,13 @@ const crypto = require("crypto");
 const Wallet = require("../models/Wallet");
 const WalletTransaction = require("../models/WalletTransaction");
 const NotificationModel = require("../models/Notification");
-
+require('dotenv').config();
 
 const router = express.Router();
 
 // Merchant details
-const merchant_id = "1230370"; 
-const merchant_secret = "MTEwODI1ODM0ODI0MDY0MTg1MDQxMzk2NTQyMzcxMjIwOTgzNTU="; 
+const merchant_id = process.env.MERCHANT_ID; 
+const merchant_secret = process.env.MERCHANT_SECRET; 
 
 router.post("/start", (req, res) => {
   const { order_id, amount, currency } = req.body;
