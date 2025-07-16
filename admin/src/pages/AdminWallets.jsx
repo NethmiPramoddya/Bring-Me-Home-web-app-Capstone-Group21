@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Users, Package, ClipboardList, Wallet } from 'lucide-react';
 import Sidebar from '../components/Sidebar';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminWallets() {
   const [wallets, setWallets] = useState([]);
@@ -10,6 +11,17 @@ export default function AdminWallets() {
   const [transactions, setTransactions] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [users, setUsers] = useState({});
+
+    const navigate = useNavigate()
+      
+      const adminId = localStorage.getItem("adminId")
+      
+      useEffect(() => {
+          const isLoggedIn = localStorage.getItem("isAdminLoggedIn");
+          if (!isLoggedIn || isLoggedIn === "false" || !adminId ) {
+            navigate('/admin/login');
+          }
+        }, [adminId, navigate]);
 
   useEffect(() => {
     fetchWallets();

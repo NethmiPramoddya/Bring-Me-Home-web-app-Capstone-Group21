@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import { MessageSquare } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminOngoingTasks() {
   const [ongoingTasks, setOngoingTasks] = useState([]);
@@ -8,6 +9,17 @@ export default function AdminOngoingTasks() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const navigate = useNavigate()
+      
+      const adminId = localStorage.getItem("adminId")
+      
+      useEffect(() => {
+          const isLoggedIn = localStorage.getItem("isAdminLoggedIn");
+          if (!isLoggedIn || isLoggedIn === "false" || !adminId ) {
+            navigate('/admin/login');
+          }
+        }, [adminId, navigate]);
 
   useEffect(() => {
     fetchOngoingTasks();
