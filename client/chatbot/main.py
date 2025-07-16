@@ -23,11 +23,3 @@ graph = graph_builder.compile()
 
 
 app = FastAPI()
-
-class ChatRequest(BaseModel):
-    messages: List[Dict[str, str]]
-
-@app.post("/chat")
-async def chat_endpoint(req: ChatRequest):
-    print("Incoming request:", req.messages)
-    state = {"messages": req.messages}
