@@ -83,14 +83,4 @@ const sendMessage = async () =>
   }
 };
 
-const [loading, setLoading] = useState(false);
-const chatBoxRef = useRef(null);
-
-useEffect(() => {
-  chatBoxRef.current?.scrollTo(0, chatBoxRef.current.scrollHeight);
-}, [messages]);
-
-{loading && <div className="loading">Thinking...</div>}
-
-
 export default App;
