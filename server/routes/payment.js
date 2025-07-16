@@ -9,7 +9,7 @@ require('dotenv').config();
 const router = express.Router();
 
 // Merchant details
-const merchant_id = "1230370"; 
+const merchant_id = process.env.MERCHANT_ID; 
 const merchant_secret = process.env.MERCHANT_SECRET; 
 
 router.post("/start", (req, res) => {
