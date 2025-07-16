@@ -19,7 +19,7 @@ import RoomId from './RoomId'
 import OnGoingTasks from './OnGoingTasks'
 import ReceiverDetails from './ReceiverDetails'
 import EditProfile from './EditProfile'
-import ChatBot from '../chatbot/chat-ui/src/chatbot';
+import ChatBot from '../chatbot/chat-ui/chatbox';
 
 function App() 
 {
