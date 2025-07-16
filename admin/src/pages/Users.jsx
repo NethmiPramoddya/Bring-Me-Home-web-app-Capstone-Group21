@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const navigate = useNavigate()
+      
+      const adminId = localStorage.getItem("adminId")
+      
+      useEffect(() => {
+          const isLoggedIn = localStorage.getItem("isAdminLoggedIn");
+          if (!isLoggedIn || isLoggedIn === "false" || !adminId ) {
+            navigate('/admin/login');
+          }
+        }, [adminId, navigate]);
 
   useEffect(() => {
     fetchUsers();
