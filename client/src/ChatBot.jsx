@@ -1,4 +1,4 @@
-/*import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ChatBubbleLeftRightIcon, PaperAirplaneIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Groq } from 'groq-sdk';
 
@@ -84,8 +84,8 @@ function ChatBot() {
         </button>
       ) : (
         <div className="bg-white rounded-lg shadow-xl w-96 h-[90vh] flex flex-col">
-          {/* Chat Header *//*}
-         /* <div className="flex items-center justify-between p-4 border-b">
+          {/* Chat Header */}
+          <div className="flex items-center justify-between p-4 border-b">
             <h3 className="text-lg font-semibold">Bring Me Home Assistant</h3>
             <div className="flex items-center space-x-2">
               <button
@@ -97,8 +97,8 @@ function ChatBot() {
             </div>
           </div>
 
-          {/* Chat Messages *//*}
-       /*  <div
+          {/* Chat Messages */}
+          <div
             ref={chatContainerRef}
             className="flex-1 p-4 space-y-4 overflow-y-auto"
           >
@@ -140,8 +140,8 @@ function ChatBot() {
             )}
           </div>
 
-          {/* Chat Input *//*}
-        /*  <form onSubmit={handleSendMessage} className="p-4 border-t">
+          {/* Chat Input */}
+          <form onSubmit={handleSendMessage} className="p-4 border-t">
             <div className="flex space-x-2">
               <input
                 type="text"
@@ -165,4 +165,4 @@ function ChatBot() {
   );
 }
 
-export default ChatBot;*/
+export default ChatBot;
