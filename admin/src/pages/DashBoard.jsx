@@ -52,7 +52,7 @@ function DashBoard() {
         } md:relative md:translate-x-0`}
       >
         <div className="flex items-center p-6 border-b border-gray-200">
-          <img src={logo} alt="Logo" className="w-10 h-auto" />
+          <Link to="/">< img src={logo} alt="Logo" className="w-10 h-auto" /></Link>
           <h3 className="ml-3 text-red-600">Bring Me Home</h3>
         </div>
         <nav className="p-4 space-y-4 text-gray-700">
@@ -94,7 +94,7 @@ function DashBoard() {
           <p className="text-center text-red-500">{error}</p>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <Link to="/admin/users">
+            <Link to="/users">
               <motion.div whileHover={{ scale: 1.05 }}>
                 <Card className="transition bg-white border-l-4 border-blue-500 shadow-lg rounded-2xl">
                   <CardContent className="p-6">
@@ -105,7 +105,7 @@ function DashBoard() {
               </motion.div>
             </Link>
 
-            <Link to="/admin/sender-requests">
+            <Link to="/sender-requests">
               <motion.div whileHover={{ scale: 1.05 }}>
                 <Card className="transition bg-white border-l-4 border-green-500 shadow-lg rounded-2xl">
                   <CardContent className="p-6">
@@ -116,7 +116,7 @@ function DashBoard() {
               </motion.div>
             </Link>
 
-            <Link to="/admin/transactions">
+            <Link to="/withdrawal">
               <motion.div whileHover={{ scale: 1.05 }}>
                 <Card className="transition bg-white border-l-4 border-yellow-500 shadow-lg rounded-2xl">
                   <CardContent className="p-6">
@@ -127,7 +127,7 @@ function DashBoard() {
               </motion.div>
             </Link>
 
-            <Link to="/admin/revenue">
+            <Link to="/withdrawal">
               <motion.div whileHover={{ scale: 1.05 }}>
                 <Card className="transition bg-white border-l-4 border-purple-500 shadow-lg rounded-2xl">
                   <CardContent className="p-6">
