@@ -1,8 +1,10 @@
 const express = require('express')
+require('dotenv').config();
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 const cors = require('cors')
 const http = require('http');
+const bcrypt = require ('bcrypt')
 const { Server } = require('socket.io');
 const SenderModel = require('./models/Senders')
 const UserModel = require('./models/user')
@@ -15,6 +17,7 @@ const MessageModel = require('./models/Masseges');
 const RoomChatModel = require('./models/ChatRoom');
 const deliveryRouter = require('./routes/delivery');
 const adminRoutes = require("./routes/admin");
+const adminLoginRoutes = require("./routes/adminLogin");
 const WalletModel = require("./models/Wallet")
 const WalletTransaction = require("./models/WalletTransaction")
 
@@ -23,7 +26,9 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect("mongodb://127.0.0.1:27017/Send_a_package")
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // Configure CORS
 app.use(
@@ -32,10 +37,10 @@ app.use(
     'http://localhost:5173',  // admin
     'http://localhost:5174',   // client
     'https://e711-2402-4000-2300-38da-edb2-e06a-2b1c-f2f4.ngrok-free.app'
-  ], // Adjust this if your frontend is hosted elsewhere
+  ], 
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // Allow credentials if needed
+    credentials: true, 
   })
 );
 
@@ -47,6 +52,7 @@ app.use("/api/payment",deliveryRouter)
 app.use("", SenderRouter);
 app.use("/chat", chatRouter);
 app.use("/admin", adminRoutes);
+app.use("/adminLogin", adminLoginRoutes);
 
 
 app.get('/', (req,res) => {
@@ -73,7 +79,7 @@ app.post("/create",async(req,res)=>{
             req.body.totalCost = parseFloat(req.body.tip);
         }
 
-        // 💸 Calculate system and traveler share from tip
+        //  Calculate system and traveler share from tip
         req.body.systemShare = Number((tip * 0.25).toFixed(2));     // 25%
         req.body.travelerShare = Number((tip * 0.75).toFixed(2));   // 75%
 
@@ -129,9 +135,12 @@ app.delete('/deleteRequest/:id',(req,res)=>{
 app.post('/login', (req,res)=>{
     const {email, password} = req.body;
     UserModel.findOne({email:email})
+
     .then(user =>{
+      
         if(user){
-            if(user.password===password){
+          const isPassowrdCorrect = bcrypt.compareSync(password, user.password)
+            if(isPassowrdCorrect){
                 res.json({
                     message:"Success",
                     userId: user._id,
@@ -150,11 +159,21 @@ app.post('/login', (req,res)=>{
 })
 
 app.post('/register',(req,res)=>{
-    UserModel.create(req.body)
+  const passwordHash = bcrypt.hashSync(req.body.password, 10)
+  
+  const userData = {
+        name : req.body.name,
+        email :req.body.email,
+        phone : req.body.phone,
+        password :passwordHash,
+
+
+    }
+    UserModel.create(userData)
     .then(user => res.status(201).json({
             userId: user._id,
             email: user.email,
-            phone: user.phone, 
+            phone: user.phone
     }))
     .catch(err => {
         console.error("Error:", err)
